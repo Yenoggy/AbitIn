@@ -2,8 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { Panel, PanelHeader, Header, Button, Group, Cell, Div, Avatar } from '@vkontakte/vkui';
+import MainFooter from '../components/MainFooter';
 
-const Home = ({ id, go, fetchedUser }) => (
+const Home = ({ id, fetchedUser }) => (
 	<Panel id={id}>
 		<PanelHeader>Example</PanelHeader>
 		{fetchedUser &&
@@ -16,19 +17,12 @@ const Home = ({ id, go, fetchedUser }) => (
 			</Cell>
 		</Group>}
 
-		<Group header={<Header mode="secondary">Navigation Example</Header>}>
-			<Div>
-				<Button stretched size="l" mode="secondary" onClick={go} data-to="persik">
-					Show me the Persik, please
-				</Button>
-			</Div>
-		</Group>
+		<MainFooter />
 	</Panel>
 );
 
 Home.propTypes = {
 	id: PropTypes.string.isRequired,
-	go: PropTypes.func.isRequired,
 	fetchedUser: PropTypes.shape({
 		photo_200: PropTypes.string,
 		first_name: PropTypes.string,
