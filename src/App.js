@@ -1,45 +1,46 @@
 import React, { useState, useEffect } from 'react';
 import bridge from '@vkontakte/vk-bridge';
-import { View, ScreenSpinner, AdaptivityProvider, AppRoot } from '@vkontakte/vkui';
+import {   AdaptivityProvider,
+	ConfigProvider,
+	useAdaptivity,
+	AppRoot,
+	SplitLayout,
+	SplitCol,
+	ViewWidth,
+	View,
+	Panel,
+	PanelHeader,
+	PanelHeaderButton,
+	CardGrid,
+	ContentCard,
+	Header,
+	Group,
+	Counter,
+	SimpleCell } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 
-import Home from './panels/Home';
-
-
+import { Icon20SlidersOutline, Icon28PictureOutline  } from '@vkontakte/icons';
 const App = () => {
-	const [activePanel, setActivePanel] = useState('home');
-	const [fetchedUser, setUser] = useState(null);
-	const [popout, setPopout] = useState(<ScreenSpinner size='large' />);
-
-	useEffect(() => {
-		bridge.subscribe(({ detail: { type, data }}) => {
-			if (type === 'VKWebAppUpdateConfig') {
-				const schemeAttribute = document.createAttribute('scheme');
-				schemeAttribute.value = data.scheme ? data.scheme : 'client_light';
-				document.body.attributes.setNamedItem(schemeAttribute);
-			}
-		});
-		async function fetchData() {
-			const user = await bridge.send('VKWebAppGetUserInfo');
-			setUser(user);
-			setPopout(null);
-		}
-		fetchData();
-	}, []);
-
-	const go = e => {
-		setActivePanel(e.currentTarget.dataset.to);
-	};
-
+	const { viewWidth } = useAdaptivity();
+   
 	return (
-		<AdaptivityProvider>
-			<AppRoot>
-				<View activePanel={activePanel} popout={popout}>
-					<Home id='home' fetchedUser={fetchedUser} go={go} />
-				</View>
-			</AppRoot>
-		</AdaptivityProvider>
+	  <AppRoot>
+		<SplitLayout header={<PanelHeader separator={false} />}>
+		  <SplitCol spaced={viewWidth && viewWidth > ViewWidth.MOBILE}>
+			<View activePanel="main">
+			<Panel id="main">
+				<PanelHeader
+				left={<PanelHeaderButton><Icon20SlidersOutline/></PanelHeaderButton>}
+				>
+				AbitIn
+				</PanelHeader>
+			</Panel>
+			</View>
+		  </SplitCol>
+		</SplitLayout>
+	  </AppRoot>
 	);
-}
+  };
 
+  
 export default App;
