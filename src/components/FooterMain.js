@@ -11,14 +11,22 @@ import PropTypes from "prop-types";
 
 const FooterMain = ({go}) => {
     const [text, setText] = useState('search');
-	return (
-        <Tabbar style={{position: ''}} itemsLayout="vertical">
-        <TabbarItem selected={text === 'search'} 
-        data-to="main" onClick={go} onClick={() => setText('search')} text="Поиск"><Icon24Search/></TabbarItem>
 
-        <TabbarItem selected={text === 'favorites'} onClick={() => setText('favorites')} text="Избранное"><Icon24FavoriteOutline/></TabbarItem>
-        </Tabbar>
-	);
+    function set1(e) {
+      setText('search'), go(e);
+    }
+    function set2(e) {
+      setText('favorites'), go(e);
+    }
+
+    return (
+          <Tabbar style={{position: ''}} itemsLayout="vertical">
+          <TabbarItem selected={text === 'search'} 
+          data-to="main" onClick={set1} text="Поиск"><Icon24Search/></TabbarItem>
+
+          <TabbarItem selected={text === 'favorites'} onClick={set2} text="Избранное"><Icon24FavoriteOutline/></TabbarItem>
+          </Tabbar>
+    );
   };
 
 FooterMain.propTypes = {
