@@ -46,7 +46,6 @@ const App = () => {
 	}, []);
 
 	const go = e => {
-		console.dir(e);
 		setActivePanel(e.currentTarget.dataset.to);
 	};
 
