@@ -14,7 +14,7 @@ const Favorites = ({id, go}) => {
           <HeaderSlider/>
           <Search/>
 
-          <FooterMain/>
+          <FooterMain go={go}/>
       </Panel>
 	);
   };

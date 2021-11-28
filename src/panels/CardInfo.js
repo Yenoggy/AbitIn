@@ -27,7 +27,8 @@ import FooterMain from '../components/FooterMain';
 const CardInfo = ({id, go}) => {
 	return (
         <Panel id={id}>
-            <FooterMain/>
+			<Header>test</Header>
+            <FooterMain go={go}/>
         </Panel>
 	);
   };
