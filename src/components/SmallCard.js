@@ -7,7 +7,8 @@ import PropTypes from 'prop-types';
 
 const SmallCard = ({id, img, name, description, address, go}) => {
 	return (
-        <ContentCard onClick={go} data-to="card" 
+      <div data-to="card">
+           <ContentCard onClick={go} data-to="card" 
             src={img}
             header={name}
             text={description}
@@ -15,6 +16,7 @@ const SmallCard = ({id, img, name, description, address, go}) => {
             maxHeight={500}
             >
         </ContentCard>
+      </div>
 	);
   };
 

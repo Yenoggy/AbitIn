@@ -16,6 +16,7 @@ import {
 	ContentCard,
 	Group,
 	Search,
+	Header,
 	Tabbar,
 	TabbarItem,
 	Header,
