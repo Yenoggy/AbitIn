@@ -24,7 +24,7 @@ const FooterMain = ({go}) => {
           <TabbarItem selected={text === 'search'} 
           data-to="main" onClick={set1} text="Поиск"><Icon24Search/></TabbarItem>
 
-          <TabbarItem selected={text === 'favorites'} onClick={set2} text="Избранное"><Icon24FavoriteOutline/></TabbarItem>
+          <TabbarItem selected={text === 'favorites'} data-to="favorites" onClick={set2} text="Избранное"><Icon24FavoriteOutline/></TabbarItem>
           </Tabbar>
     );
   };
