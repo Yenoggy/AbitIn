@@ -6,6 +6,8 @@ import {
 } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 
+import Card from './Card';
+
 const Cards = () => {
     const [cards, setCards] = useState([
         {
@@ -32,30 +34,23 @@ const Cards = () => {
   useEffect(() => {
     getData();
 
-    // we will use async/await to fetch this data
     async function getData() {
-      const response = await fetch("https://www.anapioficeandfire.com/api/books");
+      const response = await fetch("");
       const data = await response.json();
 
-      // store the data into our books variable
       setCards(data) ;
     }
-  }, []); // <- you may need to put the setBooks function in this array
+  }, []);
 
 	return (
         <Group>
             {cards && (
                 <CardGrid size="l">
                 {cards.map((card, index) => (
-                <ContentCard
-                    key={index}
-                    src={card.img}
-                    header={card.name}
-                    text={card.description}
-                    caption={card.address}
-                    maxHeight={500}
-                    >
-                </ContentCard>
+                    <Card 
+                        key={index} img={card.img} name={card.name}
+                        description={card.description} address={card.address}
+                    />
                 ))}
 
                 </CardGrid>

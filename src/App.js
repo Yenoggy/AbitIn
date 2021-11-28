@@ -10,6 +10,7 @@ import {
 	Panel,
 	PanelHeader,
 	PanelHeaderButton,
+	ScreenSpinner,
 	CardGrid,
 	ContentCard,
 	Group,
@@ -19,24 +20,42 @@ import {
 } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 
-import Header from './panels/Header';
-import Cards from './panels/Cards';
-import Footer from './panels/Footer';
+import Main from './panels/Main';
+import Filter from './panels/Filter';
 
 const App = () => {
 	const { viewWidth } = useAdaptivity();
-   
+	const [activePanel, setActivePanel] = useState('main');
+	const [fetchedUser, setUser] = useState(null);
+	const [popout, setPopout] = useState(<ScreenSpinner size='large' />);
+
+	useEffect(() => {
+		bridge.subscribe(({ detail: { type, data }}) => {
+			if (type === 'VKWebAppUpdateConfig') {
+				const schemeAttribute = document.createAttribute('scheme');
+				schemeAttribute.value = data.scheme ? data.scheme : 'client_light';
+				document.body.attributes.setNamedItem(schemeAttribute);
+			}
+		});
+		async function fetchData() {
+			const user = await bridge.send('VKWebAppGetUserInfo');
+			setUser(user);
+			setPopout(null);
+		}
+		fetchData();
+	}, []);
+
+	const go = e => {
+		setActivePanel(e.currentTarget.dataset.to);
+	};
+
 	return (
 	  <AppRoot>
 		<SplitLayout header={<PanelHeader separator={false} />}>
 		  <SplitCol spaced={viewWidth && viewWidth > ViewWidth.MOBILE}>
-			<View activePanel="profile">
-			<Panel id="profile">
-				<Header/>
-				<Search/> 
-				<Cards/>
-				<Footer/>
-			</Panel>
+		  	<View activePanel={activePanel} popout={popout}>
+				<Main id="main" go={go}/>
+				<Filter id="filter" go={go}/>
 			</View>
 		  </SplitCol>
 		</SplitLayout>
@@ -46,3 +65,5 @@ const App = () => {
 
   
 export default App;
+
+  
