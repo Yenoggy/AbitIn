@@ -22,6 +22,7 @@ import '@vkontakte/vkui/dist/vkui.css';
 
 import Main from './panels/Main';
 import CardInfo from './panels/CardInfo';
+import Favorites from './panels/CardInfo';
 
 const App = () => {
 	const { viewWidth } = useAdaptivity();
@@ -56,6 +57,7 @@ const App = () => {
 		  	<View activePanel={activePanel} popout={popout}>
 				<Main id="main" go={go}/>
 				<CardInfo id="card" go={go}/>
+				<Favorites id="favorites" go={go}/>
 			</View>
 		  </SplitCol>
 		</SplitLayout>

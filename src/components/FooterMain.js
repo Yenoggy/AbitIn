@@ -16,7 +16,7 @@ const FooterMain = ({go}) => {
           setText('search');
           go(e);
         }} text="Поиск"><Icon24Search/></TabbarItem>
-        <TabbarItem data-to="main" selected={text === 'favorites'} 
+        <TabbarItem data-to="favorites" selected={text === 'favorites'} 
         onClick={(e) => {
           setText('favorites');
           go(e);
