@@ -14,7 +14,7 @@ const FooterMain = ({go}) => {
 	return (
         <Tabbar style={{position: ''}} itemsLayout="vertical">
         <TabbarItem selected={text === 'search'} 
-        onClick={go} onClick={() => setText('search')} text="Поиск"><Icon24Search/></TabbarItem>
+        data-to="main" onClick={go} onClick={() => setText('search')} text="Поиск"><Icon24Search/></TabbarItem>
 
         <TabbarItem selected={text === 'favorites'} onClick={() => setText('favorites')} text="Избранное"><Icon24FavoriteOutline/></TabbarItem>
         </Tabbar>
