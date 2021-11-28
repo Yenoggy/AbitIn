@@ -4,7 +4,7 @@ import {
 } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 
-const Card = ({key, img, name, description, address}) => {
+const SmallCard = ({key, img, name, description, address}) => {
 	return (
         <ContentCard
             key={key}
@@ -19,4 +19,4 @@ const Card = ({key, img, name, description, address}) => {
   };
 
   
-export default Card;
+export default SmallCard;

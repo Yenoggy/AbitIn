@@ -7,7 +7,7 @@ import '@vkontakte/vkui/dist/vkui.css';
 
 import { Icon20SlidersOutline} from '@vkontakte/icons';
 
-const Header = () => {
+const HeaderSlider = () => {
 	return (
         <PanelHeader
         left={<PanelHeaderButton><Icon20SlidersOutline/></PanelHeaderButton>}
@@ -18,4 +18,4 @@ const Header = () => {
   };
 
   
-export default Header;
+export default HeaderSlider;

@@ -21,22 +21,22 @@ import {
 } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 
-const Filter = ({id, go}) => {
+import FooterMain from '../components/FooterMain';
+
+const CardInfo = ({id, go}) => {
 	return (
         <Panel id={id}>
-            <Header/>
-            <Search/> 
-            <Cards/>
-            <Footer/>
+			<Header>Test</Header>
+            <FooterMain/>
         </Panel>
 	);
   };
 
-  Filter.propTypes = {
+  CardInfo.propTypes = {
 	id: PropTypes.string.isRequired,
 	go: PropTypes.func.isRequired,
 }; 
   
-export default Filter;
+export default CardInfo;
 
   

@@ -7,7 +7,7 @@ import '@vkontakte/vkui/dist/vkui.css';
 
 import { Icon24FavoriteOutline, Icon24Search} from '@vkontakte/icons';
 
-const Footer = () => {
+const FooterMain = () => {
     const [text, setText] = useState('search');
 	return (
         <Tabbar style={{position: ''}} itemsLayout="vertical">
@@ -18,4 +18,4 @@ const Footer = () => {
   };
 
   
-export default Footer;
+export default FooterMain;

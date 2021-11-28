@@ -2,36 +2,22 @@ import React, { useState, useEffect } from 'react';
 import bridge from '@vkontakte/vk-bridge';
 import PropTypes from 'prop-types';
 import { 
-	useAdaptivity,
-	AppRoot,
-	SplitLayout,
-	SplitCol,
-	ViewWidth,
-	View,
 	Panel,
-	PanelHeader,
-	PanelHeaderButton,
-	ScreenSpinner,
-	CardGrid,
-	ContentCard,
-	Group,
 	Search,
-	Tabbar,
-	TabbarItem,
 } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 
-import Header from '../components/Header';
+import HeaderSlider from '../components/HeaderSlider';
 import Cards from '../components/Cards';
-import Footer from '../components/Footer';
+import FooterMain from '../components/FooterMain';
 
 const Main = ({id, go}) => {
 	return (
         <Panel id={id}>
-            <Header/>
+            <HeaderSlider/>
             <Search/> 
-            <Cards/>
-            <Footer/>
+            <Cards go={go}/>
+            <FooterMain/>
         </Panel>
 	);
   };

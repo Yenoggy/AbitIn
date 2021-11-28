@@ -21,7 +21,7 @@ import {
 import '@vkontakte/vkui/dist/vkui.css';
 
 import Main from './panels/Main';
-import Filter from './panels/Filter';
+import CardInfo from './panels/CardInfo';
 
 const App = () => {
 	const { viewWidth } = useAdaptivity();
@@ -46,6 +46,7 @@ const App = () => {
 	}, []);
 
 	const go = e => {
+		console.dir(e);
 		setActivePanel(e.currentTarget.dataset.to);
 	};
 
@@ -55,7 +56,7 @@ const App = () => {
 		  <SplitCol spaced={viewWidth && viewWidth > ViewWidth.MOBILE}>
 		  	<View activePanel={activePanel} popout={popout}>
 				<Main id="main" go={go}/>
-				<Filter id="filter" go={go}/>
+				<CardInfo id="card" go={go}/>
 			</View>
 		  </SplitCol>
 		</SplitLayout>
