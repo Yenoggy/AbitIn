@@ -10,19 +10,13 @@ import PropTypes from "prop-types";
 
 
 const FooterMain = ({go, selectedText}) => {
-    function set1(e) {
-      go(e);
-    }
-    function set2(e) {
-      go(e);
-    }
 
     return (
           <Tabbar style={{position: ''}} itemsLayout="vertical">
           <TabbarItem selected={selectedText === 'search'} 
-          data-to="main" onClick={set1} text="Поиск"><Icon24Search/></TabbarItem>
+          data-to="main" onClick={go} text="Поиск"><Icon24Search/></TabbarItem>
 
-          <TabbarItem selected={selectedText === 'favorites'} data-to="favorites" onClick={set2} text="Избранное"><Icon24FavoriteOutline/></TabbarItem>
+          <TabbarItem selected={selectedText === 'favorites'} data-to="favorites" onClick={go} text="Избранное"><Icon24FavoriteOutline/></TabbarItem>
           </Tabbar>
     );
   };
