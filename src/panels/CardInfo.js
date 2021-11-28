@@ -18,6 +18,7 @@ import {
 	Search,
 	Tabbar,
 	TabbarItem,
+	Header,
 } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 
