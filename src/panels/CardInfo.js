@@ -28,7 +28,7 @@ const CardInfo = ({id, go}) => {
 	return (
         <Panel id={id}>
 			<Header>test</Header>
-            <FooterMain go={go}/>
+            <FooterMain go={go} selectedText="search"/>
         </Panel>
 	);
   };
