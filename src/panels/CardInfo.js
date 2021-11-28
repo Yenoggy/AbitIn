@@ -16,7 +16,6 @@ import {
 	ContentCard,
 	Group,
 	Search,
-	Header,
 	Tabbar,
 	TabbarItem,
 	Header,
@@ -28,7 +27,6 @@ import FooterMain from '../components/FooterMain';
 const CardInfo = ({id, go}) => {
 	return (
         <Panel id={id}>
-			<Header>Test</Header>
             <FooterMain/>
         </Panel>
 	);
