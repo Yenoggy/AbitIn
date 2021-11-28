@@ -13,8 +13,7 @@ const Favorites = ({id, go}) => {
       <Panel id={id}>
           <HeaderSlider/>
           <Search/>
-
-          <FooterMain go={go}/>
+          <FooterMain go={go} selectedText="favorites" />
       </Panel>
 	);
   };

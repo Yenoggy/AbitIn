@@ -17,7 +17,7 @@ const Main = ({id, go}) => {
             <HeaderSlider/>
             <Search/> 
             <Cards go={go}/>
-            <FooterMain go={go}/>
+            <FooterMain go={go} selectedText="search"/>
         </Panel>
 	);
   };
