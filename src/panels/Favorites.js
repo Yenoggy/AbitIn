@@ -10,7 +10,6 @@ import PropTypes from 'prop-types';
 import HeaderSlider from '../components/HeaderSlider';
 import FooterMain from '../components/FooterMain';
 
-import BigStar from '../img/bigstar.svg';
 
 import { Icon20StarCircleFillGray } from '@vkontakte/icons';
 
