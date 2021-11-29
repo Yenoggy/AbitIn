@@ -5,12 +5,15 @@ import {
 } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 
-import { Icon20SlidersOutline} from '@vkontakte/icons';
+import PropTypes from "prop-types";
 
-const HeaderSlider = () => {
+import { Icon20SlidersOutline} from '@vkontakte/icons';
+import Filters from '../components/Filters';
+
+const HeaderSlider = ({changePopup}) => {
 	return (
         <PanelHeader
-        left={<PanelHeaderButton><Icon20SlidersOutline/></PanelHeaderButton>}
+        left={<PanelHeaderButton onClick={() => changePopup(Filters)}><Icon20SlidersOutline/></PanelHeaderButton>}
         >
         AbitIn
         </PanelHeader>
@@ -18,4 +21,7 @@ const HeaderSlider = () => {
   };
 
   
+HeaderSlider.propTypes = {
+  changePopup: PropTypes.func.isRequired,
+};  
 export default HeaderSlider;

@@ -50,15 +50,17 @@ const App = () => {
 		setActivePanel(e.currentTarget.dataset.to);
 		console.log(e.currentTarget.dataset.to);
 	};
+	const changePopup = popup => setPopout(popup);
+
 
 	return (
 	  <AppRoot>
 		<SplitLayout header={<PanelHeader separator={false} />}>
 		  <SplitCol spaced={viewWidth && viewWidth > ViewWidth.MOBILE}>
 		  	<View activePanel={activePanel} popout={popout}>
-				<Main id="main" go={go}/>
+				<Main id="main" go={go} changePopup={changePopup}/>
 				<CardInfo id="card" go={go}/>
-				<Favorites id="favorites" go={go}/>
+				<Favorites id="favorites" go={go} changePopup={changePopup}/>
 			</View>
 		  </SplitCol>
 		</SplitLayout>
