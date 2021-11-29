@@ -10,10 +10,10 @@ import PropTypes from "prop-types";
 import { Icon20SlidersOutline} from '@vkontakte/icons';
 import Filters from '../components/Filters';
 
-const HeaderSlider = ({changePopup}) => {
+const HeaderSlider = ({changePopout}) => {
 	return (
         <PanelHeader
-        left={<PanelHeaderButton onClick={() => changePopup(Filters)}><Icon20SlidersOutline/></PanelHeaderButton>}
+        left={<PanelHeaderButton onClick={() => changePopout(Filters)}><Icon20SlidersOutline/></PanelHeaderButton>}
         >
         AbitIn
         </PanelHeader>
@@ -22,6 +22,6 @@ const HeaderSlider = ({changePopup}) => {
 
   
 HeaderSlider.propTypes = {
-  changePopup: PropTypes.func.isRequired,
+  changePopout: PropTypes.func.isRequired,
 };  
 export default HeaderSlider;
