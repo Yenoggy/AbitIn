@@ -22,7 +22,7 @@ import '@vkontakte/vkui/dist/vkui.css';
 
 import Main from './panels/Main';
 import CardInfo from './panels/CardInfo';
-import Favorites from './panels/CardInfo';
+import Favorites from './panels/Favorites';
 
 const App = () => {
 	const { viewWidth } = useAdaptivity();
@@ -48,6 +48,7 @@ const App = () => {
 
 	const go = e => {
 		setActivePanel(e.currentTarget.dataset.to);
+		console.log(e.currentTarget.dataset.to);
 	};
 
 	return (
