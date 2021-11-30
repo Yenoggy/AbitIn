@@ -11,10 +11,10 @@ import HeaderSlider from '../components/HeaderSlider';
 import Cards from '../components/Cards';
 import FooterMain from '../components/FooterMain';
 
-const Main = ({id, go, changePopout}) => {
+const Main = ({id, go, setActiveModal}) => {
 	return (
         <Panel id={id}>
-            <HeaderSlider changePopout={changePopout}/>
+            <HeaderSlider setActiveModal={setActiveModal}/>
             <Search/> 
             <Cards go={go}/>
             <FooterMain go={go} selectedText="search"/>
@@ -25,7 +25,7 @@ const Main = ({id, go, changePopout}) => {
 Main.propTypes = {
 	id: PropTypes.string.isRequired,
 	go: PropTypes.func.isRequired,
-  changePopout: PropTypes.func.isRequired,
+  setActiveModal: PropTypes.func.isRequired,
 }; 
   
 export default Main;

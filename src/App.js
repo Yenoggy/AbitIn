@@ -8,12 +8,14 @@ import {
 	ViewWidth,
 	View,
 	Panel,
+	ModalRoot,
 	PanelHeader,
 	PanelHeaderButton,
 	ScreenSpinner,
 	CardGrid,
 	ContentCard,
 	Group,
+	ModalPage,
 	Search,
 	Tabbar,
 	TabbarItem,
@@ -24,11 +26,21 @@ import Main from './panels/Main';
 import CardInfo from './panels/CardInfo';
 import Favorites from './panels/Favorites';
 
+import Filters from './Modals/Filters';
+import SelectCity from './Modals/SelectCity';
+
+global.vkToken = "945da995945da995945da99579942aac309945d945da995f407bdae690781dd5ff5309e";
+
 const App = () => {
 	const { viewWidth } = useAdaptivity();
+	const isMobile = viewWidth <= ViewWidth.MOBILE;
+
 	const [activePanel, setActivePanel] = useState('main');
 	const [fetchedUser, setUser] = useState(null);
+
 	const [popout, setPopout] = useState(<ScreenSpinner size='large' />);
+	const [modalHistory, setModalHistory] = useState([]);
+	const [activeModal, setActiveModal] = useState(null);
 
 	useEffect(() => {
 		bridge.subscribe(({ detail: { type, data }}) => {
@@ -50,17 +62,43 @@ const App = () => {
 		setActivePanel(e.currentTarget.dataset.to);
 		console.log(e.currentTarget.dataset.to);
 	};
-	const changePopout = popup => setPopout(popup);
+	const _setActiveModal = e => {
+		const modalName = e.currentTarget.dataset.modal;
 
+		let _modalHistory = modalHistory ? [...modalHistory] : [];
+
+		if (modalName === null) {
+			_modalHistory = [];
+		  } else if (_modalHistory.indexOf(modalName) !== -1) {
+			_modalHistory = _modalHistory.splice(0, modalHistory.indexOf(modalName) + 1);
+		  } else {
+			_modalHistory.push(modalName);
+		}
+
+		setModalHistory(..._modalHistory);
+		setActiveModal(modalName);
+		console.log("modalName = ", modalName);
+	}
+
+	const modalBack = () => {
+		setActiveModal(modalHistory[modalHistory.length - 2]);
+	};
+
+	const modal = (
+		<ModalRoot activeModal={activeModal}>
+			<Filters isMobile={isMobile} setActiveModal={_setActiveModal} modalBack={modalBack}/>
+			<SelectCity isMobile={isMobile} setActiveModal={_setActiveModal} modalBack={modalBack}/>
+		</ModalRoot>
+	);
 
 	return (
 	  <AppRoot>
-		<SplitLayout header={<PanelHeader separator={false} />}>
+		<SplitLayout modal={modal} header={<PanelHeader separator={false}/>}>
 		  <SplitCol spaced={viewWidth && viewWidth > ViewWidth.MOBILE}>
 		  	<View activePanel={activePanel} popout={popout}>
-				<Main id="main" go={go} changePopout={changePopout}/>
+				<Main id="main" go={go} setActiveModal={_setActiveModal}/>
 				<CardInfo id="card" go={go}/>
-				<Favorites id="favorites" go={go} changePopout={changePopout}/>
+				<Favorites id="favorites" go={go} setActiveModal={_setActiveModal}/>
 			</View>
 		  </SplitCol>
 		</SplitLayout>

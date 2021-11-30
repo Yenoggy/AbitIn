@@ -14,12 +14,12 @@ import FooterMain from '../components/FooterMain';
 import { Icon20StarCircleFillGray } from '@vkontakte/icons';
 
 
-const Favorites = ({id, go, changePopout}) => {
+const Favorites = ({id, go, setActiveModal}) => {
     const [isHaveFavorites, setFavorites] = useState(false);
 
 	return (
       <Panel id={id}>
-          <HeaderSlider changePopout={changePopout}/>
+          <HeaderSlider setActiveModal={setActiveModal}/>
           <Search/>
           {!isHaveFavorites &&
             <Placeholder
@@ -37,7 +37,7 @@ const Favorites = ({id, go, changePopout}) => {
 Favorites.propTypes = {
     id: PropTypes.string.isRequired,
     go: PropTypes.func.isRequired,
-    changePopout: PropTypes.func.isRequired,
+    setActiveModal: PropTypes.func.isRequired,
 }; 
 
 export default Favorites;
