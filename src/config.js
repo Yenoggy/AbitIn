@@ -6,6 +6,6 @@ global.ROUTES = {
 };
 
 export const STORAGE_KEYS = {
-	HaveFavorites: "false",
+	isHaveFavorites: "false",
 	Favorites: "[]",
 };

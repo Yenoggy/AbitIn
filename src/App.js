@@ -27,9 +27,10 @@ const App = () => {
 	const { viewWidth } = useAdaptivity();
 	const isMobile = viewWidth <= ViewWidth.MOBILE;
 
-	const [activePanel, setActivePanel] = useState(ROUTES.MAIN);
 	const [fetchedUser, setUser] = useState(null);
+	const [userFavorites, setUserFavorites] = useState([]);
 
+	const [activePanel, setActivePanel] = useState(ROUTES.MAIN);
 	const [popout, setPopout] = useState(<ScreenSpinner size='large' />);
 	const [modalHistory, setModalHistory] = useState([]);
 	const [activeModal, setActiveModal] = useState(null);
