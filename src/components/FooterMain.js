@@ -14,9 +14,9 @@ const FooterMain = ({go, selectedText}) => {
     return (
           <Tabbar style={{position: ''}} itemsLayout="vertical">
           <TabbarItem selected={selectedText === 'search'} 
-          data-to="main" onClick={go} text="Поиск"><Icon24Search/></TabbarItem>
+          data-to={ROUTES.MAIN} onClick={go} text="Поиск"><Icon24Search/></TabbarItem>
 
-          <TabbarItem selected={selectedText === 'favorites'} data-to="favorites" onClick={go} text="Избранное"><Icon24FavoriteOutline/></TabbarItem>
+          <TabbarItem selected={selectedText === ROUTES.FAVORITES} data-to={ROUTES.FAVORITES} onClick={go} text="Избранное"><Icon24FavoriteOutline/></TabbarItem>
           </Tabbar>
     );
   };

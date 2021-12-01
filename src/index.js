@@ -1,5 +1,8 @@
 import App from "./App";
 
+import "core-js/features/map";
+import "core-js/features/set";
+import bridge from "@vkontakte/vk-bridge";
 
 import React from "react";
 import ReactDOM from "react-dom";
@@ -20,7 +23,8 @@ import {
 } from "@vkontakte/vkui";
 import "@vkontakte/vkui/dist/vkui.css";
  
- 
+bridge.send("VKWebAppInit");
+
 ReactDOM.render(
   <ConfigProvider>
     <AdaptivityProvider>

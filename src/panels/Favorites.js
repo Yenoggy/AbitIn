@@ -29,7 +29,7 @@ const Favorites = ({id, go, setActiveModal}) => {
                 Нет избранных вузов
             </Placeholder>
           }
-          <FooterMain go={go} selectedText="favorites" />
+          <FooterMain go={go} selectedText={ROUTES.FAVORITES} />
       </Panel>
 	);
   };
