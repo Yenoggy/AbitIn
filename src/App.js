@@ -7,18 +7,9 @@ import {
 	SplitCol,
 	ViewWidth,
 	View,
-	Panel,
 	ModalRoot,
 	PanelHeader,
-	PanelHeaderButton,
 	ScreenSpinner,
-	CardGrid,
-	ContentCard,
-	Group,
-	ModalPage,
-	Search,
-	Tabbar,
-	TabbarItem,
 } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 
@@ -29,12 +20,8 @@ import Favorites from './panels/Favorites';
 import Filters from './Modals/Filters';
 import SelectCity from './Modals/SelectCity';
 
-global.vkToken = "945da995945da995945da99579942aac309945d945da995f407bdae690781dd5ff5309e";
-global.ROUTES = {
-	MAIN: "main",
-	CARDINFO:"card-info",
-	FAVORITES: "favorites",
-};
+import {STORAGE_KEYS} from './config';
+
 
 const App = () => {
 	const { viewWidth } = useAdaptivity();
