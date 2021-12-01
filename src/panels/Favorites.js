@@ -28,7 +28,7 @@ const Favorites = ({id, go, setActiveModal, favorites}) => {
                 Нет избранных вузов
             </Placeholder>
           }
-          {favorites.length &&
+          {favorites.length > 0 &&
             <Cards go={go} cards={favorites}/>
           }
           <FooterMain go={go} selectedText={ROUTES.FAVORITES} />
