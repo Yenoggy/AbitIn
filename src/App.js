@@ -45,6 +45,29 @@ const App = () => {
 		});
 		async function fetchData() {
 			const user = await bridge.send('VKWebAppGetUserInfo');
+			const storageData = await bridge.send('VKWebAppStorageGet', {
+				keys: Object.keys(STORAGE_KEYS)
+			});
+
+			const data = [];
+			storageData.keys.forEach(({key, value}) => {
+				try {
+					data[key] = value ? JSON.parse(value) : {};
+
+					switch(key) {
+						case STORAGE_KEYS.FAVORITES: {
+							if (data[key]) {
+								if (!data[key].isArray()) data[key] = [];
+								setUserFavorites(...data[key]);
+							}
+							break;
+						}
+					}
+				} catch (error) {
+					console.log(error);
+				}
+			});
+
 			setUser(user);
 			setPopout(null);
 		}
@@ -91,7 +114,7 @@ const App = () => {
 		  	<View activePanel={activePanel} popout={popout}>
 				<Main id={ROUTES.MAIN} go={go} setActiveModal={_setActiveModal}/>
 				<CardInfo id={ROUTES.CARDINFO} go={go}/>
-				<Favorites id={ROUTES.FAVORITES} go={go} setActiveModal={_setActiveModal}/>
+				<Favorites id={ROUTES.FAVORITES} go={go} setActiveModal={_setActiveModal} favorites={userFavorites}/>
 			</View>
 		  </SplitCol>
 		</SplitLayout>
