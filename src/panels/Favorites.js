@@ -10,9 +10,9 @@ import PropTypes from 'prop-types';
 import HeaderSlider from '../components/HeaderSlider';
 import FooterMain from '../components/FooterMain';
 
-
 import { Icon20StarCircleFillGray } from '@vkontakte/icons';
 
+import Cards from '../components/Cards';
 
 const Favorites = ({id, go, setActiveModal, favorites}) => {
 
@@ -27,6 +27,9 @@ const Favorites = ({id, go, setActiveModal, favorites}) => {
                 >
                 Нет избранных вузов
             </Placeholder>
+          }
+          {favorites.length &&
+            <Cards go={go} cards={favorites}/>
           }
           <FooterMain go={go} selectedText={ROUTES.FAVORITES} />
       </Panel>
