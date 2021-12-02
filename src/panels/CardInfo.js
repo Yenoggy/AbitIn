@@ -82,11 +82,16 @@ const CardInfo = ({id, go, selectedCard}) => {
 					<Separator style={{ margin: '12px 0' }} />
 					<Subhead weight="bold" style={{ marginBottom: 12 }}>Полезные ссылки</Subhead>
 					
-					<Div>
-						<Link href="https://google.com" target="_blank">Страница факультетов на сайте</Link>
-					</Div>
-
+					{card.links && card.linkNames && (
+						<Div>
+							{card.links.map((link, index) => (
+								<Link key={index} href={link} target="_blank">{card.linkNames[index]}</Link>
+							))}
+						</Div>
+					)}
+					<Separator style={{ margin: '12px 0' }} />
 				</Div>
+
 			</Group>
             <FooterMain go={go} selectedText="search"/>
         </Panel>
