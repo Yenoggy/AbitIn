@@ -22,13 +22,18 @@ import SelectCity from './Modals/SelectCity';
 
 import {STORAGE_KEYS} from './config';
 
+import HeaderSlider from './components/HeaderSlider';
+
 
 const App = () => {
-	const { viewWidth } = useAdaptivity();
+	const { viewWidth, platform, VKCOM } = useAdaptivity();
 	const isMobile = viewWidth <= ViewWidth.MOBILE;
+	const hasHeader = platform !== VKCOM;
+	const isDesktop = viewWidth >= ViewWidth.SMALL_TABLET;
 
 	const [fetchedUser, setUser] = useState(null);
 	const [userFavorites, setUserFavorites] = useState([]);
+	const [selectedCard, setSelectedCard] = useState(-1);
 
 	const [activePanel, setActivePanel] = useState(ROUTES.MAIN);
 	const [popout, setPopout] = useState(<ScreenSpinner size='large' />);
@@ -109,11 +114,14 @@ const App = () => {
 
 	return (
 	  <AppRoot>
-		<SplitLayout modal={modal} header={<PanelHeader separator={false}/>}>
-		  <SplitCol spaced={viewWidth && viewWidth > ViewWidth.MOBILE}>
+		<SplitLayout modal={modal} style={{ justifyContent: "center" }} header={hasHeader && <PanelHeader separator={false} />}>
+		  <SplitCol           animate={!isDesktop}
+          spaced={isDesktop}
+          width={isDesktop ? '560px' : '100%'}
+          maxWidth={isDesktop ? '560px' : '100%'}>
 		  	<View activePanel={activePanel} popout={popout}>
-				<Main id={ROUTES.MAIN} go={go} setActiveModal={_setActiveModal}/>
-				<CardInfo id={ROUTES.CARDINFO} go={go}/>
+				<Main id={ROUTES.MAIN} go={go} setActiveModal={_setActiveModal} setSelectedCard={setSelectedCard}/>
+				<CardInfo id={ROUTES.CARDINFO} go={go} selectedCard={selectedCard}/>
 				<Favorites id={ROUTES.FAVORITES} go={go} setActiveModal={_setActiveModal} favorites={userFavorites}/>
 			</View>
 		  </SplitCol>

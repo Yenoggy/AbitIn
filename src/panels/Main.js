@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { 
 	Panel,
 	Search,
+  Group,
 } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 
@@ -11,7 +12,7 @@ import HeaderSlider from '../components/HeaderSlider';
 import Cards from '../components/Cards';
 import FooterMain from '../components/FooterMain';
 
-const Main = ({id, go, setActiveModal}) => {
+const Main = ({id, go, setActiveModal, setSelectedCard}) => {
     const [cards, setCards] = useState([
       {
           id: 0,
@@ -47,11 +48,13 @@ const Main = ({id, go, setActiveModal}) => {
   }, []); */
 
 	return (
-        <Panel id={id}>
+        <Panel id={id} style={{ justifyContent: "center" }}>
             <HeaderSlider setActiveModal={setActiveModal}/>
-            <Search/> 
-            <Cards go={go} cards={cards}/>
-            <FooterMain go={go} selectedText="search"/>
+            <Group>
+              <Search/> 
+              <Cards go={go} cards={cards} setSelectedCard={setSelectedCard}/>
+              <FooterMain go={go} selectedText="search"/>
+            </Group>
         </Panel>
 	);
   };
@@ -60,6 +63,7 @@ Main.propTypes = {
 	id: PropTypes.string.isRequired,
 	go: PropTypes.func.isRequired,
   setActiveModal: PropTypes.func.isRequired,
+  setSelectedCard: PropTypes.func.isRequired,
 }; 
   
 export default Main;

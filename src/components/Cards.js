@@ -8,7 +8,7 @@ import '@vkontakte/vkui/dist/vkui.css';
 import PropTypes from 'prop-types';
 import SmallCard from './SmallCard';
 
-const Cards = ({go, cards}) => {
+const Cards = ({go, cards, setSelectedCard}) => {
 
 	return (
         <Group>
@@ -18,7 +18,7 @@ const Cards = ({go, cards}) => {
                     <div key={index}>
                         <SmallCard go={go}
                             id={card.id} img={card.img} name={card.name}
-                            description={card.description} address={card.address}
+                            description={card.description} address={card.address} to={ROUTES.CARDINFO} setSelectedCard={setSelectedCard} 
                         />
                     </div>
                 ))}
@@ -33,5 +33,6 @@ const Cards = ({go, cards}) => {
 Cards.propTypes = {
 	go: PropTypes.func.isRequired,
     cards: PropTypes.array.isRequired,
+    setSelectedCard: PropTypes.func.isRequired,
 };  
 export default Cards;
