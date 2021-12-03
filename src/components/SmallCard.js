@@ -5,13 +5,13 @@ import {
 import '@vkontakte/vkui/dist/vkui.css';
 import PropTypes from 'prop-types';
 
-const SmallCard = ({id, img, name, description, address, go, to, setSelectedCard}) => {
+const SmallCard = ({id, img, name, description, address, go, toOnClick, setSelectedCard}) => {
     return (
-        <div data-to={to}>
-            <ContentCard data-to={to} onClick={e => {
-                if (to !== ROUTES.CARDINFO) return;
+        <div data-to={toOnClick}>
+            <ContentCard data-to={toOnClick} onClick={e => {
+                if (toOnClick !== ROUTES.CARDINFO) return;
                 setSelectedCard(id);
-                e.currentTarget.dataset.to = to; // удалить
+                e.currentTarget.dataset.to = toOnClick; // удалить
                 go(e);
             }
             }

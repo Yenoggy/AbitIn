@@ -9,10 +9,10 @@ import '@vkontakte/vkui/dist/vkui.css';
 
 import PropTypes from "prop-types";
 
-const HeaderBack = ({go}) => {
+const HeaderBack = ({go, panelBack}) => {
 
     return (
-        <PanelHeader separator={false} left={<PanelHeaderBack data-to="main" onClick={go} />}>
+        <PanelHeader separator={false} left={<PanelHeaderBack onClick={panelBack} />}>
             AbitIn
         </PanelHeader>
     );
@@ -20,6 +20,7 @@ const HeaderBack = ({go}) => {
 
 HeaderBack.propTypes = {
     go: PropTypes.func.isRequired,
+    panelBack: PropTypes.func.isRequired,
 };
 
 export default HeaderBack;

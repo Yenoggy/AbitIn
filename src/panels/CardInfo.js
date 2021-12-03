@@ -26,6 +26,7 @@ import {
 	CustomSelectOption,
 	Avatar,
 	Subhead,
+	Spacing,
 	Link
 } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
@@ -36,7 +37,7 @@ import FooterMain from '../components/FooterMain';
 
 import { Icon24CheckSquareOutline } from '@vkontakte/icons';
 import { Icon24CheckBoxOff } from '@vkontakte/icons';
-const CardInfo = ({id, go, selectedCard}) => {
+const CardInfo = ({id, go, selectedCard, panelBack}) => {
 	const [card, setCardData] = useState({
 		name: "Университет ИТМО",
 		img: "https://avatars.mds.yandex.net/i?id=a7709dbc6ddecde207a68c6286a03c9f-5607498-images-thumbs&n=13",
@@ -59,7 +60,7 @@ const CardInfo = ({id, go, selectedCard}) => {
 	})
 	return (
         <Panel id={id}>
-			<HeaderBack go={go}/>
+			<HeaderBack go={go} panelBack={panelBack}/>
 			<Group>
 				<Div>
 					<SmallCard id={selectedCard} img={card.img} name={card.name}/>
@@ -85,7 +86,10 @@ const CardInfo = ({id, go, selectedCard}) => {
 					{card.links && card.linkNames && (
 						<Div>
 							{card.links.map((link, index) => (
-								<Link key={index} href={link} target="_blank">{card.linkNames[index]}</Link>
+								<Link key={index} href={link} target="_blank">
+									{card.linkNames[index]}
+									<Spacing />
+								</Link>
 							))}
 						</Div>
 					)}
@@ -102,6 +106,7 @@ const CardInfo = ({id, go, selectedCard}) => {
 	id: PropTypes.string.isRequired,
 	go: PropTypes.func.isRequired,
 	selectedCard: PropTypes.number.isRequired,
+	panelBack: PropTypes.func.isRequired,
 }; 
 
 export default CardInfo;

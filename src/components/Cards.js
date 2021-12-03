@@ -18,7 +18,7 @@ const Cards = ({go, cards, setSelectedCard}) => {
                     <div key={index}>
                         <SmallCard go={go}
                             id={card.id} img={card.img} name={card.name}
-                            description={card.description} address={card.address} to={ROUTES.CARDINFO} setSelectedCard={setSelectedCard} 
+                            description={card.description} address={card.address} toOnClick={ROUTES.CARDINFO} setSelectedCard={setSelectedCard} 
                         />
                     </div>
                 ))}

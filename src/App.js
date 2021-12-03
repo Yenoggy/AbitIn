@@ -37,8 +37,11 @@ const App = () => {
 
 	const [activePanel, setActivePanel] = useState(ROUTES.MAIN);
 	const [popout, setPopout] = useState(<ScreenSpinner size='large' />);
-	const [modalHistory, setModalHistory] = useState([]);
 	const [activeModal, setActiveModal] = useState(null);
+
+	const [panelHistory, setPanelHistory] = useState([]);
+	const [modalHistory, setModalHistory] = useState([]);
+
 
 	useEffect(() => {
 		bridge.subscribe(({ detail: { type, data }}) => {
@@ -79,10 +82,6 @@ const App = () => {
 		fetchData();
 	}, []);
 
-	const go = e => {
-		setActivePanel(e.currentTarget.dataset.to);
-		console.log(e.currentTarget.dataset.to);
-	};
 	const _setActiveModal = e => {
 		const modalName = e.currentTarget.dataset.modal;
 
@@ -99,10 +98,32 @@ const App = () => {
 		setModalHistory(..._modalHistory);
 		setActiveModal(modalName);
 		console.log("modalName = ", modalName);
-	}
+	};
+
+	const go = e => {
+		const panelId = e.currentTarget.dataset.to;
+
+		let _panelHistory = panelHistory ? [...panelHistory] : [];
+
+		if (panelId === null) {
+			_panelHistory = [];
+		  } else if (_panelHistory.indexOf(panelId) !== -1) {
+			_panelHistory = _panelHistory.splice(0, panelHistory.indexOf(panelId) + 1);
+		  } else {
+			_panelHistory.push(panelId);
+		}
+
+		setPanelHistory(..._panelHistory);
+		setActivePanel(panelId);
+		console.log("panelId = ", panelId);
+	};
 
 	const modalBack = () => {
 		setActiveModal(modalHistory[modalHistory.length - 2]);
+	};
+
+	const panelBack = () => {
+		setActivePanel(panelHistory[panelHistory.length - 2]);
 	};
 
 	const modal = (
@@ -121,7 +142,7 @@ const App = () => {
           maxWidth={isDesktop ? '560px' : '100%'}>
 		  	<View activePanel={activePanel} popout={popout}>
 				<Main id={ROUTES.MAIN} go={go} setActiveModal={_setActiveModal} setSelectedCard={setSelectedCard}/>
-				<CardInfo id={ROUTES.CARDINFO} go={go} selectedCard={selectedCard}/>
+				<CardInfo id={ROUTES.CARDINFO} go={go} selectedCard={selectedCard} panelBack={panelBack}/>
 				<Favorites id={ROUTES.FAVORITES} go={go} setActiveModal={_setActiveModal} favorites={userFavorites}/>
 			</View>
 		  </SplitCol>
