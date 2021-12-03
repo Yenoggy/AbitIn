@@ -63,37 +63,37 @@ const CardInfo = ({id, go, selectedCard, panelBack}) => {
 			<HeaderBack go={go} panelBack={panelBack}/>
 			<Group>
 				<Div>
+
 					<SmallCard id={selectedCard} img={card.img} name={card.name}/>
-					<Separator style={{ margin: '12px 0' }} />
-						<Text weight="regular" style={{ marginBottom: 12}}>Обучение от {card.costFrom} ₽ в год</Text>
-					<Separator style={{ margin: '12px 0' }} />
-					
-					{card.milDepartment ?
-						<CustomSelectOption disabled={true} style={{ background: 'var(--background_content)' }} after={<Icon24CheckSquareOutline/>}>Военная кафедра</CustomSelectOption>
-						:
-						<CustomSelectOption disabled={true} style={{ background: 'var(--background_content)' }} after={<Icon24CheckBoxOff/>}>Военная кафедра</CustomSelectOption>
-					}
+					<Spacing separator size={16} />
+					<Caption weight="regular" style={{ marginBottom: 12 }}>
+						Обучение от {card.costFrom} ₽ в год
+					</Caption>
+					<Spacing separator size={12} />
+					<Group>
+						{card.milDepartment ?
+							<CustomSelectOption style={{ background: 'var(--background_content)' }} after={<Icon24CheckSquareOutline/>}>Военная кафедра</CustomSelectOption>
+							:
+							<CustomSelectOption style={{ background: 'var(--background_content)' }} after={<Icon24CheckBoxOff/>}>Военная кафедра</CustomSelectOption>
+						}
 
-					{card.hostel ?
-						<CustomSelectOption disabled={true} style={{ background: 'var(--background_content)' }} after={<Icon24CheckSquareOutline/>}>Общежитие</CustomSelectOption>
-						:
-						<CustomSelectOption disabled={true} style={{ background: 'var(--background_content)' }} after={<Icon24CheckBoxOff/>}>Общежитие</CustomSelectOption>
-					}
-
-					<Separator style={{ margin: '12px 0' }} />
-					<Subhead weight="bold" style={{ marginBottom: 12 }}>Полезные ссылки</Subhead>
-					
-					{card.links && card.linkNames && (
-						<Div>
-							{card.links.map((link, index) => (
+						{card.hostel ?
+							<CustomSelectOption style={{ background: 'var(--background_content)' }} after={<Icon24CheckSquareOutline/>}>Общежитие</CustomSelectOption>
+							:
+							<CustomSelectOption style={{ background: 'var(--background_content)' }} after={<Icon24CheckBoxOff/>}>Общежитие</CustomSelectOption>
+						}
+					</Group>
+					<Group>
+						<Subhead weight="bold" style={{ marginBottom: 12 }}>Полезные ссылки</Subhead>
+						{card.links && card.linkNames && card.links.map((link, index) => (
 								<Link key={index} href={link} target="_blank">
 									{card.linkNames[index]}
 									<Spacing />
 								</Link>
 							))}
-						</Div>
-					)}
-					<Separator style={{ margin: '12px 0' }} />
+					</Group>
+					
+					<Spacing separator="bottom" size={12} />
 				</Div>
 
 			</Group>
