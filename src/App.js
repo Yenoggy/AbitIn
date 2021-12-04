@@ -17,12 +17,11 @@ import Main from './panels/Main';
 import CardInfo from './panels/CardInfo';
 import Favorites from './panels/Favorites';
 
+import {STORAGE_KEYS} from './config';
+
 import Filters from './Modals/Filters';
 import SelectCity from './Modals/SelectCity';
 
-import {STORAGE_KEYS} from './config';
-
-import HeaderSlider from './components/HeaderSlider';
 
 
 const App = () => {
@@ -128,8 +127,8 @@ const App = () => {
 
 	const modal = (
 		<ModalRoot activeModal={activeModal}>
-			<Filters isMobile={isMobile} setActiveModal={_setActiveModal} modalBack={modalBack}/>
-			<SelectCity isMobile={isMobile} setActiveModal={_setActiveModal} modalBack={modalBack}/>
+			<Filters id={MODALS.FILTERS} isMobile={isMobile} setActiveModal={_setActiveModal} modalBack={modalBack}/>
+			<SelectCity id={MODALS.SELECTCITY} isMobile={isMobile} setActiveModal={_setActiveModal} modalBack={modalBack}/>
 		</ModalRoot>
 	);
 

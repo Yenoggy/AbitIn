@@ -4,6 +4,10 @@ global.ROUTES = {
 	CARDINFO:"card-info",
 	FAVORITES: "favorites",
 };
+global.MODALS = {
+	FILTERS: "filters",
+	SELECTCITY: "select-city",
+};
 
 export const STORAGE_KEYS = {
 	FAVORITES: "[]",

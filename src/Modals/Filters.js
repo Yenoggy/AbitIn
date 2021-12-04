@@ -9,21 +9,27 @@ import {
     FormItem,
     Group,
     SelectMimicry,
+    Cell,
+    Switch,
     Input,
     SelectModal,
+    FormLayout,
+    FormLayoutGroup,
+    IconButton,
     Headline,
-    Select
+    Select,
+    Div,
 } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 import PropTypes from 'prop-types';
-
-const Filters = ({isMobile, setActiveModal, modalBack}) => {
+import { Icon16Clear } from '@vkontakte/icons';
+const Filters = ({id, isMobile, setActiveModal, modalBack}) => {
     const textInput = React.createRef();
     const clear = () => textInput.current.value = '';
 
 	return (
         <ModalPage
-            id="filters"
+            id={id}
             onClose={modalBack}
             header={
             <ModalPageHeader
@@ -35,41 +41,45 @@ const Filters = ({isMobile, setActiveModal, modalBack}) => {
             }
         >
             <Group>
-            <FormItem top="Специализация">
-                <Input getRef={textInput} type="text" defaultValue="Специализация" after={<IconButton hoverMode="opacity" aria-label="Очистить поле" onClick={clear}><Icon16Clear/></IconButton>} />
-            </FormItem>
-
-            <FormItem top="Город">            
-                <SelectMimicry placeholder="Выбрать город" data-modal="select-city" onClick={setActiveModal} />
-            </FormItem>
-
-            <FormItem top="Баллы">
-                <FormLayoutGroup mode="horizontal">
-                    <FormItem top="Минимальные">            
-                        <Input />
+                <FormLayout>
+                    <FormItem top="Специализация">
+                        <Input getRef={textInput} type="text" defaultValue="Специализация" after={<IconButton hoverMode="opacity" aria-label="Очистить поле" onClick={clear}><Icon16Clear/></IconButton>} />
                     </FormItem>
-                    <FormItem top="Средние">            
-                        <Input />
+
+                    <FormItem top="Город">            
+                        <SelectMimicry placeholder="Выбрать город" data-modal="select-city" onClick={setActiveModal} />
                     </FormItem>
-                </FormLayoutGroup>
-            </FormItem>
 
-            <FormItem top="Дополнительно">
-                <Cell role={null} defaultChecked disabled after={<Switch aria-label="Военная кафедра" />}>
-                    Военная кафедра
-                </Cell>
-                <Cell role={null} defaultChecked disabled after={<Switch defaultChecked aria-label="Общежитие" />}>
-                    Общежитие
-                </Cell>
-            </FormItem>
+                    <FormItem top="Баллы">
+                        <FormLayoutGroup mode="horizontal">
+                            <FormItem top="Минимальные">            
+                                <Input />
+                            </FormItem>
+                            <FormItem top="Средние">            
+                                <Input />
+                            </FormItem>
+                        </FormLayoutGroup>
+                    </FormItem>
 
-
+                    <FormItem top="Дополнительно">
+                    <Div>
+                            <Cell role={null} defaultChecked disabled after={<Switch aria-label="Военная кафедра" />}>
+                                Военная кафедра
+                            </Cell>
+                            <Cell role={null} defaultChecked disabled after={<Switch defaultChecked aria-label="Общежитие" />}>
+                                Общежитие
+                            </Cell>
+                    </Div>
+                    </FormItem>
+                </FormLayout>
+                
             </Group>
         </ModalPage>
     );
   };
 
 Filters.propTypes = {
+    id: PropTypes.string.isRequired,
     isMobile: PropTypes.bool.isRequired,
     setActiveModal: PropTypes.func.isRequired,
     modalBack: PropTypes.func.isRequired,
