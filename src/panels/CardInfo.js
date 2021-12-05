@@ -41,11 +41,13 @@ const CardInfo = ({id, go, selectedCard, panelBack}) => {
 	const [card, setCardData] = useState({
 		name: "Университет ИТМО",
 		img: "https://avatars.mds.yandex.net/i?id=a7709dbc6ddecde207a68c6286a03c9f-5607498-images-thumbs&n=13",
-		costFrom: '100 000',
+		mincost: '100 000',
 		milDepartment: true, // Военная кафедра
-		hostel: false, // Общежитие
-		linkNames: ["Страница факультетов на сайте", "Основная группа ВК"],
-		links:["https://www.figma.com/file/6J1hEjVnvxqC7MCjwkBVM0/AbitIn-main?node-id=82%3A813", "https://github.com/nodenwwsfww/AbitIn/blob/main/VK_AbitIn/src/panels/Persik.js"],
+		hostel: false, // Общежитие,
+		links: {
+			"Страница факультетов на сайте": "https://www.figma.com/file/6J1hEjVnvxqC7MCjwkBVM0/AbitIn-main?node-id=82%3A813",
+			"Основная группа ВК": "https://github.com/nodenwwsfww/AbitIn/blob/main/VK_AbitIn/src/panels/Persik.js"
+		},
 	});
 	useEffect(() => {
 		if (selectedCard >= 0) {
@@ -67,7 +69,7 @@ const CardInfo = ({id, go, selectedCard, panelBack}) => {
 					<SmallCard id={selectedCard} img={card.img} name={card.name}/>
 					<Spacing separator size={16} />
 					<Caption weight="regular" style={{ marginBottom: 12 }}>
-						Обучение от {card.costFrom} ₽ в год
+						Обучение от {card.mincost} ₽ в год
 					</Caption>
 					<Spacing separator size={12} />
 					<Group>
@@ -85,12 +87,13 @@ const CardInfo = ({id, go, selectedCard, panelBack}) => {
 					</Group>
 					<Group>
 						<Subhead weight="bold" style={{ marginBottom: 12 }}>Полезные ссылки</Subhead>
-						{card.links && card.linkNames && card.links.map((link, index) => (
-								<Link key={index} href={link} target="_blank">
-									{card.linkNames[index]}
-									<Spacing />
-								</Link>
-							))}
+						{card.links && Object.keys(card.links).map(linkName => {
+							<Link href={card.links[linkName]} target="_blank">
+								{linkName}
+								<Spacing />
+							</Link>
+						})
+						}
 					</Group>
 					
 					<Spacing separator="bottom" size={12} />

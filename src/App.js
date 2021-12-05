@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import ReactDOM from 'react-dom';
 import bridge from '@vkontakte/vk-bridge';
 import { 
 	useAdaptivity,
+	usePlatform,
+	VKCOM,
+	ANDROID,
+	IOS,
 	AppRoot,
 	SplitLayout,
 	SplitCol,
@@ -23,12 +28,13 @@ import Filters from './Modals/Filters';
 import SelectCity from './Modals/SelectCity';
 
 
-
 const App = () => {
-	const { viewWidth, platform, VKCOM } = useAdaptivity();
+
+	const {viewWidth, sizeX} = useAdaptivity();
+	const platform = usePlatform();
 	const isMobile = viewWidth <= ViewWidth.MOBILE;
-	const hasHeader = platform !== VKCOM;
-	const isDesktop = viewWidth >= ViewWidth.SMALL_TABLET;
+
+	const isDesktop = !(viewWidth >= ViewWidth.SMALL_TABLET);
 
 	const [fetchedUser, setUser] = useState(null);
 	const [userFavorites, setUserFavorites] = useState([]);
@@ -43,6 +49,7 @@ const App = () => {
 
 
 	useEffect(() => {
+		console.log(!isDesktop);
 		bridge.subscribe(({ detail: { type, data }}) => {
 			if (type === 'VKWebAppUpdateConfig') {
 				const schemeAttribute = document.createAttribute('scheme');
@@ -123,6 +130,7 @@ const App = () => {
 
 	const panelBack = () => {
 		setActivePanel(panelHistory[panelHistory.length - 2]);
+		console.log("panelnew=", panelHistory[panelHistory.length - 2]);
 	};
 
 	const modal = (
@@ -134,7 +142,7 @@ const App = () => {
 
 	return (
 	  <AppRoot>
-		<SplitLayout modal={modal} style={{ justifyContent: "center" }} header={hasHeader && <PanelHeader separator={false} />}>
+		<SplitLayout modal={modal} style={{ justifyContent: "center" }} header={<PanelHeader separator={false} />}>
 		  <SplitCol           animate={!isDesktop}
           spaced={isDesktop}
           width={isDesktop ? '560px' : '100%'}
@@ -148,9 +156,8 @@ const App = () => {
 		</SplitLayout>
 	  </AppRoot>
 	);
-  };
+};
 
-  
 export default App;
 
   
