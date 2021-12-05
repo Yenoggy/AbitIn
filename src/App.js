@@ -32,9 +32,10 @@ const App = () => {
 
 	const {viewWidth, sizeX} = useAdaptivity();
 	const platform = usePlatform();
-	const isMobile = viewWidth <= ViewWidth.MOBILE;
+	const hasHeader = platform !== VKCOM;
 
-	const isDesktop = !(viewWidth >= ViewWidth.SMALL_TABLET);
+	const isMobile = viewWidth <= ViewWidth.MOBILE;
+	const isDesktop = !(viewWidth >= ViewWidth.TABLET);
 
 	const [fetchedUser, setUser] = useState(null);
 	const [userFavorites, setUserFavorites] = useState([]);
@@ -49,7 +50,7 @@ const App = () => {
 
 
 	useEffect(() => {
-		console.log(!isDesktop);
+		console.log(isDesktop, viewWidth);
 		bridge.subscribe(({ detail: { type, data }}) => {
 			if (type === 'VKWebAppUpdateConfig') {
 				const schemeAttribute = document.createAttribute('scheme');
@@ -142,11 +143,13 @@ const App = () => {
 
 	return (
 	  <AppRoot>
-		<SplitLayout modal={modal} style={{ justifyContent: "center" }} header={<PanelHeader separator={false} />}>
-		  <SplitCol           animate={!isDesktop}
+		<SplitLayout style={{ justifyContent: "center" }} modal={modal} style={{ justifyContent: "center" }} header={hasHeader && <PanelHeader separator={false} />}>
+        <SplitCol
+          animate={!isDesktop}
           spaced={isDesktop}
           width={isDesktop ? '560px' : '100%'}
-          maxWidth={isDesktop ? '560px' : '100%'}>
+          maxWidth={isDesktop ? '560px' : '100%'}
+        >
 		  	<View activePanel={activePanel} popout={popout}>
 				<Main id={ROUTES.MAIN} go={go} setActiveModal={_setActiveModal} setSelectedCard={setSelectedCard}/>
 				<CardInfo id={ROUTES.CARDINFO} go={go} selectedCard={selectedCard} panelBack={panelBack}/>
