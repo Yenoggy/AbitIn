@@ -46,7 +46,7 @@ const App = () => {
 	const [activeModal, setActiveModal] = useState(null);
 
 	const [panelHistory, setPanelHistory] = useState([]);
-	const [modalHistory, setModalHistory] = useState([]);
+	const [modalHistory, setModalHistory] = useState([""]);
 
 
 	useEffect(() => {
@@ -102,7 +102,7 @@ const App = () => {
 			_modalHistory.push(modalName);
 		}
 
-		setModalHistory(..._modalHistory);
+		setModalHistory([..._modalHistory]);
 		setActiveModal(modalName);
 		console.log("modalName = ", modalName);
 	};
@@ -120,12 +120,14 @@ const App = () => {
 			_panelHistory.push(panelId);
 		}
 
-		setPanelHistory(..._panelHistory);
+		setPanelHistory([..._panelHistory]);
 		setActivePanel(panelId);
 		console.log("panelId = ", panelId);
 	};
 
 	const modalBack = () => {
+		const modal = modalHistory[modalHistory.length - 2];
+		if (!modal) return setActiveModal(null);
 		setActiveModal(modalHistory[modalHistory.length - 2]);
 	};
 
@@ -143,7 +145,10 @@ const App = () => {
 
 	return (
 	  <AppRoot>
-		<SplitLayout style={{ justifyContent: "center" }} modal={modal} style={{ justifyContent: "center" }} header={hasHeader && <PanelHeader separator={false} />}>
+		<SplitLayout 
+			style={{ justifyContent: "center" }} 
+			modal={modal} 
+			header={hasHeader && <PanelHeader separator={false} />}>
         <SplitCol
           animate={!isDesktop}
           spaced={isDesktop}

@@ -33,8 +33,8 @@ const Filters = ({id, isMobile, setActiveModal, modalBack}) => {
             onClose={modalBack}
             header={
             <ModalPageHeader
-                left={isMobile && <PanelHeaderClose onClose={modalBack} />}
-                right={<PanelHeaderSubmit onClose={modalBack} />}
+                left={isMobile && <PanelHeaderClose onClick={modalBack} />}
+                right={<PanelHeaderSubmit onClick={modalBack} />}
             >
                 Фильтры
             </ModalPageHeader>

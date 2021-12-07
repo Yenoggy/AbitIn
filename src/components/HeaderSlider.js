@@ -16,7 +16,7 @@ const HeaderSlider = ({setActiveModal}) => {
         <PanelHeader separator={false}
             left={<PanelHeaderButton data-modal="filters"
                                      onClick={setActiveModal}><Icon20SlidersOutline/></PanelHeaderButton>}
-            right={<Avatar size={36} />}
+            right={<Avatar size={100} />}
         >
             AbitIn
         </PanelHeader>
