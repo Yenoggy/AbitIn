@@ -6,12 +6,15 @@ import {
     PanelHeaderSubmit,
     PanelHeaderClose,
     PanelHeaderButton,
+    PanelHeaderBack,
     FormItem,
     Group,
+    PanelHeaderContent,
     SelectMimicry,
     Cell,
     Switch,
     Input,
+    Button,
     SelectModal,
     FormLayout,
     FormLayoutGroup,
@@ -32,14 +35,16 @@ const Filters = ({id, isMobile, setActiveModal, modalBack}) => {
             id={id}
             onClose={modalBack}
             header={
-            <ModalPageHeader
-                left={isMobile && <PanelHeaderClose onClick={modalBack} />}
-                right={<PanelHeaderSubmit onClick={modalBack} />}
-            >
-                Фильтры
-            </ModalPageHeader>
+                <ModalPageHeader
+                    left={isMobile &&
+                        <PanelHeaderContent
+                        status="Очистить"/>
+                    }
+                >
+                    Фильтры
+                </ModalPageHeader>
             }
-        >
+            >
             <Group>
                 <FormLayout>
                     <FormItem top="Специализация">
@@ -71,6 +76,9 @@ const Filters = ({id, isMobile, setActiveModal, modalBack}) => {
                             </Cell>
                     </Div>
                     </FormItem>
+                    <Div>
+                        <Button size="l" stretched style={{ marginRight: 8 }}>+ Показать результаты 3 </Button>
+                    </Div>
                 </FormLayout>
                 
             </Group>
