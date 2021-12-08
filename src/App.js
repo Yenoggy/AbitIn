@@ -45,7 +45,7 @@ const App = () => {
 	const [popout, setPopout] = useState(<ScreenSpinner size='large' />);
 	const [activeModal, setActiveModal] = useState(null);
 
-	const [panelHistory, setPanelHistory] = useState([]);
+	const [panelHistory, setPanelHistory] = useState([ROUTES.MAIN]);
 	const [modalHistory, setModalHistory] = useState([""]);
 
 
