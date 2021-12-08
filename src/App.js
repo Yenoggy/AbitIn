@@ -35,7 +35,7 @@ const App = () => {
 	const hasHeader = platform !== VKCOM;
 
 	const isMobile = viewWidth <= ViewWidth.MOBILE;
-	const isDesktop = !(viewWidth >= ViewWidth.TABLET);
+	const isDesktop = (viewWidth >= ViewWidth.TABLET);
 
 	const [fetchedUser, setUser] = useState(null);
 	const [userFavorites, setUserFavorites] = useState([]);
