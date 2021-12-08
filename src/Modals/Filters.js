@@ -13,22 +13,27 @@ import {
     SelectMimicry,
     Cell,
     Switch,
+    Counter,
     Input,
     Button,
     SelectModal,
     FormLayout,
     FormLayoutGroup,
     IconButton,
+    Spacing,
     Headline,
     Select,
     Div,
 } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 import PropTypes from 'prop-types';
-import { Icon16Clear } from '@vkontakte/icons';
+import { Icon16Clear, Icon16Add } from '@vkontakte/icons';
+import { Icon16ChevronOutline } from '@vkontakte/icons';
 const Filters = ({id, isMobile, setActiveModal, modalBack}) => {
     const textInput = React.createRef();
     const clear = () => textInput.current.value = '';
+
+    const [resultsCount, setResultsCount] = useState(3);
 
 	return (
         <ModalPage
@@ -36,10 +41,8 @@ const Filters = ({id, isMobile, setActiveModal, modalBack}) => {
             onClose={modalBack}
             header={
                 <ModalPageHeader
-                    left={isMobile &&
-                        <PanelHeaderContent
-                        status="Очистить"/>
-                    }
+                    left={isMobile && <PanelHeaderClose onClick={modalBack} />}
+                    right={<PanelHeaderSubmit onClick={modalBack} />}
                 >
                     Фильтры
                 </ModalPageHeader>
@@ -55,16 +58,16 @@ const Filters = ({id, isMobile, setActiveModal, modalBack}) => {
                         <SelectMimicry placeholder="Выбрать город" data-modal="select-city" onClick={setActiveModal} />
                     </FormItem>
 
-                    <FormItem top="Баллы">
-                        <FormLayoutGroup mode="horizontal">
-                            <FormItem top="Минимальные">            
-                                <Input />
-                            </FormItem>
-                            <FormItem top="Средние">            
-                                <Input />
-                            </FormItem>
+                        <FormItem top="Баллы" style={{ marginBottom: '-25px'}}>
+                        </FormItem>
+                        <FormLayoutGroup mode="horizontal" style={{ marginTop: '0'}}>
+                                <FormItem top="Минимальные">            
+                                    <Input />
+                                </FormItem>
+                                <FormItem top="Средние">            
+                                    <Input />
+                                </FormItem>
                         </FormLayoutGroup>
-                    </FormItem>
 
                     <FormItem top="Дополнительно">
                     <Div>
@@ -77,10 +80,21 @@ const Filters = ({id, isMobile, setActiveModal, modalBack}) => {
                     </Div>
                     </FormItem>
                     <Div>
-                        <Button size="l" stretched style={{ marginRight: 8 }}>+ Показать результаты 3 </Button>
+                        <Button 
+                            before={<Icon16Add/>} 
+                            after={ 
+                                <>
+                                    <Counter>
+                                        {resultsCount}
+                                    </Counter>
+                                </>
+                            }
+                            size="l" 
+                            stretched style={{ marginRight: 8 }}>
+                            Показать результаты
+                        </Button>
                     </Div>
                 </FormLayout>
-                
             </Group>
         </ModalPage>
     );

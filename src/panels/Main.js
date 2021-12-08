@@ -16,21 +16,21 @@ const Main = ({id, go, setActiveModal, setSelectedCard}) => {
     const [cards, setCards] = useState([
       {
           id: 0,
-          img: "https://images.unsplash.com/photo-1603928726698-a015a1015d0e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=80",
+          img: "https://news.itmo.ru/images/news/big/p9409.jpg",
           name: "Университет ИТМО", 
           description: "От 100 000 рублей в год", 
           address: "м. Гостиный Двор, 22 мин. пешком Набережная реки Фонтанки, 4, подъезд 7" 
       },
       {
           id: 1,
-          img: "https://images.unsplash.com/photo-1603928726698-a015a1015d0e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=80",
+          img: "https://news.itmo.ru/images/news/big/p9409.jpg",
           name: "Университет ИТМО", 
           description: "От 100 000 рублей в год", 
           address: "м. Гостиный Двор, 22 мин. пешком Набережная реки Фонтанки, 4, подъезд 7" 
       },
       {
           id: 2,
-          img: "https://images.unsplash.com/photo-1603928726698-a015a1015d0e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=80",
+          img: "https://news.itmo.ru/images/news/big/p9409.jpg",
           name: "Университет ИТМО", 
           description: "От 100 000 рублей в год", 
           address: "м. Гостиный Двор, 22 мин. пешком Набережная реки Фонтанки, 4, подъезд 7" 
