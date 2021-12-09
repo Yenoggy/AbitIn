@@ -73,7 +73,7 @@ const App = () => {
 						case STORAGE_KEYS.FAVORITES: {
 							if (data[key]) {
 								if (!data[key].isArray()) data[key] = [];
-								setUserFavorites(...data[key]);
+								setUserFavorites([...data[key]]);
 							}
 							break;
 						}
