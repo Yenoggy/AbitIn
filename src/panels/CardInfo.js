@@ -21,6 +21,7 @@ import {
 	Header,
 	Separator,
 	Caption,
+	Headline,
 	Div,
 	Text,
 	CustomSelectOption,
@@ -65,34 +66,36 @@ const CardInfo = ({id, go, selectedCard, panelBack}) => {
 			<HeaderBack go={go} panelBack={panelBack}/>
 			<Group>
 				<Div>
-
-					<SmallCard id={selectedCard} img={card.img} name={card.name}/>
-					<Spacing separator size={16} />
+					<Group>
+						<SmallCard id={selectedCard} img={card.img} name={""}/>
+						<Headline weight="medium" style={{ marginBottom: 16 }}>{card.name}</Headline>
+					</Group>
+					<Caption></Caption>
 					<Caption weight="regular" style={{ marginBottom: 12 }}>
 						Обучение от {card.mincost} ₽ в год
 					</Caption>
 					<Spacing separator size={12} />
 					<Group>
 						{card.milDepartment ?
-							<CustomSelectOption style={{ background: 'var(--background_content)' }} after={<Icon24CheckSquareOutline/>}>Военная кафедра</CustomSelectOption>
+							<CustomSelectOption style={{ marginLeft:-12, background: 'var(--background_content)' }} after={<Icon24CheckSquareOutline/>}>Военная кафедра</CustomSelectOption>
 							:
-							<CustomSelectOption style={{ background: 'var(--background_content)' }} after={<Icon24CheckBoxOff/>}>Военная кафедра</CustomSelectOption>
+							<CustomSelectOption style={{ marginLeft:-12, background: 'var(--background_content)' }} after={<Icon24CheckBoxOff/>}>Военная кафедра</CustomSelectOption>
 						}
 
 						{card.hostel ?
-							<CustomSelectOption style={{ background: 'var(--background_content)' }} after={<Icon24CheckSquareOutline/>}>Общежитие</CustomSelectOption>
+							<CustomSelectOption style={{ marginLeft:-12, background: 'var(--background_content)' }} after={<Icon24CheckSquareOutline/>}>Общежитие</CustomSelectOption>
 							:
-							<CustomSelectOption style={{ background: 'var(--background_content)' }} after={<Icon24CheckBoxOff/>}>Общежитие</CustomSelectOption>
+							<CustomSelectOption style={{ marginLeft:-12, background: 'var(--background_content)' }} after={<Icon24CheckBoxOff/>}>Общежитие</CustomSelectOption>
 						}
 					</Group>
 					<Group>
 						<Subhead weight="bold" style={{ marginBottom: 12 }}>Полезные ссылки</Subhead>
-						{card.links && Object.keys(card.links).map(linkName => {
+						{card.links && Object.keys(card.links).map(linkName => 
 							<Link href={card.links[linkName]} target="_blank">
 								{linkName}
 								<Spacing />
 							</Link>
-						})
+						)
 						}
 					</Group>
 					

@@ -22,6 +22,7 @@ import {
     IconButton,
     Spacing,
     Headline,
+    Text,
     Select,
     Div,
 } from '@vkontakte/vkui';
@@ -70,14 +71,12 @@ const Filters = ({id, isMobile, setActiveModal, modalBack}) => {
                         </FormLayoutGroup>
 
                     <FormItem top="Дополнительно">
-                    <Div>
-                            <Cell role={null} defaultChecked disabled after={<Switch aria-label="Военная кафедра" />}>
-                                Военная кафедра
-                            </Cell>
-                            <Cell role={null} defaultChecked disabled after={<Switch defaultChecked aria-label="Общежитие" />}>
-                                Общежитие
-                            </Cell>
-                    </Div>
+                        <Cell style={{marginLeft: 0}} role={null} defaultChecked disabled after={<Switch aria-label="Военная кафедра" />}>
+                            Военная кафедра
+                        </Cell> 
+                        <Cell style={{marginLeft: 0}} role={null} defaultChecked disabled after={<Switch defaultChecked aria-label="Общежитие" />}>
+                            Общежитие
+                        </Cell>
                     </FormItem>
                     <Div>
                         <Button 
