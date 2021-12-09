@@ -15,7 +15,7 @@ const HeaderBack = ({go, panelBack}) => {
         <PanelHeader separator={false} left={<PanelHeaderBack onClick={e => {
             console.log('333');
             panelBack();
-        }} />}>
+        }}/>}>
             AbitIn
         </PanelHeader>
     );

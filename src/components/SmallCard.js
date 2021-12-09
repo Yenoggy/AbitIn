@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+    Button,
     ContentCard
 } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
@@ -22,6 +23,7 @@ const SmallCard = ({id, img, name, description, address, go, toOnClick, setSelec
                 maxHeight={500}
             >
             </ContentCard>
+            <Button>В избранное</Button>
         </div>
 
 );

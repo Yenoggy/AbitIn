@@ -8,15 +8,15 @@ import '@vkontakte/vkui/dist/vkui.css';
 
 import PropTypes from "prop-types";
 
-import {Icon20SlidersOutline} from '@vkontakte/icons';
+import {Icon28SlidersOutline} from '@vkontakte/icons';
 
 const HeaderSlider = ({setActiveModal}) => {
 
     return (
         <PanelHeader separator={false}
-            left={<PanelHeaderButton data-modal="filters"
-                                     onClick={setActiveModal}><Icon20SlidersOutline/></PanelHeaderButton>}
-            right={<Avatar size={100} />}
+                     left={<PanelHeaderButton data-modal="filters"
+                                              onClick={setActiveModal}><Icon28SlidersOutline/></PanelHeaderButton>}
+                     right={<Avatar size={100}/>}
         >
             AbitIn
         </PanelHeader>

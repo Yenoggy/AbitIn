@@ -1,11 +1,11 @@
 import React from 'react';
-import { 
+import {
     ContentCard
 } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 
 const SmallCard = ({key, img, name, description, address}) => {
-	return (
+    return (
         <ContentCard
             key={key}
             src={img}
@@ -13,10 +13,10 @@ const SmallCard = ({key, img, name, description, address}) => {
             text={description}
             caption={address}
             maxHeight={500}
-            >
+        >
         </ContentCard>
-	);
-  };
+    );
+};
 
-  
+
 export default SmallCard;
