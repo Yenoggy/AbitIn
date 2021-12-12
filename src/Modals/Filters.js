@@ -31,20 +31,50 @@ import PropTypes from 'prop-types';
 import {Icon16Clear, Icon16Add} from '@vkontakte/icons';
 import {Icon16ChevronOutline} from '@vkontakte/icons';
 
-const Filters = ({id, isMobile, setActiveModal, modalBack}) => {
+const Filters = ({id, isMobile, setActiveModal, closeModals, selectedCityName, setSelectedCityName}) => {
+    const [resultsCount, setResultsCount] = useState(3);
+    const [military, setMilitary] = useState(false);
+    const [hostel, setHostel] = useState(false);
+
+    const [minPoints, setMinPoints] = useState(100);
+    const [averagePoints, setAveragePoints] = useState(200);
+
+    useEffect(() => {
+        if (selectedCityName) countAndUpdateResults();
+    });
+
     const textInput = React.createRef();
     const clear = () => textInput.current.value = '';
 
-    const [resultsCount, setResultsCount] = useState(3);
+    const checkChanges = ({target}) => {
+        console.dir(target);
+        countAndUpdateResults();
+    };
+
+    const countAndUpdateResults = () => {
+        //
+        console.log("Результаты должны были обновиться");
+    };
+
+    const exitFilters = () => {
+        setSelectedCityName(null);
+        closeModals();
+    };
+
+    const showResults = () => {
+        setSelectedCityName(null);
+        console.log("Типа результаты");
+    };
 
     return (
         <ModalPage
             id={id}
-            onClose={modalBack}
+            onClose={exitFilters}
+            onChange={checkChanges}
             header={
                 <ModalPageHeader
-                    left={isMobile && <PanelHeaderClose onClick={modalBack}/>}
-                    right={<PanelHeaderSubmit onClick={modalBack}/>}
+                    left={isMobile && <PanelHeaderClose onClick={exitFilters}/>}
+                    right={<PanelHeaderSubmit onClick={exitFilters}/>}
                 >
                     Фильтры
                 </ModalPageHeader>
@@ -52,34 +82,53 @@ const Filters = ({id, isMobile, setActiveModal, modalBack}) => {
         >
             <Group>
                 <FormLayout>
-                    <FormItem top="Специализация">
+{/*                     <FormItem top="Специализация">
                         <Input getRef={textInput} type="text" defaultValue="Специализация"
                                after={<IconButton hoverMode="opacity" aria-label="Очистить поле"
                                                   onClick={clear}><Icon16Clear/></IconButton>}/>
-                    </FormItem>
+                    </FormItem> */}
 
                     <FormItem top="Город">
-                        <SelectMimicry placeholder="Выбрать город" data-modal="select-city" onClick={setActiveModal}/>
+                        <SelectMimicry id="select-city" placeholder="Выбрать город" data-modal="select-city" onClick={setActiveModal}>
+                            {selectedCityName}
+                        </SelectMimicry>
                     </FormItem>
 
                     <FormItem top="Баллы" style={{marginBottom: '-25px'}}>
                     </FormItem>
                     <FormLayoutGroup mode="horizontal" style={{marginTop: '0'}}>
                         <FormItem top="Минимальные">
-                            <Input/>
+                            <Input 
+                            id="min-points"
+                            value={minPoints} 
+                                onChange={({target}) => setMinPoints(target.value)} 
+                            />
                         </FormItem>
                         <FormItem top="Средние">
-                            <Input/>
+                            <Input 
+                            id="average-points"
+                            value={averagePoints} 
+                                onChange={({target}) => setAveragePoints(target.value)} 
+                            />
                         </FormItem>
                     </FormLayoutGroup>
 
                     <FormItem top="Дополнительно">
                         <Cell style={{marginLeft: 0}} role={null} defaultChecked disabled
-                              after={<Switch aria-label="Военная кафедра"/>}>
+                              after={
+                                <Switch 
+                                    id="military" value={military} 
+                                    onChange={({target}) => setMilitary(target.value)} 
+                                    aria-label="Военная кафедра"/>
+                              }>
                             Военная кафедра
                         </Cell>
                         <Cell style={{marginLeft: 0}} role={null} defaultChecked disabled
-                              after={<Switch defaultChecked aria-label="Общежитие"/>}>
+                              after={
+                                <Switch id="hostel" value={hostel} 
+                                onChange={({target}) => setHostel(target.value)} 
+                                aria-label="Общежитие"/>
+                              }>
                             Общежитие
                         </Cell>
                     </FormItem>
@@ -94,6 +143,7 @@ const Filters = ({id, isMobile, setActiveModal, modalBack}) => {
                                 </>
                             }
                             size="l"
+                            onClick={showResults}
                             stretched style={{marginRight: 8}}>
                             Показать результаты
                         </Button>
@@ -107,7 +157,7 @@ const Filters = ({id, isMobile, setActiveModal, modalBack}) => {
 Filters.propTypes = {
     id: PropTypes.string.isRequired,
     isMobile: PropTypes.bool.isRequired,
+    closeModals: PropTypes.func.isRequired,
     setActiveModal: PropTypes.func.isRequired,
-    modalBack: PropTypes.func.isRequired,
 };
 export default Filters;

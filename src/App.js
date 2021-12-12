@@ -40,6 +40,7 @@ const App = () => {
     const [fetchedUser, setUser] = useState(null);
     const [userFavorites, setUserFavorites] = useState([]);
     const [selectedCard, setSelectedCard] = useState(-1);
+    const [selectedCityName, setSelectedCityName] = useState("");
 
     const [activePanel, setActivePanel] = useState(ROUTES.MAIN);
     const [popout, setPopout] = useState(<ScreenSpinner size='large'/>);
@@ -109,6 +110,11 @@ const App = () => {
         console.log("modalName = ", modalName);
     };
 
+    const closeAndCleanModals = () => {
+        setModalHistory([""]);
+        setActiveModal(null);
+    };
+
     const go = e => {
         const panelId = e.currentTarget.dataset.to;
 
@@ -140,9 +146,9 @@ const App = () => {
 
     const modal = (
         <ModalRoot activeModal={activeModal}>
-            <Filters id={MODALS.FILTERS} isMobile={isMobile} setActiveModal={_setActiveModal} modalBack={modalBack}/>
+            <Filters id={MODALS.FILTERS} isMobile={isMobile} closeModals={closeAndCleanModals} setActiveModal={_setActiveModal} selectedCityName={selectedCityName} setSelectedCityName={setSelectedCityName}/>
             <SelectCity id={MODALS.SELECTCITY} isMobile={isMobile} setActiveModal={_setActiveModal}
-                        modalBack={modalBack}/>
+                        modalBack={modalBack} selectedCityName={selectedCityName} setSelectedCityName={setSelectedCityName}/>
         </ModalRoot>
     );
 

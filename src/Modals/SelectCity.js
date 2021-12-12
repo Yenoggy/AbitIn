@@ -21,10 +21,22 @@ import '@vkontakte/vkui/dist/vkui.css';
 import PropTypes from 'prop-types';
 
 
-const SelectCity = ({id, isMobile, setActiveModal, modalBack}) => {
+const SelectCity = ({id, isMobile, setActiveModal, modalBack, selectedCityName, setSelectedCityName}) => {
+    const [cities, setCities] = useState([
+        {
+            id: 0,
+            title: "Москва"
+        }
+        ,
+        {
+            id: 1,
+            title: "Санкт-Петербург"
+        }
+    ]);
 
-    const [cities, setCities] = useState([]);
-    useEffect(async () => {
+    const setCity = ({target}) => setSelectedCityName(target.value);
+
+    /*useEffect(async () => {
         try {
             let response = await fetch(`https://api.vk.com/method/database.getCities?access_token=${vkToken}&country_id=1&need_all=1&count=1000&v=5.81?lang=ru`, {
                 method: 'GET',
@@ -41,8 +53,8 @@ const SelectCity = ({id, isMobile, setActiveModal, modalBack}) => {
             }));
         } catch (error) {
             console.error(error);
-        }
-    });
+        } 
+    });*/
 
     return (
 
@@ -59,10 +71,10 @@ const SelectCity = ({id, isMobile, setActiveModal, modalBack}) => {
             settlingHeight={80}
         >
             <Group>
-                <FormLayoutGroup>
+                <FormLayoutGroup onClick={setCity}>
                     {cities.map(city => {
                         return (
-                            <Radio key={city.id} name="city" value={city.id}>{city.title}</Radio>
+                            <Radio key={city.id} name="city" value={city.title}>{city.title}</Radio>
                         );
                     })}
                 </FormLayoutGroup>
