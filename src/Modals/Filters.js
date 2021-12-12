@@ -31,7 +31,7 @@ import PropTypes from 'prop-types';
 import {Icon16Clear, Icon16Add} from '@vkontakte/icons';
 import {Icon16ChevronOutline} from '@vkontakte/icons';
 
-const Filters = ({id, isMobile, setActiveModal, closeModals, selectedCityName, setSelectedCityName}) => {
+const Filters = ({id, isMobile, setActiveModal, closeModals, setFilteredCards, selectedCityName, setSelectedCityName,}) => {
     const [resultsCount, setResultsCount] = useState(3);
     const [military, setMilitary] = useState(false);
     const [hostel, setHostel] = useState(false);
@@ -61,7 +61,13 @@ const Filters = ({id, isMobile, setActiveModal, closeModals, selectedCityName, s
         closeModals();
     };
 
+    const getCardsByFilters = () => {
+        return [];
+    };
+
     const showResults = () => {
+        const cards = getCardsByFilters();
+        setFilteredCards(cards);
         setSelectedCityName(null);
         console.log("Типа результаты");
     };
@@ -159,5 +165,6 @@ Filters.propTypes = {
     isMobile: PropTypes.bool.isRequired,
     closeModals: PropTypes.func.isRequired,
     setActiveModal: PropTypes.func.isRequired,
+    setFilteredCards: PropTypes.func.isRequired,
 };
 export default Filters;

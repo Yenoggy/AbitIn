@@ -41,6 +41,7 @@ const App = () => {
     const [userFavorites, setUserFavorites] = useState([]);
     const [selectedCard, setSelectedCard] = useState(-1);
     const [selectedCityName, setSelectedCityName] = useState("");
+    const [filteredCards, setFilteredCards] = useState(null);
 
     const [activePanel, setActivePanel] = useState(ROUTES.MAIN);
     const [popout, setPopout] = useState(<ScreenSpinner size='large'/>);
@@ -146,7 +147,7 @@ const App = () => {
 
     const modal = (
         <ModalRoot activeModal={activeModal}>
-            <Filters id={MODALS.FILTERS} isMobile={isMobile} closeModals={closeAndCleanModals} setActiveModal={_setActiveModal} selectedCityName={selectedCityName} setSelectedCityName={setSelectedCityName}/>
+            <Filters id={MODALS.FILTERS} isMobile={isMobile} closeModals={closeAndCleanModals} setActiveModal={_setActiveModal} setFilteredCards={setFilteredCards} selectedCityName={selectedCityName} setSelectedCityName={setSelectedCityName}/>
             <SelectCity id={MODALS.SELECTCITY} isMobile={isMobile} setActiveModal={_setActiveModal}
                         modalBack={modalBack} selectedCityName={selectedCityName} setSelectedCityName={setSelectedCityName}/>
         </ModalRoot>
@@ -166,7 +167,7 @@ const App = () => {
                 >
                     <View activePanel={activePanel} popout={popout}>
                         <Main id={ROUTES.MAIN} go={go} setActiveModal={_setActiveModal}
-                              setSelectedCard={setSelectedCard}/>
+                              setSelectedCard={setSelectedCard} filteredCards={filteredCards}/>
                         <CardInfo id={ROUTES.CARDINFO} go={go} selectedCard={selectedCard} panelBack={panelBack}/>
                         <Favorites id={ROUTES.FAVORITES} go={go} setActiveModal={_setActiveModal}
                                    favorites={userFavorites}/>

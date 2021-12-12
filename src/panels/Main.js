@@ -12,7 +12,7 @@ import HeaderSlider from '../components/HeaderSlider';
 import Cards from '../components/Cards';
 import FooterMain from '../components/FooterMain';
 
-const Main = ({id, go, setActiveModal, setSelectedCard}) => {
+const Main = ({id, go, setActiveModal, setSelectedCard, filteredCards}) => {
     const [cards, setCards] = useState([
         {
             id: 0,
@@ -37,13 +37,16 @@ const Main = ({id, go, setActiveModal, setSelectedCard}) => {
         },
     ]);
     /*   useEffect(() => {
-      getData();
+        if (filteredCards) setCards(filteredCards);
+        else {
+             getData();
 
-      async function getData() {
-        const response = await fetch("");
-        const data = await response.json();
+        async function getData() {
+            const response = await fetch("");
+            const data = await response.json();
 
-        setCards(data);
+            setCards(data);
+            }
       }
     }, []); */
 
@@ -65,6 +68,7 @@ Main.propTypes = {
     go: PropTypes.func.isRequired,
     setActiveModal: PropTypes.func.isRequired,
     setSelectedCard: PropTypes.func.isRequired,
+    filteredCards: PropTypes.array,
 };
 
 export default Main;
