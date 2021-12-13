@@ -22,7 +22,6 @@ const SmallCard = ({id, img, name, description, go, toOnClick, setSelectedCard})
                 caption={<Button size="m" style={{marginTop:1}}>В избранное</Button>}
                 maxHeight={500}
             >
-
             </ContentCard>
         </div>
 
