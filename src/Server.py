@@ -41,22 +41,24 @@ def DBSet():
     Session = DB()
     return (Session, University, User)
 
+
 @app.post('/MainInfo')
 def MainInfo():
     items: List[University] = University.limit(5).all()
     return items
+
 
 @app.post('/GetInfo')
 def GetInfo(Id):
     item = DB.query(University).filter(University.id == Id).all()
     return item
 
+
 @app.post('/Favorites')
 def Favorites(Id):
     favs = User
     items = DB.query(University).filter(University.id in [*User.favorites]).all() 
     return items
-
 
 
 if __name__ == '__main__':

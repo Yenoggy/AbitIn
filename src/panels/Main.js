@@ -7,7 +7,7 @@ import {
     Group, Spacing,
 } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
-
+import MainSearch from '../components/MainSearch';
 import HeaderSlider from '../components/HeaderSlider';
 import Cards from '../components/Cards';
 import FooterMain from '../components/FooterMain';
@@ -54,7 +54,7 @@ const Main = ({id, go, setActiveModal, setSelectedCard, filteredCards}) => {
         <Panel id={id} style={{justifyContent: "center"}}>
             <HeaderSlider setActiveModal={setActiveModal}/>
             <Group>
-                <Search/>
+                <MainSearch/>
                 <Cards go={go} cards={cards} setSelectedCard={setSelectedCard}/>
                 <Spacing size={30}/>
                 <FooterMain go={go} selectedText="search"/>
