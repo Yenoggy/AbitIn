@@ -1,12 +1,12 @@
 import React from 'react';
 import {
     Button,
-    ContentCard
+    ContentCard,
 } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 import PropTypes from 'prop-types';
 
-const SmallCard = ({id, img, name, description, address, go, toOnClick, setSelectedCard}) => {
+const SmallCard = ({id, img, name, description, go, toOnClick, setSelectedCard}) => {
     return (
         <div data-to={toOnClick}>
             <ContentCard data-to={toOnClick} onClick={e => {
@@ -19,11 +19,11 @@ const SmallCard = ({id, img, name, description, address, go, toOnClick, setSelec
                 src={img}
                 header={name}
                 text={description}
-                caption={address}
+                caption={<Button size="m" style={{marginTop:1}}>В избранное</Button>}
                 maxHeight={500}
             >
+
             </ContentCard>
-            <Button>В избранное</Button>
         </div>
 
 );
