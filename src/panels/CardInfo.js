@@ -100,8 +100,8 @@ const CardInfo = ({id, go, selectedCard, panelBack}) => {
                     <Group>
                         <Title level="2" weight="heavy" style={{marginBottom: 12}}>Полезные ссылки</Title>
                         {/*<Subhead weight="bold" style={{marginBottom: 12}}>Полезные ссылки</Subhead>*/}
-                        {card.links && Object.keys(card.links).map(linkName =>
-                            <Link href={card.links[linkName]} target="_blank">
+                        {card.links && Object.keys(card.links).map((linkName, index) =>
+                            <Link key={index} href={card.links[linkName]} target="_blank">
                                 {linkName}
                                 <Spacing/>
                             </Link>

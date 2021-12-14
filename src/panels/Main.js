@@ -12,7 +12,7 @@ import HeaderSlider from '../components/HeaderSlider';
 import Cards from '../components/Cards';
 import FooterMain from '../components/FooterMain';
 
-const Main = ({id, go, setActiveModal, setSelectedCard, filteredCards}) => {
+const Main = ({id, go, setActiveModal, setSelectedCard, filteredCards, addToFavorites}) => {
     const [cards, setCards] = useState([
         {
             id: 0,
@@ -55,7 +55,7 @@ const Main = ({id, go, setActiveModal, setSelectedCard, filteredCards}) => {
             <HeaderSlider setActiveModal={setActiveModal}/>
             <Group>
                 <MainSearch/>
-                <Cards go={go} cards={cards} setSelectedCard={setSelectedCard}/>
+                <Cards go={go} cards={cards} setSelectedCard={setSelectedCard} addToFavorites={addToFavorites}/>
                 <Spacing size={30}/>
                 <FooterMain go={go} selectedText="search"/>
             </Group>
@@ -69,6 +69,7 @@ Main.propTypes = {
     setActiveModal: PropTypes.func.isRequired,
     setSelectedCard: PropTypes.func.isRequired,
     filteredCards: PropTypes.array,
+    addToFavorites: PropTypes.func.isRequired,
 };
 
 export default Main;

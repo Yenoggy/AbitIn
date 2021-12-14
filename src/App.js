@@ -15,8 +15,12 @@ import {
     ModalRoot,
     PanelHeader,
     ScreenSpinner,
+    Snackbar,
+    Avatar,
 } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
+
+import { Icon24Error } from '@vkontakte/icons';
 
 import Main from './panels/Main';
 import CardInfo from './panels/CardInfo';
@@ -45,6 +49,7 @@ const App = () => {
 
     const [activePanel, setActivePanel] = useState(ROUTES.MAIN);
     const [popout, setPopout] = useState(<ScreenSpinner size='large'/>);
+    const [snackbar, setSnackbar] = useState(false);
     const [activeModal, setActiveModal] = useState(null);
 
     const [panelHistory, setPanelHistory] = useState([ROUTES.MAIN]);
@@ -82,7 +87,20 @@ const App = () => {
                         }
                     }
                 } catch (error) {
-                    console.log(error);
+                    setSnackbar(
+                        <Snackbar
+                        layout="vertical"
+                        onClose={() => setSnackbar(null)}
+                        before={
+                            <Avatar size={24} style={{ backgroundColor: "var(--dynamic-red)"}}>
+                                <Icon24Error fill="#fff" width={14} height={14}/>
+                            </Avatar>
+                        }
+                        duration={900}
+                        >
+                            Произошла проблема получения данных из хранилища (Storage)
+                        </Snackbar>
+                    );
                 }
             });
 
@@ -92,6 +110,38 @@ const App = () => {
 
         fetchData();
     }, []);
+
+    const addToFavorites = universityId => {
+        const copyUserFavorites = [...userFavorites];
+        copyUserFavorites.push(universityId);
+        setUserFavorites(copyUserFavorites);
+        postUserFavorites();
+
+    };
+
+    const postUserFavorites = async () => {
+        try {
+            await bridge.send("VKWebAppStorageSet", {
+                key: STORAGE_KEYS.FAVORITES,
+                value: JSON.stringify(userFavorites)
+            });
+        } catch (error) {
+            setSnackbar(
+                <Snackbar
+                layout="vertical"
+                onClose={() => setSnackbar(null)}
+                before={
+                    <Avatar size={24} style={{ backgroundColor: "var(--dynamic-red)"}}>
+                        <Icon24Error fill="#fff" width={14} height={14}/>
+                    </Avatar>
+                }
+                duration={900}
+                >
+                    Произошла проблема с отправкой данных в хранилище (Storage)
+                </Snackbar>
+            );
+        }
+    };
 
     const _setActiveModal = e => {
         const modalName = e.currentTarget.dataset.modal;
@@ -115,7 +165,6 @@ const App = () => {
         setModalHistory([""]);
         setActiveModal(null);
     };
-
     const go = e => {
         const panelId = e.currentTarget.dataset.to;
 
@@ -133,7 +182,6 @@ const App = () => {
         setActivePanel(panelId);
         console.log("panelId = ", panelId);
     };
-
     const modalBack = () => {
         const modal = modalHistory[modalHistory.length - 2];
         if (!modal) return setActiveModal(null);
@@ -153,6 +201,7 @@ const App = () => {
         </ModalRoot>
     );
 
+
     return (
         <AppRoot>
             <SplitLayout
@@ -167,10 +216,10 @@ const App = () => {
                 >
                     <View activePanel={activePanel} popout={popout}>
                         <Main id={ROUTES.MAIN} go={go} setActiveModal={_setActiveModal}
-                              setSelectedCard={setSelectedCard} filteredCards={filteredCards}/>
+                              setSelectedCard={setSelectedCard} filteredCards={filteredCards} addToFavorites={addToFavorites}/>
                         <CardInfo id={ROUTES.CARDINFO} go={go} selectedCard={selectedCard} panelBack={panelBack}/>
                         <Favorites id={ROUTES.FAVORITES} go={go} setActiveModal={_setActiveModal}
-                                   favorites={userFavorites}/>
+                                   favoritiesIds={userFavorites} addToFavorites={addToFavorites}/>
                     </View>
                 </SplitCol>
             </SplitLayout>
