@@ -21,7 +21,6 @@ const SmallCard = ({id, img, name, description, go, toOnClick, setSelectedCard, 
                 text={description}
                 caption={
                     <Button size="m" style={{marginTop:1}} onClick={(e) => {
-                        console.log('нажал');
                         addToFavorites(id);
                     }}>В избранное</Button>
                 }

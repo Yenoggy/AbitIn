@@ -40,7 +40,7 @@ Favorites.propTypes = {
     id: PropTypes.string.isRequired,
     go: PropTypes.func.isRequired,
     setActiveModal: PropTypes.func.isRequired,
-    favorites: PropTypes.array.isRequired,
+    favoritiesIds: PropTypes.array.isRequired,
     addToFavorites: PropTypes.func.isRequired,
 };
 

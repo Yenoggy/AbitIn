@@ -12,10 +12,7 @@ import PropTypes from "prop-types";
 const HeaderBack = ({go, panelBack}) => {
 
     return (
-        <PanelHeader separator={false} left={<PanelHeaderBack onClick={e => {
-            console.log('333');
-            panelBack();
-        }}/>}>
+        <PanelHeader separator={false} left={<PanelHeaderBack onClick={panelBack}/>}>
             AbitIn
         </PanelHeader>
     );

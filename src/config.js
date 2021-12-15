@@ -10,5 +10,5 @@ global.MODALS = {
 };
 
 export const STORAGE_KEYS = {
-    FAVORITES: "[]",
+    FAVORITES: "_favorites",
 };

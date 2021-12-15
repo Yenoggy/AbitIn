@@ -57,7 +57,6 @@ const App = () => {
 
 
     useEffect(() => {
-        console.log(isDesktop, viewWidth);
         bridge.subscribe(({detail: {type, data}}) => {
             if (type === 'VKWebAppUpdateConfig') {
                 const schemeAttribute = document.createAttribute('scheme');
@@ -69,24 +68,27 @@ const App = () => {
         async function fetchData() {
             const user = await bridge.send('VKWebAppGetUserInfo');
             const storageData = await bridge.send('VKWebAppStorageGet', {
-                keys: Object.keys(STORAGE_KEYS)
+                keys: Object.values(STORAGE_KEYS)
             });
 
             const data = [];
             storageData.keys.forEach(({key, value}) => {
                 try {
                     data[key] = value ? JSON.parse(value) : {};
-
                     switch (key) {
                         case STORAGE_KEYS.FAVORITES: {
                             if (data[key]) {
-                                if (!data[key].isArray()) data[key] = [];
+                                console.log('111', data[key])
+                                if (!isArray(data[key])) data[key] = [];
                                 setUserFavorites([...data[key]]);
+                                console.log(1);
+                                console.log(userFavorites);
                             }
                             break;
                         }
                     }
                 } catch (error) {
+                    console.error(error);
                     setSnackbar(
                         <Snackbar
                         layout="vertical"
@@ -104,6 +106,8 @@ const App = () => {
                 }
             });
 
+            console.log(data);
+
             setUser(user);
             setPopout(null);
         }
@@ -111,21 +115,21 @@ const App = () => {
         fetchData();
     }, []);
 
-    const addToFavorites = universityId => {
-        const copyUserFavorites = [...userFavorites];
-        copyUserFavorites.push(universityId);
-        setUserFavorites(copyUserFavorites);
-        postUserFavorites();
-
-    };
-
-    const postUserFavorites = async () => {
+    const addToFavorites = async universityId => {
         try {
+            const copyUserFavorites = [...userFavorites];
+            copyUserFavorites.push(universityId);
+            setUserFavorites(copyUserFavorites);
+
+            console.log('adding')
+            console.log(copyUserFavorites)
             await bridge.send("VKWebAppStorageSet", {
                 key: STORAGE_KEYS.FAVORITES,
-                value: JSON.stringify(userFavorites)
+                value: JSON.stringify(copyUserFavorites)
             });
+            console.log('added');
         } catch (error) {
+            console.error(error);
             setSnackbar(
                 <Snackbar
                 layout="vertical"
@@ -141,6 +145,7 @@ const App = () => {
                 </Snackbar>
             );
         }
+
     };
 
     const _setActiveModal = e => {
