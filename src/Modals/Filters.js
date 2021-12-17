@@ -26,52 +26,80 @@ import {
     Select,
     Div,
 } from '@vkontakte/vkui';
+import { ChipsSelect } from '@vkontakte/vkui/dist/unstable';
 import '@vkontakte/vkui/dist/vkui.css';
 import PropTypes from 'prop-types';
 import {Icon16Clear, Icon16Add} from '@vkontakte/icons';
 import {Icon16ChevronOutline} from '@vkontakte/icons';
 
-const Filters = ({id, isMobile, setActiveModal, closeModals, setFilteredCards, selectedCityName, setSelectedCityName,}) => {
+const exams = [{value: 'Р', label: 'Русский язык'}, {value: 'М', label: 'Математика'}, {value: 'ИНФ', label: 'Информатика',}];
+
+
+const Filters = ({id, isMobile, setActiveModal, closeModals, setFilteredCards, 
+    selectedCityName, setSelectedCityName}) => {
     const [resultsCount, setResultsCount] = useState(3);
-    const [military, setMilitary] = useState(false);
-    const [hostel, setHostel] = useState(false);
+    const [cards, setCards] = useState(null);
+    const [mildep, setMildep] = useState(false);
+    const [dorm, setDorm] = useState(false); // Общежитие
 
     const [minPoints, setMinPoints] = useState(100);
     const [averagePoints, setAveragePoints] = useState(200);
 
+    const [selectedExams, setSelectedExams] = useState(exams.slice(0, 2));
+
+
     useEffect(() => {
-        if (selectedCityName) countAndUpdateResults();
+        if (selectedCityName && selectedExams) countAndUpdateResults();
     });
 
-    const textInput = React.createRef();
-    const clear = () => textInput.current.value = '';
+    
+    const exitFilters = () => {
+        setSelectedCityName(null);
+        closeModals();
+    };
+
+    const examsChipsProps = {
+        value: selectedExams,
+        onChange: setSelectedExams,
+        options: exams,
+        placeholder:"Не выбраны",
+        creatable: true,
+        creatableText: '',
+    };
+
 
     const checkChanges = ({target}) => {
         console.dir(target);
         countAndUpdateResults();
     };
 
-    const countAndUpdateResults = () => {
+    const countAndUpdateResults = async () => {
         //
+        const cards = await getCardsByFilters();
+        setResultsCount(cards.length);
         console.log("Результаты должны были обновиться");
     };
 
-    const exitFilters = () => {
-        setSelectedCityName(null);
-        closeModals();
-    };
 
-    const getCardsByFilters = () => {
-        return [];
+    const getCardsByFilters = async () => {
+        const res = await fetch(SERVER_API + 
+                `/GetInfo?mildep=${mildep}&dorm=${dorm}&city=${selectedCityName}
+                &minscore=${minPoints}&avgscore=${averagePoints}
+                &spec=${
+                    selectedExams.map(({value}) => value).join(', ')
+                }`
+        );
+        const data = await res.json();
+        setCards(data);    
+        return data;
     };
 
     const showResults = () => {
-        const cards = getCardsByFilters();
         setFilteredCards(cards);
         setSelectedCityName(null);
+        setSelectedExams(null);
         console.log("Типа результаты");
     };
-
     return (
         <ModalPage
             id={id}
@@ -88,12 +116,12 @@ const Filters = ({id, isMobile, setActiveModal, closeModals, setFilteredCards, s
         >
             <Group>
                 <FormLayout>
-{/*                     <FormItem top="Специализация">
-                        <Input getRef={textInput} type="text" defaultValue="Специализация"
-                               after={<IconButton hoverMode="opacity" aria-label="Очистить поле"
-                                                  onClick={clear}><Icon16Clear/></IconButton>}/>
-                    </FormItem> */}
 
+                                        
+                    <FormItem top="Выбрать предметы ЕГЭ">
+                        <ChipsSelect {...examsChipsProps}/>
+                    </FormItem>
+                    
                     <FormItem top="Город">
                         <SelectMimicry id="select-city" placeholder="Выбрать город" data-modal="select-city" onClick={setActiveModal}>
                             {selectedCityName}
@@ -123,16 +151,16 @@ const Filters = ({id, isMobile, setActiveModal, closeModals, setFilteredCards, s
                         <Cell style={{marginLeft: 0}} role={null} defaultChecked disabled
                               after={
                                 <Switch 
-                                    id="military" value={military} 
-                                    onChange={({target}) => setMilitary(target.value)} 
+                                    id="mildep" value={mildep} 
+                                    onChange={({target}) => setMildep(target.value)} 
                                     aria-label="Военная кафедра"/>
                               }>
                             Военная кафедра
                         </Cell>
                         <Cell style={{marginLeft: 0}} role={null} defaultChecked disabled
                               after={
-                                <Switch id="hostel" value={hostel} 
-                                onChange={({target}) => setHostel(target.value)} 
+                                <Switch id="dorm" value={dorm} 
+                                onChange={({target}) => setDorm(target.value)} 
                                 aria-label="Общежитие"/>
                               }>
                             Общежитие

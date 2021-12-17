@@ -38,7 +38,7 @@ const SelectCity = ({id, isMobile, setActiveModal, modalBack, selectedCityName, 
 
     /*useEffect(async () => {
         try {
-            let response = await fetch(`https://api.vk.com/method/database.getCities?access_token=${vkToken}&country_id=1&need_all=1&count=1000&v=5.81?lang=ru`, {
+            let response = await fetch(`https://api.vk.com/method/database.getCities?access_token=${VK_TOKEN}&country_id=1&need_all=1&count=1000&v=5.81?lang=ru`, {
                 method: 'GET',
                 mode: 'cors',
                 headers: {

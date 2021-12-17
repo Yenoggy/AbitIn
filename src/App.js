@@ -28,9 +28,9 @@ import Favorites from './panels/Favorites';
 
 import {STORAGE_KEYS} from './config';
 
+//
 import Filters from './Modals/Filters';
 import SelectCity from './Modals/SelectCity';
-
 
 const App = () => {
 
@@ -79,7 +79,7 @@ const App = () => {
                         case STORAGE_KEYS.FAVORITES: {
                             if (data[key]) {
                                 console.log('111', data[key])
-                                if (!isArray(data[key])) data[key] = [];
+                                if (typeof data[key] !== 'array') data[key] = [];
                                 setUserFavorites([...data[key]]);
                                 console.log(1);
                                 console.log(userFavorites);
@@ -200,9 +200,14 @@ const App = () => {
 
     const modal = (
         <ModalRoot activeModal={activeModal}>
+
             <Filters id={MODALS.FILTERS} isMobile={isMobile} closeModals={closeAndCleanModals} setActiveModal={_setActiveModal} setFilteredCards={setFilteredCards} selectedCityName={selectedCityName} setSelectedCityName={setSelectedCityName}/>
+
             <SelectCity id={MODALS.SELECTCITY} isMobile={isMobile} setActiveModal={_setActiveModal}
                         modalBack={modalBack} selectedCityName={selectedCityName} setSelectedCityName={setSelectedCityName}/>
+
+{/*             <SelectExams id={MODALS.SELECTEXAMS} isMobile={isMobile} setActiveModal={_setActiveModal}
+                        modalBack={modalBack} selectedExams={selectedExams} setSelectedExams={setSelectedExams}/> */}
         </ModalRoot>
     );
 

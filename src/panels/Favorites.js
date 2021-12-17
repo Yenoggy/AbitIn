@@ -14,6 +14,7 @@ const Favorites = ({id, go, setActiveModal, favoritiesIds, addToFavorites}) => {
     const [favorites, setFavorities] = useState([]);
     useEffect(() => {
         // тут типо получаем из бд по id из favoritiesId все нужные карточи и кладем их.
+        
     });
 
     return (

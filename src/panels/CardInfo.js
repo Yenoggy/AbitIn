@@ -44,8 +44,11 @@ const CardInfo = ({id, go, selectedCard, panelBack}) => {
         name: "Университет ИТМО",
         img: "https://avatars.mds.yandex.net/i?id=a7709dbc6ddecde207a68c6286a03c9f-5607498-images-thumbs&n=13",
         mincost: '100 000',
-        milDepartment: true, // Военная кафедра
-        hostel: false, // Общежитие,
+        avgscore: '0',
+        mildep: true, // Военная кафедра
+        dorm: false, // Общежитие,
+        city: "Санкт-Петербург",
+        id: 1,
         links: {
             "Страница факультетов на сайте": "https://www.figma.com/file/6J1hEjVnvxqC7MCjwkBVM0/AbitIn-main?node-id=82%3A813",
             "Основная группа ВК": "https://github.com/nodenwwsfww/AbitIn/blob/main/VK_AbitIn/src/panels/Persik.js"
@@ -57,9 +60,13 @@ const CardInfo = ({id, go, selectedCard, panelBack}) => {
         }
 
         async function fetchData() {
-            /* const jsonData = await fetch("https://images.unsplash.com/photo-1603928726698-a015a1015d0e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&");
-            const data = JSON.parse(jsonData);
-            setCardData(data); */
+            try {
+                const jsonData = await fetch(SERVER_API + `/GetInfo?Id=${id}`);
+                const data = JSON.parse(jsonData);
+                setCardData(data); 
+            } catch(error) {
+                console.error(error);
+            }
         }
     })
     return (
@@ -71,7 +78,7 @@ const CardInfo = ({id, go, selectedCard, panelBack}) => {
                     <Group>
                         {/*Галерея фотографий ВУЗа*/}
                         <Gallery slideWidth="100%" style={{marginBottom: 16}}>
-                            <img src={card.img} alt="Фото ВУЗа" style={{borderRadius: 10}}/>
+                            <img src={card.imgurl} alt="Фото ВУЗа" style={{borderRadius: 10}}/>
                         </Gallery>
                         {/*Название ВУЗа*/}
                         <Title level="1" weight="bold" style={{marginBottom: 6}}>{card.name}</Title>
@@ -80,7 +87,7 @@ const CardInfo = ({id, go, selectedCard, panelBack}) => {
                     </Group>
                     {/*Секция с особенностями*/}
                     <Group>
-                        {card.milDepartment ?
+                        {card.mildep ?
                             <CustomSelectOption style={{marginLeft: -12, background: 'var(--background_content)'}}
                                                 after={<Icon24CheckSquareOutline/>}>Военная кафедра</CustomSelectOption>
                             :
@@ -88,7 +95,7 @@ const CardInfo = ({id, go, selectedCard, panelBack}) => {
                                                 after={<Icon24CheckBoxOff/>}>Военная кафедра</CustomSelectOption>
                         }
 
-                        {card.hostel ?
+                        {card.dorm ?
                             <CustomSelectOption style={{marginLeft: -12, background: 'var(--background_content)'}}
                                                 after={<Icon24CheckSquareOutline/>}>Общежитие</CustomSelectOption>
                             :

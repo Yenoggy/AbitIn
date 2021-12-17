@@ -14,7 +14,7 @@ import FooterMain from '../components/FooterMain';
 
 const Main = ({id, go, setActiveModal, setSelectedCard, filteredCards, addToFavorites}) => {
     const [cards, setCards] = useState([
-        {
+/*         {
             id: 0,
             img: "https://news.itmo.ru/images/news/big/p9409.jpg",
             name: "Университет ИТМО",
@@ -34,21 +34,29 @@ const Main = ({id, go, setActiveModal, setSelectedCard, filteredCards, addToFavo
             name: "Университет ИТМО",
             description: "От 100 000 рублей в год",
             address: "м. Гостиный Двор, 22 мин. пешком Набережная реки Фонтанки, 4, подъезд 7"
-        },
+        }, */
     ]);
-    /*   useEffect(() => {
+    useEffect(() => {
+        async function getData() {
+            try {
+                console.log('gettting')
+                const response = await fetch(SERVER_API + "/MainInfo", {
+                    method: "POST",
+                    mode: 'cors',
+                    
+                });
+                console.log('response', response);
+                const data = await response.json();
+                setCards(data);
+            } catch(error) {
+                console.error(error);
+            }
+        }
         if (filteredCards) setCards(filteredCards);
         else {
              getData();
-
-        async function getData() {
-            const response = await fetch("");
-            const data = await response.json();
-
-            setCards(data);
-            }
       }
-    }, []); */
+    }, []);
 
     return (
         <Panel id={id} style={{justifyContent: "center"}}>
