@@ -42,7 +42,7 @@ const Main = ({id, go, setActiveModal, setSelectedCard, filteredCards, addToFavo
                 console.log('gettting')
                 const response = await fetch(SERVER_API + "/MainInfo", {
                     method: "POST",
-                    mode: 'no-cors',
+                    mode: 'cors',
                     
                 });
                 console.log('response', response);
