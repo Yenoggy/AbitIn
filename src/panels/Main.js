@@ -42,12 +42,13 @@ const Main = ({id, go, setActiveModal, setSelectedCard, filteredCards, addToFavo
                 console.log('gettting')
                 const response = await fetch(SERVER_API + "/MainInfo", {
                     method: "POST",
-                    mode: 'cors',
+                    mode: 'no-cors',
                     
                 });
                 console.log('response', response);
                 const data = await response.json();
                 setCards(data);
+                console.log('data', data);
             } catch(error) {
                 console.error(error);
             }

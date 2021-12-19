@@ -78,11 +78,8 @@ const App = () => {
                     switch (key) {
                         case STORAGE_KEYS.FAVORITES: {
                             if (data[key]) {
-                                console.log('111', data[key])
                                 if (typeof data[key] !== 'array') data[key] = [];
                                 setUserFavorites([...data[key]]);
-                                console.log(1);
-                                console.log(userFavorites);
                             }
                             break;
                         }
@@ -106,7 +103,6 @@ const App = () => {
                 }
             });
 
-            console.log(data);
 
             setUser(user);
             setPopout(null);
@@ -121,13 +117,10 @@ const App = () => {
             copyUserFavorites.push(universityId);
             setUserFavorites(copyUserFavorites);
 
-            console.log('adding')
-            console.log(copyUserFavorites)
             await bridge.send("VKWebAppStorageSet", {
                 key: STORAGE_KEYS.FAVORITES,
                 value: JSON.stringify(copyUserFavorites)
             });
-            console.log('added');
         } catch (error) {
             console.error(error);
             setSnackbar(
