@@ -40,15 +40,19 @@ const Main = ({id, go, setActiveModal, setSelectedCard, filteredCards, addToFavo
         async function getData() {
             try {
                 console.log('gettting')
-                const response = await fetch(SERVER_API + "/MainInfo", {
-                    method: "POST",
-                    mode: 'cors',
-                    
+                const response = fetch("https://sniff-beb.ru:13535/MainInfo",{
+                    method: "GET",
+                    mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        "Access-Control-Allow-Origin": "*"
+                    }
+                }).then(res => {
+                    console.log(res)
+                }).catch(e => {
+                    console.log(e)
                 });
-                console.log('response', response);
-                const data = await response.json();
-                setCards(data);
-                console.log('data', data);
+                //setCards(data);
             } catch(error) {
                 console.error(error);
             }
