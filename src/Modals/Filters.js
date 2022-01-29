@@ -82,14 +82,19 @@ const Filters = ({id, isMobile, setActiveModal, closeModals, setFilteredCards,
 
 
     const getCardsByFilters = async () => {
-        const res = await fetch(SERVER_API + 
+        let data;
+        try {
+            const res = await fetch(SERVER_API + 
                 `/GetInfo?mildep=${mildep}&dorm=${dorm}&city=${selectedCityName}
                 &minscore=${minPoints}&avgscore=${averagePoints}
-                &spec=${
+                &spec=${    
                     selectedExams.map(({value}) => value).join(', ')
                 }`
-        );
-        const data = await res.json();
+            );
+            data = await res.json(); 
+        } catch(error) {
+            console.error('Ошибка SERVER-API getCardsByFilters', error);
+        }
         setCards(data);    
         return data;
     };
@@ -119,7 +124,7 @@ const Filters = ({id, isMobile, setActiveModal, closeModals, setFilteredCards,
 
                                         
                     <FormItem top="Выбрать предметы ЕГЭ">
-                        <ChipsSelect {...examsChipsProps}/>
+                            
                     </FormItem>
                     
                     <FormItem top="Город">
