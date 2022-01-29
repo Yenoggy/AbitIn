@@ -11,7 +11,7 @@ const SmallCard = ({id, img, name, description, go, toOnClick, setSelectedCard, 
         <div data-to={toOnClick}>
             <ContentCard data-to={toOnClick} onClick={e => {
                 if (toOnClick !== ROUTES.CARDINFO) return;
-                setSelectedCard(id);
+                setSelectedCard(Number(id));
                 e.currentTarget.dataset.to = toOnClick; // удалить
                 go(e);
             }

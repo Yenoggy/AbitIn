@@ -61,11 +61,14 @@ const CardInfo = ({id, go, selectedCard, panelBack}) => {
 
         async function fetchData() {
             try {
-                const jsonData = await fetch(SERVER_API + `/GetInfo?Id=${id}`);
+                const jsonData = await fetch(`https://sniff-beb.ru:13535/GetInfo?Id=${selectedCard}`, {
+                    method: "GET",
+                    mode: 'cors',
+                });
                 const data = JSON.parse(jsonData);
                 setCardData(data); 
             } catch(error) {
-                console.error(error);
+                console.error('SERVER-API error: ' + error);
             }
         }
     })

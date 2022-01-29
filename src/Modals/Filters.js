@@ -37,7 +37,7 @@ const exams = [{value: 'Р', label: 'Русский язык'}, {value: 'М', la
 
 const Filters = ({id, isMobile, setActiveModal, closeModals, setFilteredCards, 
     selectedCityName, setSelectedCityName}) => {
-    const [resultsCount, setResultsCount] = useState(3);
+    const [resultsCount, setResultsCount] = useState(0);
     const [cards, setCards] = useState(null);
     const [mildep, setMildep] = useState(false);
     const [dorm, setDorm] = useState(false); // Общежитие
@@ -89,13 +89,17 @@ const Filters = ({id, isMobile, setActiveModal, closeModals, setFilteredCards,
                 &minscore=${minPoints}&avgscore=${averagePoints}
                 &spec=${    
                     selectedExams.map(({value}) => value).join(', ')
-                }`
+                }`,
+                {
+                    method: "GET",
+                    mode: 'cors',
+            }
             );
             data = await res.json(); 
+            setCards(data); 
         } catch(error) {
             console.error('Ошибка SERVER-API getCardsByFilters', error);
-        }
-        setCards(data);    
+        } 
         return data;
     };
 
