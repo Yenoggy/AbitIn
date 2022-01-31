@@ -8,39 +8,47 @@ import {
 } from '@vkontakte/vkui';
 
 
-const thematics = [
+
+
+const MainSearch = () => {
+  const [cards, setCards] = useState([
     {name: "Университет ИТМО"},
     {name: "Политех"},
     {name: "Горный"},
-  ];
+  ]);
 
-  class MainSearch extends React.Component {
+    /* useEffect(() => {
+  async function getData() {
+        try {
+            const response = await fetch(SERVER_API + `/MainInfo`,{
+                method: "POST",
+                mode: 'cors',
+            });
+            const data = await response.json();
+            setCardData(...data);
+        } catch(error) {
+            console.error(error);
+        }
+    } 
 
-    constructor (props) {
-      super(props);
-      this.state = {
-        search: ''
-      }
-      this.onChange = this.onChange.bind(this);
-    }
+    getData();
 
-    onChange (e) { this.setState({ search: e.target.value }); }
+  }, []); */
 
-    get thematics () {
-      const search = this.state.search.toLowerCase();
-      return thematics.filter(({name}) => name.toLowerCase().indexOf(search) > -1);
-    }
-
-    render() {
-      return (
-        <React.Fragment>
-          <Group>
-            <Search value={this.state.search} onChange={this.onChange} after={null}/>
-            {this.thematics.length > 0 && this.thematics.map(thematic => <Cell key={thematic.id}>{thematic.name}</Cell>)}
-            {this.thematics.length === 0 && <Footer>Ничего не найдено</Footer>}
-          </Group>
-        </React.Fragment>
-      );
-    }
+  const onInput = ({target}) => {
+    const search = target.value.toLowerCase();
+    setCards(cards.filter(({name}) => name.toLowerCase().indexOf(search) > -1));
   }
-  export default MainSearch;
+
+  return (
+    <>
+        <Group>
+          <Search onChange={onInput} after={null}/>
+          {cards.length > 0 && cards.map(card => <Cell key={card.id}>{card.name}</Cell>)}
+          {cards.length === 0 && <Footer>Ничего не найдено</Footer>}
+        </Group>
+    </>
+  );
+};
+
+export default MainSearch;

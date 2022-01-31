@@ -40,87 +40,73 @@ import {Icon24CheckSquareOutline} from '@vkontakte/icons';
 import {Icon24CheckBoxOff} from '@vkontakte/icons';
 
 const CardInfo = ({id, go, selectedCard, panelBack}) => {
-    const [card, setCardData] = useState({
-        name: "Университет ИТМО",
-        img: "https://avatars.mds.yandex.net/i?id=a7709dbc6ddecde207a68c6286a03c9f-5607498-images-thumbs&n=13",
-        mincost: '100 000',
-        avgscore: '0',
-        mildep: true, // Военная кафедра
-        dorm: false, // Общежитие,
-        city: "Санкт-Петербург",
-        id: 1,
-        links: {
-            "Страница факультетов на сайте": "https://www.figma.com/file/6J1hEjVnvxqC7MCjwkBVM0/AbitIn-main?node-id=82%3A813",
-            "Основная группа ВК": "https://github.com/nodenwwsfww/AbitIn/blob/main/VK_AbitIn/src/panels/Persik.js"
-        },
-    });
+    const [card, setCardData] = useState(null);
     useEffect(() => {
-        if (selectedCard >= 0) {
-            fetchData();
-        }
-
-        async function fetchData() {
+        async function getData() {
             try {
-                const jsonData = await fetch(`https://sniff-beb.ru:13535/GetInfo?Id=${selectedCard}`, {
-                    method: "GET",
+                const response = await fetch(SERVER_API + `/GetInfo?Id=${selectedCard}`,{
+                    method: "POST",
                     mode: 'cors',
                 });
-                const data = JSON.parse(jsonData);
-                setCardData(data); 
+                const data = await response.json();
+                setCardData(...data);
             } catch(error) {
-                console.error('SERVER-API error: ' + error);
+                console.error(error);
             }
         }
-    })
+
+        if (selectedCard >= 0) {
+            getData();
+        }
+
+    }, []);
+    
     return (
         <Panel id={id}>
             <HeaderBack go={go} panelBack={panelBack}/>
             <Group>
-                <Div>
-                    {/*База о ВУЗе*/}
-                    <Group>
-                        {/*Галерея фотографий ВУЗа*/}
-                        <Gallery slideWidth="100%" style={{marginBottom: 16}}>
-                            <img src={card.imgurl} alt="Фото ВУЗа" style={{borderRadius: 10}}/>
-                        </Gallery>
-                        {/*Название ВУЗа*/}
-                        <Title level="1" weight="bold" style={{marginBottom: 6}}>{card.name}</Title>
-                        {/*Прайс*/}
-                        <Headline weight="semibold">Обучение от {card.mincost} ₽ в год</Headline>
-                    </Group>
-                    {/*Секция с особенностями*/}
-                    <Group>
-                        {card.mildep ?
-                            <CustomSelectOption style={{marginLeft: -12, background: 'var(--background_content)'}}
-                                                after={<Icon24CheckSquareOutline/>}>Военная кафедра</CustomSelectOption>
-                            :
-                            <CustomSelectOption style={{marginLeft: -12, background: 'var(--background_content)'}}
-                                                after={<Icon24CheckBoxOff/>}>Военная кафедра</CustomSelectOption>
-                        }
+                {card &&
+                    <Div>
+                        <Group>
+                            <Gallery slideWidth="100%" style={{marginBottom: 16}}>
+                                <img src={card.imgurl} alt="Фото ВУЗа" style={{borderRadius: 10}}/>
+                            </Gallery>
+                            <Title level="1" weight="bold" style={{marginBottom: 6}}>{card.name}</Title>
+                            <Headline weight="semibold">Обучение от {card.mincost} ₽ в год</Headline>
+                        </Group>
+                        <Group>
+                            {card.mildep ?
+                                <CustomSelectOption style={{marginLeft: -12, background: 'var(--background_content)'}}
+                                                    after={<Icon24CheckSquareOutline/>}>Военная кафедра</CustomSelectOption>
+                                :
+                                <CustomSelectOption style={{marginLeft: -12, background: 'var(--background_content)'}}
+                                                    after={<Icon24CheckBoxOff/>}>Военная кафедра</CustomSelectOption>
+                            }
 
-                        {card.dorm ?
-                            <CustomSelectOption style={{marginLeft: -12, background: 'var(--background_content)'}}
-                                                after={<Icon24CheckSquareOutline/>}>Общежитие</CustomSelectOption>
-                            :
-                            <CustomSelectOption style={{marginLeft: -12, background: 'var(--background_content)'}}
-                                                after={<Icon24CheckBoxOff/>}>Общежитие</CustomSelectOption>
-                        }
-                    </Group>
-                    {/*Полезные ссылки*/}
-                    <Group>
-                        <Title level="2" weight="heavy" style={{marginBottom: 12}}>Полезные ссылки</Title>
-                        {/*<Subhead weight="bold" style={{marginBottom: 12}}>Полезные ссылки</Subhead>*/}
-                        {card.links && Object.keys(card.links).map((linkName, index) =>
-                            <Link key={index} href={card.links[linkName]} target="_blank">
-                                {linkName}
-                                <Spacing/>
-                            </Link>
-                        )
-                        }
-                    </Group>
+                            {card.dorm ?
+                                <CustomSelectOption style={{marginLeft: -12, background: 'var(--background_content)'}}
+                                                    after={<Icon24CheckSquareOutline/>}>Общежитие</CustomSelectOption>
+                                :
+                                <CustomSelectOption style={{marginLeft: -12, background: 'var(--background_content)'}}
+                                                    after={<Icon24CheckBoxOff/>}>Общежитие</CustomSelectOption>
+                            }
+                        </Group>
+                        {/*Полезные ссылки*/}
+                        <Group>
+                            <Title level="2" weight="heavy" style={{marginBottom: 12}}>Полезные ссылки</Title>
+                            {/*<Subhead weight="bold" style={{marginBottom: 12}}>Полезные ссылки</Subhead>*/}
+                            {card.extra && Object.keys(card.extra).map((linkName, index) =>
+                                <Link key={index} href={card.extra[linkName]} target="_blank">
+                                    {linkName}
+                                    <Spacing/>
+                                </Link>
+                            )
+                            }
+                        </Group>
 
-                    <Spacing separator="bottom" size={12}/>
-                </Div>
+                        <Spacing separator="bottom" size={12}/>
+                    </Div>
+                }
 
             </Group>
             <FooterMain go={go} selectedText="search"/>
