@@ -43,7 +43,7 @@ const Filters = ({id, isMobile, setActiveModal, closeModals, setFilteredCards,
     const [dorm, setDorm] = useState(false); // Общежитие
 
     const [minPoints, setMinPoints] = useState(100);
-    const [averagePoints, setAveragePoints] = useState(200);
+    const [maxPoints, setMaxPoints] = useState(200);
 
     const [selectedExams, setSelectedExams] = useState(exams.slice(0, 2));
 
@@ -85,8 +85,8 @@ const Filters = ({id, isMobile, setActiveModal, closeModals, setFilteredCards,
         let data;
         try {
             const res = await fetch(SERVER_API + 
-                `/GetInfo?mildep=${mildep}&dorm=${dorm}&city=${selectedCityName}
-                &minscore=${minPoints}&avgscore=${averagePoints}
+                `/MainInfo?mildep=${mildep}&dorm=${dorm}&city=${selectedCityName}
+                &minscore=${minPoints}&maxscore=${maxPoints}
                 &spec=${    
                     selectedExams.map(({value}) => value).join(', ')
                 }`,
@@ -128,7 +128,7 @@ const Filters = ({id, isMobile, setActiveModal, closeModals, setFilteredCards,
 
                                         
                     <FormItem top="Выбрать предметы ЕГЭ">
-                            
+                        <ChipsSelect {...examsChipsProps}/>
                     </FormItem>
                     
                     <FormItem top="Город">
@@ -147,11 +147,11 @@ const Filters = ({id, isMobile, setActiveModal, closeModals, setFilteredCards,
                                 onChange={({target}) => setMinPoints(target.value)} 
                             />
                         </FormItem>
-                        <FormItem top="Средние">
+                        <FormItem top="Максимальные">
                             <Input 
-                            id="average-points"
-                            value={averagePoints} 
-                                onChange={({target}) => setAveragePoints(target.value)} 
+                            id="max-points"
+                            value={maxPoints} 
+                                onChange={({target}) => setMaxPoints(target.value)} 
                             />
                         </FormItem>
                     </FormLayoutGroup>
