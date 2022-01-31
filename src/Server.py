@@ -34,8 +34,17 @@ def MainInfo():
         mildep = request.args.get('mildep')
         items = items.filter(universities.mildep == mildep)
     if request.args.get('spec'):
-        spec = request.args.get('spec')
-        items = items.filter(universities.spec in spec)
+        specs = request.args.get('spec')
+        items = items.filter(spec in universities.spec for spec in specs)
+    if request.args.get('minscore'):
+        minscore = request.args.get('minscore')
+        items = items.filter(universities.avgscore > minscore)
+    if request.args.get('avgscore'):
+        avgscore = request.args.get('avgscore')
+        items = items.filter(universities.avgscore < avgscore)
+    if request.args.get('city'):
+        city = request.args.get('city')
+        items = items.filter(universities.city in city)
         
     response = app.response_class(
         response=str(items.limit(5)),
