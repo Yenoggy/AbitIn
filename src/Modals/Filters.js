@@ -32,7 +32,13 @@ import PropTypes from 'prop-types';
 import {Icon16Clear, Icon16Add} from '@vkontakte/icons';
 import {Icon16ChevronOutline} from '@vkontakte/icons';
 
-const exams = [{value: 'Р', label: 'Русский язык'}, {value: 'М', label: 'Математика'}, {value: 'ИНФ', label: 'Информатика',}];
+const exams = [
+    {value: 'Р', label: 'Русский язык'}, 
+    {value: 'М', label: 'Математика'}, 
+    {value: 'ИК', label: 'Информатика',}, 
+    {value: 'И', label: 'История',},
+    {value: 'АЯ', label: 'Английский язык'}
+];
 
 
 const Filters = ({id, isMobile, setActiveModal, closeModals, setFilteredCards, 
@@ -104,9 +110,10 @@ const Filters = ({id, isMobile, setActiveModal, closeModals, setFilteredCards,
     };
 
     const showResults = () => {
+        console.log(selectedExams);
         setFilteredCards(cards);
         setSelectedCityName(null);
-        setSelectedExams(null);
+        setSelectedExams(exams.slice(0, 2));
         console.log("Типа результаты");
     };
     return (
