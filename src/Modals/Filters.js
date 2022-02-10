@@ -75,14 +75,18 @@ const Filters = ({id, isMobile, setActiveModal, closeModals, setFilteredCards,
 
 
     const checkChanges = ({target}) => {
-        console.dir(target);
+        console.dir('changes,', target);
         countAndUpdateResults();
     };
 
     const countAndUpdateResults = async () => {
         //
-        const cards = await getCardsByFilters();
-        setResultsCount(cards.length);
+        try {
+            const cards = await getCardsByFilters();
+            setResultsCount(cards.length);
+        } catch (error) {
+            console.error('Ошибка getCardsByFilters (в countAndUpdateResults)', error);
+        }
         console.log("Результаты должны были обновиться");
     };
 
@@ -92,12 +96,12 @@ const Filters = ({id, isMobile, setActiveModal, closeModals, setFilteredCards,
         try {
             const res = await fetch(SERVER_API + 
                 `/MainInfo?mildep=${mildep}&dorm=${dorm}&city=${selectedCityName}
-                &minscore=${minPoints}&maxscore=${maxPoints}
+                &minscore=${minPoints}&avgscore=${maxPoints}
                 &spec=${    
                     selectedExams.map(({value}) => value).join(', ')
                 }`,
                 {
-                    method: "GET",
+                    method: "POST",
                     mode: 'cors',
             }
             );

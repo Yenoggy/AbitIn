@@ -40,7 +40,7 @@ const Main = ({id, go, setActiveModal, setSelectedCard, filteredCards, addToFavo
         async function getData() {
             try {
                 console.log('gettting')
-                const response = await fetch("https://sniff-beb.ru:13535/MainInfo",{
+                const response = await fetch(SERVER_API + '/MainInfo',{
                     method: "POST",
                     mode: 'cors',
                 });
