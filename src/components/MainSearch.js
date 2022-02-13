@@ -11,7 +11,7 @@ import {
 
 
 const MainSearch = () => {
-  let serverCards = null;
+
   const defaultNames = [
     {name: "Университет ИТМО"},
     {name: "Политех"},
@@ -20,36 +20,39 @@ const MainSearch = () => {
 
   const [outputNames, setOutputNames] = useState(defaultNames);
 
+  let serverData = null;
+  
   useEffect(() => {
-  async function getNames() {
-        try {
-          console.log('Получаем names')
-            const response = await fetch(SERVER_API + `/MainInfo?NamesOnly=${true}`,{
-                method: "POST",
-                mode: 'cors',
-            });
-            console.log(response)
-            const data = await response.json();
-            console.log(data)
-            serverCards = data;
-        } catch(error) {
-            console.error(error);
-        }
-    } 
+    async function getNames() {
+          try {
+            console.log('Получаем names')
+              const response = await fetch(SERVER_API + `/MainInfo?NamesOnly=${true}`,{
+                  method: "POST",
+                  mode: 'cors',
+              });
+              console.log(response)
+              const data = await response.json();
+              console.log(data)
+              serverData = data;
+          } catch(error) {
+              console.error(error);
+          }
+      } 
 
-    if (!serverCards) getNames();
+    if (!serverData) getNames();
 
   }, []); 
 
   const onInput = ({target}) => {
     const inputText = target.value.toLowerCase();
+
     if (inputText.length == 0) {
       setOutputNames(defaultNames);
       return;
     }
 
     setOutputNames(
-      serverCards.filter(({name}) => name.toLowerCase().indexOf(inputText) > -1)
+      serverData.filter(({name}) => name.toLowerCase().indexOf(inputText) > -1)
     );
   }
 
