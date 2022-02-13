@@ -17,7 +17,7 @@ class universities(db.Model):
     extra =             db.Column( db.String(500)) # Dict
 
     def __repr__(self):
-        return f'{{"id":"{self.id}", "name":"{self.name}", "imgurl":"{self.imgurl}", "mincost":"{self.mincost}", "spec":"{self.spec}", "city":"{self.city}", "address":"{self.address}", "avgscore":"{self.avgscore}", "minscore":"{self.minscore}", "mildep":"{self.mildep}", "dorm":"{self.dorm}", "extra":{self.extra}}}'
+        return f'{{"id":"{self.id}", "name":"{self.name}", "imgurl":"{self.imgurl}", "mincost":"{self.mincost}", "spec":"{self.spec}", "city":"{self.city}", "address":"{self.address}", "avgscore":"{self.avgscore}", "minscore":"{self.minscore}", "mildep":{self.mildep}, "dorm":{self.dorm}, "extra":{self.extra}}}'
 
 class users(db.Model):  
     id =                db.Column( db.Integer     , primary_key=True)  

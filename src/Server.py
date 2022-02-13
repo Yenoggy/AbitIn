@@ -25,29 +25,36 @@ db.create_all()
 
 @app.route('/MainInfo', methods=["POST", "GET"])
 def MainInfo():
-    offset = request.args.get('offset') if request.args.get('offset') else 0
-    items = universities.query.offset(offset)
+    items = universities.query
+    if request.args.get('offset'):
+        offset = request.args.get('offset')
+        items = items.offset(offset)
     if request.args.get('dorm'):
-        dorm = request.args.get('dorm')
+        dorm = bool(request.args.get('dorm'))
         items = items.filter(universities.dorm == dorm)
     if request.args.get('mildep'):
-        mildep = request.args.get('mildep')
+        mildep = bool(request.args.get('mildep'))
         items = items.filter(universities.mildep == mildep)
     if request.args.get('spec'):
         specs = request.args.get('spec')
         items = items.filter(spec in universities.spec for spec in specs)
     if request.args.get('minscore'):
-        minscore = request.args.get('minscore')
+        minscore = int(request.args.get('minscore'))
         items = items.filter(universities.avgscore > minscore)
     if request.args.get('avgscore'):
-        avgscore = request.args.get('avgscore')
+        avgscore = int(request.args.get('avgscore'))
         items = items.filter(universities.avgscore < avgscore)
     if request.args.get('city'):
         city = request.args.get('city')
         items = items.filter(universities.city in city)
-        
+    if request.args.get('limit'):
+        limit = request.args.get('limit')
+        items = items.limit(limit)
+    items: list[dict] = items.all()
+    if request.args.get('NamesOnly'):
+        items = [{'id':item.id, 'name':item.name} for item in items]
     response = app.response_class(
-        response=str(items.limit(5)),
+        response=str(items),
         status=200,
         mimetype='application/json'
     )
