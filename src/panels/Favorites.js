@@ -14,6 +14,7 @@ import {Icon20StarCircleFillGray} from '@vkontakte/icons';
 import Cards from '../components/Cards';
 const Favorites = ({id, go, setActiveModal, favoritiesIds, addToFavorites}) => {
     const [favorites, setFavorities] = useState([]);
+    const dataHasTaken = false;
     useEffect(() => {
    
         async function getFavorites() {
@@ -27,12 +28,13 @@ const Favorites = ({id, go, setActiveModal, favoritiesIds, addToFavorites}) => {
                 const data = await response.json();
                 console.log(data)
                 setFavorities(data);
+                dataHasTaken = true;
             } catch(error) {
                 console.error(error);
             }
         } 
 
-        if (!favorites.length) getFavorites(); //
+        if (!dataHasTaken) getFavorites(); //
     }, []);
 
 
