@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import '@vkontakte/vkui/dist/vkui.css';
+import PropTypes from 'prop-types';
 import {
     Group,
     Search,
@@ -10,7 +11,7 @@ import {
 
 
 
-const MainSearch = () => {
+const MainSearch = ({searchData}) => {
 
   const defaultNames = [
     {name: "Университет ИТМО"},
@@ -19,29 +20,6 @@ const MainSearch = () => {
   ];
 
   const [outputNames, setOutputNames] = useState(defaultNames);
-
-  let serverData = null;
-  
-  useEffect(() => {
-    async function getNames() {
-          try {
-            console.log('Получаем names')
-              const response = await fetch(SERVER_API + `/MainInfo?NamesOnly=${true}`,{
-                  method: "POST",
-                  mode: 'cors',
-              });
-              console.log(response)
-              const data = await response.json();
-              console.log(data)
-              serverData = data;
-          } catch(error) {
-              console.error(error);
-          }
-      } 
-
-    if (!serverData) getNames();
-
-  }, []); 
 
   const onInput = ({target}) => {
     const inputText = target.value.toLowerCase();
@@ -52,7 +30,7 @@ const MainSearch = () => {
     }
 
     setOutputNames(
-      serverData.filter(({name}) => name.toLowerCase().indexOf(inputText) > -1)
+      searchData.filter(({name}) => name.toLowerCase().indexOf(inputText) > -1)
     );
   }
 
@@ -67,4 +45,7 @@ const MainSearch = () => {
   );
 };
 
+MainSearch.propTypes = {
+  searchData: PropTypes.array.isRequired,
+}
 export default MainSearch;

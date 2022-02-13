@@ -13,31 +13,10 @@ import Cards from '../components/Cards';
 import FooterMain from '../components/FooterMain';
 
 const Main = ({id, go, setActiveModal, setSelectedCard, filteredCards, addToFavorites}) => {
-    const [cards, setCards] = useState([
-/*         {
-            id: 0,
-            img: "https://news.itmo.ru/images/news/big/p9409.jpg",
-            name: "Университет ИТМО",
-            description: "От 100 000 рублей в год",
-            address: "м. Гостиный Двор, 22 мин. пешком Набережная реки Фонтанки, 4, подъезд 7"
-        },
-        {
-            id: 1,
-            img: "https://news.itmo.ru/images/news/big/p9409.jpg",
-            name: "Университет ИТМО",
-            description: "От 100 000 рублей в год",
-            address: "м. Гостиный Двор, 22 мин. пешком Набережная реки Фонтанки, 4, подъезд 7"
-        },
-        {
-            id: 2,
-            img: "https://news.itmo.ru/images/news/big/p9409.jpg",
-            name: "Университет ИТМО",
-            description: "От 100 000 рублей в год",
-            address: "м. Гостиный Двор, 22 мин. пешком Набережная реки Фонтанки, 4, подъезд 7"
-        }, */
-    ]);
+    const [cards, setCards] = useState([]);
+    const [names, setNames] = useState(null);
     useEffect(() => {
-        async function getData() {
+        async function getCards() {
             try {
                 console.log('gettting')
                 const response = await fetch(SERVER_API + `/MainInfo`,{
@@ -50,17 +29,36 @@ const Main = ({id, go, setActiveModal, setSelectedCard, filteredCards, addToFavo
                 console.error(error);
             }
         }
+        async function getNames() {
+        try {
+          console.log('Получаем names')
+            const response = await fetch(SERVER_API + `/MainInfo?NamesOnly=${true}`,{
+                method: "POST",
+                mode: 'cors',
+            });
+            console.log(response)
+            const data = await response.json();
+            console.log(data)
+            setNames(data);
+        } catch(error) {
+            console.error(error);
+        }
+        } 
+
         if (filteredCards) setCards(filteredCards);
         else {
-             getData();
-      }
+            getCards();
+        }
+        if (!names) getNames();
     }, []);
+
+
 
     return (
         <Panel id={id} style={{justifyContent: "center"}}>
             <HeaderSlider setActiveModal={setActiveModal}/>
             <Group>
-                <MainSearch/>
+                <MainSearch searchData={names}/>
                 <Cards go={go} cards={cards} setSelectedCard={setSelectedCard} addToFavorites={addToFavorites}/>
                 <Spacing size={30}/>
                 <FooterMain go={go} selectedText="search"/>
