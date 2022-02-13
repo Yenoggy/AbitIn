@@ -36,10 +36,9 @@ const Main = ({id, go, setActiveModal, setSelectedCard, filteredCards, addToFavo
                 method: "POST",
                 mode: 'cors',
             });
-            console.log(response)
             const data = await response.json();
-            console.log(data)
             setNames(data);
+            console.log('имена', names)
         } catch(error) {
             console.error(error);
         }
