@@ -19,7 +19,7 @@ const Cards = ({go, cards, setSelectedCard, addToFavorites}) => {
                             <SmallCard key={index} go={go}
                                        id={card.id} img={card.imgurl} name={card.name}
                                        description={`От ${card.mincost} рублей в год`} address={card.address} toOnClick={ROUTES.CARDINFO}
-                                       setSelectedCard={setSelectedCard} addToFavorites={addToFavorites}
+                                       setSelectedCard={setSelectedCard}
                             />
                         </div>
                     ))}

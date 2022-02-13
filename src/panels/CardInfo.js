@@ -29,6 +29,7 @@ import {
     Subhead,
     Spacing,
     Link, Gallery, Title,
+    Button,
 } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 
@@ -39,7 +40,7 @@ import FooterMain from '../components/FooterMain';
 import {Icon24CheckSquareOutline} from '@vkontakte/icons';
 import {Icon24CheckBoxOff} from '@vkontakte/icons';
 
-const CardInfo = ({id, go, selectedCard, panelBack}) => {
+const CardInfo = ({id, go, selectedCard, panelBack, addToFavorites}) => {
     const [card, setCardData] = useState(null);
     useEffect(() => {
         async function getData() {
@@ -73,6 +74,9 @@ const CardInfo = ({id, go, selectedCard, panelBack}) => {
                             </Gallery>
                             <Title level="1" weight="bold" style={{marginBottom: 6}}>{card.name}</Title>
                             <Headline weight="semibold">Обучение от {card.mincost} ₽ в год</Headline>
+                            <Button size="m" style={{marginTop:5}} onClick={(e) => {
+                                addToFavorites(id);
+                            }}>В избранное</Button>
                         </Group>
                         <Group>
                             {card.mildep ?
@@ -119,6 +123,7 @@ CardInfo.propTypes = {
     go: PropTypes.func.isRequired,
     selectedCard: PropTypes.number.isRequired,
     panelBack: PropTypes.func.isRequired,
+    addToFavorites: PropTypes.func.isRequired,
 };
 
 export default CardInfo;

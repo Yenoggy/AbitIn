@@ -220,7 +220,7 @@ const App = () => {
                     <View activePanel={activePanel} popout={popout}>
                         <Main id={ROUTES.MAIN} go={go} setActiveModal={_setActiveModal}
                               setSelectedCard={setSelectedCard} filteredCards={filteredCards} addToFavorites={addToFavorites}/>
-                        <CardInfo id={ROUTES.CARDINFO} go={go} selectedCard={selectedCard} panelBack={panelBack}/>
+                        <CardInfo id={ROUTES.CARDINFO} go={go} selectedCard={selectedCard} panelBack={panelBack} addToFavorites={addToFavorites}/>
                         <Favorites id={ROUTES.FAVORITES} go={go} setActiveModal={_setActiveModal}
                                    favoritiesIds={userFavorites} addToFavorites={addToFavorites}/>
                     </View>

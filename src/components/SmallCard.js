@@ -6,7 +6,7 @@ import {
 import '@vkontakte/vkui/dist/vkui.css';
 import PropTypes from 'prop-types';
 
-const SmallCard = ({id, img, name, description, go, toOnClick, setSelectedCard, addToFavorites}) => {
+const SmallCard = ({id, img, name, description, go, toOnClick, setSelectedCard}) => {
     return (
         <div data-to={toOnClick}>
             <ContentCard data-to={toOnClick} onClick={e => {
@@ -19,11 +19,6 @@ const SmallCard = ({id, img, name, description, go, toOnClick, setSelectedCard, 
                 src={img}
                 header={name}
                 text={description}
-                caption={
-                    <Button size="m" style={{marginTop:1}} onClick={(e) => {
-                        addToFavorites(id);
-                    }}>В избранное</Button>
-                }
                 maxHeight={500}
             >
             </ContentCard>
@@ -36,6 +31,5 @@ SmallCard.propTypes = {
     id: PropTypes.number.isRequired,
     img: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
-    addToFavorites: PropTypes.func.isRequired,
 };
 export default SmallCard;
