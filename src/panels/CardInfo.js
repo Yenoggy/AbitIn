@@ -74,8 +74,9 @@ const CardInfo = ({id, go, selectedCard, panelBack, addToFavorites}) => {
                             </Gallery>
                             <Title level="1" weight="bold" style={{marginBottom: 6}}>{card.name}</Title>
                             <Headline weight="semibold">Обучение от {card.mincost} ₽ в год</Headline>
-                            <Button size="m" style={{marginTop:5}} onClick={(e) => {
+                            <Button size="m" id='add-favorites-btn' style={{marginTop:5}} onClick={(e) => {
                                 addToFavorites(id);
+                                document.querySelector('#add-favorites-btn').style.display = 'none';
                             }}>В избранное</Button>
                         </Group>
                         <Group>
