@@ -17,23 +17,26 @@ const MainSearch = () => {
     {name: "Горный"},
   ]);
 
-    /* useEffect(() => {
-  async function getData() {
+  useEffect(() => {
+  async function getNames() {
         try {
-            const response = await fetch(SERVER_API + `/MainInfo`,{
+          console.log('Получаем names')
+            const response = await fetch(SERVER_API + `/MainInfo?NamesOnly=${true}`,{
                 method: "POST",
                 mode: 'cors',
             });
+            console.log(response)
             const data = await response.json();
-            setCardData(...data);
+            console.log(data)
+            setCards(data);
         } catch(error) {
             console.error(error);
         }
     } 
 
-    getData();
+    getNames();
 
-  }, []); */
+  }, []); 
 
   const onInput = ({target}) => {
     const search = target.value.toLowerCase();
