@@ -11,11 +11,14 @@ import {
 
 
 const MainSearch = () => {
-  const [cards, setCards] = useState([
+  let serverCards = null;
+  const defaultNames = [
     {name: "Университет ИТМО"},
     {name: "Политех"},
     {name: "Горный"},
-  ]);
+  ];
+
+  const [outputNames, setOutputNames] = useState(defaultNames);
 
   useEffect(() => {
   async function getNames() {
@@ -28,27 +31,34 @@ const MainSearch = () => {
             console.log(response)
             const data = await response.json();
             console.log(data)
-            setCards(data);
+            serverCards = data;
         } catch(error) {
             console.error(error);
         }
     } 
 
-    getNames();
+    if (!serverCards) getNames();
 
   }, []); 
 
   const onInput = ({target}) => {
-    const search = target.value.toLowerCase();
-    setCards(cards.filter(({name}) => name.toLowerCase().indexOf(search) > -1));
+    const inputText = target.value.toLowerCase();
+    if (inputText.length == 0) {
+      setOutputNames(defaultNames);
+      return;
+    }
+
+    setOutputNames(
+      serverCards.filter(({name}) => name.toLowerCase().indexOf(inputText) > -1)
+    );
   }
 
   return (
     <>
         <Group>
           <Search onChange={onInput} after={null}/>
-          {cards.length > 0 && cards.map(card => <Cell key={card.id}>{card.name}</Cell>)}
-          {cards.length === 0 && <Footer>Ничего не найдено</Footer>}
+          {outputNames.length > 0 && outputNames.map(university => <Cell key={university.id}>{university.name}</Cell>)}
+          {outputNames.length === 0 && <Footer>Ничего не найдено</Footer>}
         </Group>
     </>
   );
