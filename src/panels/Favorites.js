@@ -12,22 +12,30 @@ import MainSearch from '../components/MainSearch';
 
 import {Icon20StarCircleFillGray} from '@vkontakte/icons';
 import Cards from '../components/Cards';
-const Favorites = ({id, go, setActiveModal, favoritiesIds, addToFavorites}) => {
-    const [favorites, setFavorities] = useState([]);
+const Favorites = ({id, go, setActiveModal, getUnicFavoritesIds, addToFavorites}) => {
+    const [favorites, setFavorites] = useState([]);
     const dataHasTaken = false;
     useEffect(() => {
-   
+        // Получаем по списку с id-шниками фаворитных вузов карточки из базы данных для отрисовки, чистим лишние
         async function getFavorites() {
+
             try {
-            console.log('Получаем names')
-                const response = await fetch(SERVER_API + `/Favorites?Id=${favoritiesIds}`,{
+                const unicIds = getUnicFavoritesIds();
+                const requestArguments =  {
                     method: "POST",
                     mode: 'cors',
-                });
-                console.log(response)
-                const data = await response.json();
+                };
+
+                const data = [];
+                for (const unicId of unicIds) {
+                    const response = await fetch(SERVER_API + `/Favorites?Id=${unicId}`, requestArguments);
+                    console.log(response)
+                    const partOfData = await response.json();
+                    data.push(partOfData);
+                }
+                
                 console.log(data)
-                setFavorities(data);
+                setFavorites(data);
                 dataHasTaken = true;
             } catch(error) {
                 console.error(error);
@@ -65,6 +73,7 @@ Favorites.propTypes = {
     setActiveModal: PropTypes.func.isRequired,
     favoritiesIds: PropTypes.array.isRequired,
     addToFavorites: PropTypes.func.isRequired,
+    getUnicFavoritesIds: PropTypes.func.isRequired,
 };
 
 export default Favorites;

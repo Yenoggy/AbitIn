@@ -141,6 +141,8 @@ const App = () => {
 
     };
 
+    const getUnicFavoritesIds = () => [...new Set(userFavorites)];
+
     const _setActiveModal = e => {
         const modalName = e.currentTarget.dataset.modal;
 
@@ -222,7 +224,7 @@ const App = () => {
                               setSelectedCard={setSelectedCard} filteredCards={filteredCards} addToFavorites={addToFavorites}/>
                         <CardInfo id={ROUTES.CARDINFO} go={go} selectedCard={selectedCard} panelBack={panelBack} addToFavorites={addToFavorites}/>
                         <Favorites id={ROUTES.FAVORITES} go={go} setActiveModal={_setActiveModal}
-                                   favoritiesIds={userFavorites} addToFavorites={addToFavorites}/>
+                                   getUnicFavoritesIds={getUnicFavoritesIds} addToFavorites={addToFavorites}/>
                     </View>
                 </SplitCol>
             </SplitLayout>
