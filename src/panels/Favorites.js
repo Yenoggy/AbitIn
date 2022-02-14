@@ -14,8 +14,9 @@ import {Icon20StarCircleFillGray} from '@vkontakte/icons';
 import Cards from '../components/Cards';
 const Favorites = ({id, go, setActiveModal, getUnicFavoritesIds, addToFavorites}) => {
     const [favorites, setFavorites] = useState([]);
-    const dataHasTaken = false;
+    let dataHasTaken = false;
     useEffect(() => {
+        console.log('data ids', getUnicFavoritesIds());
         // Получаем по списку с id-шниками фаворитных вузов карточки из базы данных для отрисовки, чистим лишние
         async function getFavorites() {
 
@@ -28,13 +29,13 @@ const Favorites = ({id, go, setActiveModal, getUnicFavoritesIds, addToFavorites}
 
                 const data = [];
                 for (const unicId of unicIds) {
-                    const response = await fetch(SERVER_API + `/Favorites?Id=${unicId}`, requestArguments);
+                    const response = await fetch(SERVER_API + `/GetInfo?Id=${unicId}`, requestArguments);
                     console.log(response)
                     const partOfData = await response.json();
-                    data.push(partOfData);
+                    data.push(...partOfData);
                 }
-                
-                console.log(data)
+                console.log('data ids', unicIds);
+                console.log('data Favorites', data)
                 setFavorites(data);
                 dataHasTaken = true;
             } catch(error) {
@@ -42,7 +43,7 @@ const Favorites = ({id, go, setActiveModal, getUnicFavoritesIds, addToFavorites}
             }
         } 
 
-        if (!dataHasTaken) getFavorites(); //
+        if (!dataHasTaken && getUnicFavoritesIds().length) getFavorites(); //
     }, []);
 
 
@@ -71,7 +72,6 @@ Favorites.propTypes = {
     id: PropTypes.string.isRequired,
     go: PropTypes.func.isRequired,
     setActiveModal: PropTypes.func.isRequired,
-    favoritiesIds: PropTypes.array.isRequired,
     addToFavorites: PropTypes.func.isRequired,
     getUnicFavoritesIds: PropTypes.func.isRequired,
 };

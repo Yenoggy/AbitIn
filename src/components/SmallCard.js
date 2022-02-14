@@ -28,7 +28,7 @@ const SmallCard = ({id, img, name, description, go, toOnClick, setSelectedCard})
 };
 
 SmallCard.propTypes = {
-    id: PropTypes.number.isRequired,
+    id: PropTypes.string.isRequired,
     img: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
 };
