@@ -75,7 +75,7 @@ const Filters = ({id, isMobile, setActiveModal, closeModals, setFilteredCards,
 
 
     const checkChanges = ({target}) => {
-        console.dir('changes,', target);
+        console.dir('changes', target);
         countAndUpdateResults();
     };
 
@@ -93,18 +93,27 @@ const Filters = ({id, isMobile, setActiveModal, closeModals, setFilteredCards,
     const getCardsByFilters = async () => {
         let data;
         try {
-            const res = await fetch(SERVER_API + 
-                `/MainInfo?mildep=${mildep}&dorm=${dorm}&city=${selectedCityName}
-                &minscore=${minPoints}&avgscore=${maxPoints}
-                &spec=${    
-                    selectedExams.map(({value}) => value).join(', ')
-                }`,
+            let specString = "";
+            for (let i = 0; i < selectedExams.length; i++) {
+                specString += "&";
+                specString += `spec[${i}]=${selectedExams[i].value}`;
+            }
+            
+            let requestText;
+            if (selectedCityName) requestText = SERVER_API + 
+            `/MainInfo?mildep=${mildep}&dorm=${dorm}&city[0]=${selectedCityName}&minscore=${minPoints}&avgscore=${maxPoints}${specString}`;
+            else requestText = SERVER_API + 
+            `/MainInfo?mildep=${mildep}&dorm=${dorm}&minscore=${minPoints}&avgscore=${maxPoints}${specString}`;
+
+            console.log(requestText);
+            const res = await fetch(requestText,
                 {
                     method: "POST",
                     mode: 'cors',
             }
             );
             data = await res.json(); 
+            console.log('data', data);
             setCards(data); 
         } catch(error) {
             console.error('Ошибка SERVER-API getCardsByFilters', error);
@@ -113,11 +122,9 @@ const Filters = ({id, isMobile, setActiveModal, closeModals, setFilteredCards,
     };
 
     const showResults = () => {
-        console.log(selectedExams);
         setFilteredCards(cards);
         setSelectedCityName(null);
         setSelectedExams(exams.slice(0, 2));
-        console.log("Типа результаты");
     };
     return (
         <ModalPage
