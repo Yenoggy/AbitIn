@@ -12,7 +12,7 @@ const SmallCard = ({id, img, name, description, go, toOnClick, setSelectedCard})
             <ContentCard data-to={toOnClick} onClick={e => {
                 if (toOnClick !== ROUTES.CARDINFO) return;
                 setSelectedCard(Number(id));
-                e.currentTarget.dataset.to = toOnClick; // удалить
+                e.currentTarget.dataset.to = toOnClick;
                 go(e);
             }
             }
@@ -29,6 +29,8 @@ const SmallCard = ({id, img, name, description, go, toOnClick, setSelectedCard})
 
 SmallCard.propTypes = {
     id: PropTypes.string.isRequired,
+    go: PropTypes.func.isRequired,
+    toOnClick: PropTypes.string.isRequired,
     img: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
 };

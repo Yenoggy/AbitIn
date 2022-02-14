@@ -12,13 +12,12 @@ import HeaderSlider from '../components/HeaderSlider';
 import Cards from '../components/Cards';
 import FooterMain from '../components/FooterMain';
 
-const Main = ({id, go, setActiveModal, setSelectedCard, filteredCards, addToFavorites}) => {
+const Main = ({id, go, setActiveModal, setSelectedCard, filteredCards, addToFavorites, setActiveBottomType}) => {
     const [cards, setCards] = useState([]);
     const [names, setNames] = useState(null);
     useEffect(() => {
         async function getCards() {
             try {
-                console.log('gettting')
                 const response = await fetch(SERVER_API + `/MainInfo`,{
                     method: "POST",
                     mode: 'cors',
@@ -31,14 +30,12 @@ const Main = ({id, go, setActiveModal, setSelectedCard, filteredCards, addToFavo
         }
         async function getNames() {
         try {
-          console.log('Получаем names')
             const response = await fetch(SERVER_API + `/MainInfo?NamesOnly=${true}`,{
                 method: "POST",
                 mode: 'cors',
             });
             const data = await response.json();
             setNames(data);
-            console.log('имена', names)
         } catch(error) {
             console.error(error);
         }
@@ -60,7 +57,7 @@ const Main = ({id, go, setActiveModal, setSelectedCard, filteredCards, addToFavo
                 <MainSearch searchData={names}/>
                 <Cards go={go} cards={cards} setSelectedCard={setSelectedCard} addToFavorites={addToFavorites}/>
                 <Spacing size={30}/>
-                <FooterMain go={go} selectedText="search"/>
+                <FooterMain go={go} selectedText="search" setActiveBottomType={setActiveBottomType}/>
             </Group>
         </Panel>
     );
@@ -73,6 +70,7 @@ Main.propTypes = {
     setSelectedCard: PropTypes.func.isRequired,
     filteredCards: PropTypes.array,
     addToFavorites: PropTypes.func.isRequired,
+    setActiveBottomType: PropTypes.func.isRequired,
 };
 
 export default Main;

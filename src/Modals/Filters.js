@@ -87,7 +87,6 @@ const Filters = ({id, isMobile, setActiveModal, closeModals, setFilteredCards,
         } catch (error) {
             console.error('Ошибка getCardsByFilters (в countAndUpdateResults)', error);
         }
-        console.log("Результаты должны были обновиться");
     };
 
 

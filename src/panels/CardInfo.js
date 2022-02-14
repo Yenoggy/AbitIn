@@ -40,7 +40,7 @@ import FooterMain from '../components/FooterMain';
 import {Icon24CheckSquareOutline} from '@vkontakte/icons';
 import {Icon24CheckBoxOff} from '@vkontakte/icons';
 
-const CardInfo = ({id, go, selectedCard, panelBack, addToFavorites}) => {
+const CardInfo = ({id, go, selectedCard, panelBack, addToFavorites, setActiveBottomType, activeBottomType}) => {
     const [card, setCardData] = useState(null);
     useEffect(() => {
         async function getData() {
@@ -114,7 +114,7 @@ const CardInfo = ({id, go, selectedCard, panelBack, addToFavorites}) => {
                 }
 
             </Group>
-            <FooterMain go={go} selectedText="search"/>
+            <FooterMain go={go} setActiveBottomType={setActiveBottomType} selectedText={activeBottomType}/>
         </Panel>
     );
 };
@@ -125,6 +125,8 @@ CardInfo.propTypes = {
     selectedCard: PropTypes.number.isRequired,
     panelBack: PropTypes.func.isRequired,
     addToFavorites: PropTypes.func.isRequired,
+    setActiveBottomType: PropTypes.func.isRequired,
+    activeBottomType: PropTypes.string.isRequired,
 };
 
 export default CardInfo;

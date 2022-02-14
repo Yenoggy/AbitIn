@@ -8,7 +8,7 @@ import '@vkontakte/vkui/dist/vkui.css';
 import PropTypes from 'prop-types';
 import SmallCard from './SmallCard';
 
-const Cards = ({go, cards, setSelectedCard, addToFavorites}) => {
+const Cards = ({go, cards, setSelectedCard}) => {
 
     return (
         <Group>
@@ -33,7 +33,5 @@ const Cards = ({go, cards, setSelectedCard, addToFavorites}) => {
 Cards.propTypes = {
     go: PropTypes.func.isRequired,
     cards: PropTypes.array.isRequired,
-    setSelectedCard: PropTypes.func.isRequired,
-    addToFavorites: PropTypes.func.isRequired,
 };
 export default Cards;

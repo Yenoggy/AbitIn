@@ -47,14 +47,16 @@ const App = () => {
     const [selectedCityName, setSelectedCityName] = useState("");
     const [filteredCards, setFilteredCards] = useState(null);
 
-    const [activePanel, setActivePanel] = useState(ROUTES.MAIN);
     const [popout, setPopout] = useState(<ScreenSpinner size='large'/>);
     const [snackbar, setSnackbar] = useState(false);
-    const [activeModal, setActiveModal] = useState(null);
+
 
     const [panelHistory, setPanelHistory] = useState([ROUTES.MAIN]);
     const [modalHistory, setModalHistory] = useState([""]);
 
+    const [activePanel, setActivePanel] = useState(ROUTES.MAIN);
+    const [activeModal, setActiveModal] = useState(null);
+    const [activeBottomType, setActiveBottomType] = useState("search"); // Поиск или Избранное, отображение выбранного
 
     useEffect(() => {
         bridge.subscribe(({detail: {type, data}}) => {
@@ -78,7 +80,6 @@ const App = () => {
                     switch (key) {
                         case STORAGE_KEYS.FAVORITES: {
                             if (data[key]) {
-                                if (typeof data[key] !== 'array') data[key] = [];
                                 setUserFavorites([...data[key]]);
                             }
                             break;
@@ -113,13 +114,43 @@ const App = () => {
 
     const addToFavorites = async universityId => {
         try {
-            const copyUserFavorites = [...userFavorites];
+            const copyUserFavorites = [...new Set(userFavorites)];
             copyUserFavorites.push(universityId);
             setUserFavorites(copyUserFavorites);
 
             await bridge.send("VKWebAppStorageSet", {
                 key: STORAGE_KEYS.FAVORITES,
                 value: JSON.stringify(copyUserFavorites)
+            });
+        } catch (error) {
+            console.error(error);
+            setSnackbar(
+                <Snackbar
+                layout="vertical"
+                onClose={() => setSnackbar(null)}
+                before={
+                    <Avatar size={24} style={{ backgroundColor: "var(--dynamic-red)"}}>
+                        <Icon24Error fill="#fff" width={14} height={14}/>
+                    </Avatar>
+                }
+                duration={900}
+                >
+                    Произошла проблема с отправкой данных в хранилище (Storage)
+                </Snackbar>
+            );
+        }
+
+    };
+
+    const removeFromFavorites = async universityId => {
+        try {
+            const setUserFavorites = new Set(...userFavorites);
+            setUserFavorites.Delete(universityId);
+            setUserFavorites([...setUserFavorites]);
+
+            await bridge.send("VKWebAppStorageSet", {
+                key: STORAGE_KEYS.FAVORITES,
+                value: JSON.stringify(userFavorites)
             });
         } catch (error) {
             console.error(error);
@@ -221,10 +252,13 @@ const App = () => {
                 >
                     <View activePanel={activePanel} popout={popout}>
                         <Main id={ROUTES.MAIN} go={go} setActiveModal={_setActiveModal}
-                              setSelectedCard={setSelectedCard} filteredCards={filteredCards} addToFavorites={addToFavorites}/>
-                        <CardInfo id={ROUTES.CARDINFO} go={go} selectedCard={selectedCard} panelBack={panelBack} addToFavorites={addToFavorites}/>
+                              setSelectedCard={setSelectedCard} filteredCards={filteredCards} 
+                              setActiveBottomType={setActiveBottomType}/>
+
+                        <CardInfo id={ROUTES.CARDINFO} go={go} selectedCard={selectedCard} panelBack={panelBack} addToFavorites={addToFavorites} activeBottomType={activeBottomType} setActiveBottomType={setActiveBottomType}/>
+
                         <Favorites id={ROUTES.FAVORITES} go={go} setActiveModal={_setActiveModal}
-                                   getUnicFavoritesIds={getUnicFavoritesIds} addToFavorites={addToFavorites}/>
+                                   getUnicFavoritesIds={getUnicFavoritesIds} removeFromFavorites={removeFromFavorites} setSelectedCard={setSelectedCard} setActiveBottomType={setActiveBottomType} setPopout={setPopout}/>
                     </View>
                 </SplitCol>
             </SplitLayout>
