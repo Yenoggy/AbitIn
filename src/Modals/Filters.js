@@ -136,7 +136,7 @@ const Filters = ({id, isMobile, setActiveModal, closeModals, setFilteredCards,
                     left={isMobile && <PanelHeaderClose onClick={exitFilters}/>}
                     right={<PanelHeaderSubmit onClick={exitFilters}/>}
                 >
-                    Фильтры
+                    Фильтры 
                 </ModalPageHeader>
             }
         >

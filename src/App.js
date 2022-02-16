@@ -144,9 +144,9 @@ const App = () => {
 
     const removeFromFavorites = async universityId => {
         try {
-            const setUserFavorites = new Set(...userFavorites);
-            setUserFavorites.Delete(universityId);
-            setUserFavorites([...setUserFavorites]);
+            const setOfFavorites = new Set(userFavorites);
+            setOfFavorites.delete(universityId);
+            setUserFavorites([...setOfFavorites]);
 
             await bridge.send("VKWebAppStorageSet", {
                 key: STORAGE_KEYS.FAVORITES,
@@ -255,10 +255,11 @@ const App = () => {
                               setSelectedCard={setSelectedCard} filteredCards={filteredCards} 
                               setActiveBottomType={setActiveBottomType}/>
 
-                        <CardInfo id={ROUTES.CARDINFO} go={go} selectedCard={selectedCard} panelBack={panelBack} addToFavorites={addToFavorites} activeBottomType={activeBottomType} setActiveBottomType={setActiveBottomType}/>
+                        {/* CardInfo принимает удаление из избранного и добавление обратно, на случай если пользователь сразу хочет вернуть обратно (находясь в избранном) */}
+                        <CardInfo id={ROUTES.CARDINFO} go={go} selectedCard={selectedCard} panelBack={panelBack} addToFavorites={addToFavorites} removeFromFavorites={removeFromFavorites} activeBottomType={activeBottomType} setActiveBottomType={setActiveBottomType} getUnicFavoritesIds={getUnicFavoritesIds}/>
 
                         <Favorites id={ROUTES.FAVORITES} go={go} setActiveModal={_setActiveModal}
-                                   getUnicFavoritesIds={getUnicFavoritesIds} removeFromFavorites={removeFromFavorites} setSelectedCard={setSelectedCard} setActiveBottomType={setActiveBottomType} setPopout={setPopout}/>
+                                   getUnicFavoritesIds={getUnicFavoritesIds} setSelectedCard={setSelectedCard} setActiveBottomType={setActiveBottomType} setPopout={setPopout}/>
                     </View>
                 </SplitCol>
             </SplitLayout>

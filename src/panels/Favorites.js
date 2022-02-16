@@ -14,7 +14,7 @@ import MainSearch from '../components/MainSearch';
 import {Icon20StarCircleFillGray} from '@vkontakte/icons';
 import Cards from '../components/Cards';
 const Favorites = ({id, go, setActiveModal, getUnicFavoritesIds, 
-    removeFromFavorites, setSelectedCard, setActiveBottomType, setPopout}) => {
+    setSelectedCard, setActiveBottomType, setPopout}) => {
     const [favorites, setFavorites] = useState([]);
     let dataHasTaken = false;
     useEffect(() => {
@@ -66,7 +66,6 @@ const Favorites = ({id, go, setActiveModal, getUnicFavoritesIds,
                 <Cards 
                     go={go} 
                     cards={favorites} 
-                    removeFromFavorites={removeFromFavorites}
                     setSelectedCard={setSelectedCard}
                 />
             }
@@ -79,7 +78,6 @@ Favorites.propTypes = {
     id: PropTypes.string.isRequired,
     go: PropTypes.func.isRequired,
     setActiveModal: PropTypes.func.isRequired,
-    removeFromFavorites: PropTypes.func.isRequired,
     getUnicFavoritesIds: PropTypes.func.isRequired,
     setSelectedCard: PropTypes.func.isRequired,
     setPopout: PropTypes.func.isRequired,

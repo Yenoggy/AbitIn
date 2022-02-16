@@ -40,8 +40,15 @@ import FooterMain from '../components/FooterMain';
 import {Icon24CheckSquareOutline} from '@vkontakte/icons';
 import {Icon24CheckBoxOff} from '@vkontakte/icons';
 
-const CardInfo = ({id, go, selectedCard, panelBack, addToFavorites, setActiveBottomType, activeBottomType}) => {
+const CardInfo = ({id, go, selectedCard, getUnicFavoritesIds, panelBack, addToFavorites, removeFromFavorites, setActiveBottomType, activeBottomType}) => {
     const [card, setCardData] = useState(null);
+
+    // Определяет находится ли пользователь в избранных и просматривает свою карточку из избранного
+    const isInFavorites = () => {
+        console.log(activeBottomType);
+        return activeBottomType === 'favorites';
+    }
+
     useEffect(() => {
         async function getData() {
             try {
@@ -52,7 +59,7 @@ const CardInfo = ({id, go, selectedCard, panelBack, addToFavorites, setActiveBot
                 const data = await response.json();
                 setCardData(...data);
             } catch(error) {
-                console.error(error);
+                console.error('ERROR in fetch GetInfo CardInfo', error);
             }
         }
 
@@ -74,10 +81,24 @@ const CardInfo = ({id, go, selectedCard, panelBack, addToFavorites, setActiveBot
                             </Gallery>
                             <Title level="1" weight="bold" style={{marginBottom: 6}}>{card.name}</Title>
                             <Headline weight="semibold">Обучение от {card.mincost} ₽ в год</Headline>
-                            <Button size="m" id='add-favorites-btn' style={{marginTop:5}} onClick={(e) => {
-                                addToFavorites(selectedCard);
-                                document.querySelector('#add-favorites-btn').style.display = 'none';
-                            }}>В избранное</Button>
+
+                            {/* Если карточка из избранного и можно удалить её*/}
+                            {isInFavorites() && getUnicFavoritesIds().indexOf(selectedCard) !== -1 &&
+                                <Button size="m" id='add-favorites-btn' style={{marginTop:5}} onClick={(e) => {
+                                    removeFromFavorites(selectedCard);
+                                    document.querySelector('#add-favorites-btn').style.display = 'none';
+                                }}>Убрать из избранного</Button>
+                            }
+
+                            {/* Если просто открыл карточку не из избранного 
+                            или Если карточка из избранного и пользователь только что удалил её оттуда*/}
+                            {!isInFavorites()  || (isInFavorites() && getUnicFavoritesIds().indexOf(selectedCard) == -1) &&
+                                <Button size="m" id='add-favorites-btn' style={{marginTop:5}} onClick={(e) => {
+                                    addToFavorites(selectedCard);
+                                    document.querySelector('#add-favorites-btn').style.display = 'none';
+                                }}>В избранное</Button>
+                            }
+
                         </Group>
                         <Group>
                             {card.mildep ?
@@ -125,8 +146,10 @@ CardInfo.propTypes = {
     selectedCard: PropTypes.number.isRequired,
     panelBack: PropTypes.func.isRequired,
     addToFavorites: PropTypes.func.isRequired,
+    removeFromFavorites: PropTypes.func.isRequired,
     setActiveBottomType: PropTypes.func.isRequired,
     activeBottomType: PropTypes.string.isRequired,
+    getUnicFavoritesIds: PropTypes.func.isRequired,
 };
 
 export default CardInfo;
