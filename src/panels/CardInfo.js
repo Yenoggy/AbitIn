@@ -50,6 +50,7 @@ const CardInfo = ({id, go, selectedCard, getUnicFavoritesIds, panelBack, addToFa
     }
 
     useEffect(() => {
+        console.log('isInFavorites, 11', isInFavorites(), (isInFavorites() && getUnicFavoritesIds().indexOf(selectedCard) == -1));
         async function getData() {
             try {
                 const response = await fetch(SERVER_API + `/GetInfo?Id=${selectedCard}`,{
@@ -82,14 +83,6 @@ const CardInfo = ({id, go, selectedCard, getUnicFavoritesIds, panelBack, addToFa
                             <Title level="1" weight="bold" style={{marginBottom: 6}}>{card.name}</Title>
                             <Headline weight="semibold">Обучение от {card.mincost} ₽ в год</Headline>
 
-                            {/* Если карточка из избранного и можно удалить её*/}
-                            {isInFavorites() && getUnicFavoritesIds().indexOf(selectedCard) !== -1 &&
-                                <Button size="m" id='add-favorites-btn' style={{marginTop:5}} onClick={(e) => {
-                                    removeFromFavorites(selectedCard);
-                                    document.querySelector('#add-favorites-btn').style.display = 'none';
-                                }}>Убрать из избранного</Button>
-                            }
-
                             {/* Если просто открыл карточку не из избранного 
                             или Если карточка из избранного и пользователь только что удалил её оттуда*/}
                             {!isInFavorites()  || (isInFavorites() && getUnicFavoritesIds().indexOf(selectedCard) == -1) &&
@@ -98,6 +91,16 @@ const CardInfo = ({id, go, selectedCard, getUnicFavoritesIds, panelBack, addToFa
                                     document.querySelector('#add-favorites-btn').style.display = 'none';
                                 }}>В избранное</Button>
                             }
+
+
+                            {/* Если карточка из избранного и можно удалить её*/}
+                            {isInFavorites() && getUnicFavoritesIds().indexOf(selectedCard) !== -1 &&
+                                <Button size="m" id='add-favorites-btn' style={{marginTop:5}} onClick={(e) => {
+                                    removeFromFavorites(selectedCard);
+                                    document.querySelector('#add-favorites-btn').style.display = 'none';
+                                }}>Убрать из избранного</Button>
+                            }
+
 
                         </Group>
                         <Group>

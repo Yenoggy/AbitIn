@@ -17,11 +17,7 @@ const Main = ({id, go, setActiveModal, setSelectedCard, filteredCards, setActive
     const [cards, setCards] = useState([]);
     const [names, setNames] = useState(null);
 
-    let dataHasTaken = false;
     useEffect(() => {
-        if (!dataHasTaken) {
-            setPopout(<ScreenSpinner size='large'/>);
-        }
         async function getCards() {
             try {
                 const response = await fetch(SERVER_API + `/MainInfo`,{
@@ -30,9 +26,7 @@ const Main = ({id, go, setActiveModal, setSelectedCard, filteredCards, setActive
                 });
                 const data = await response.json();
                 setCards(data);
-                
-                setPopout(null);
-                dataHasTaken = true;
+
             } catch(error) {
                 console.error(error);
             }

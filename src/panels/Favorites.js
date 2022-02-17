@@ -15,12 +15,12 @@ import {Icon20StarCircleFillGray} from '@vkontakte/icons';
 import Cards from '../components/Cards';
 const Favorites = ({id, go, setActiveModal, getUnicFavoritesIds, 
     setSelectedCard, setActiveBottomType, setPopout}) => {
-    const [favorites, setFavorites] = useState([]);
+    const [favorites, setFavorites] = useState(null);
     let dataHasTaken = false;
 
     useEffect(() => {
+        console.log('dataHasTaken', dataHasTaken);
         if (!dataHasTaken) {
-            console.log('spinner call');
             setPopout(<ScreenSpinner size='large'/>);
         }
         // Получаем по списку с id-шниками фаворитных вузов карточки из базы данных для отрисовки, чистим лишние
@@ -43,6 +43,7 @@ const Favorites = ({id, go, setActiveModal, getUnicFavoritesIds,
                 setPopout(null);
                 setFavorites(data);
                 dataHasTaken = true;
+                console.log('dataHasTaken')
                 
             } catch(error) {
                 console.error(error);
@@ -58,22 +59,24 @@ const Favorites = ({id, go, setActiveModal, getUnicFavoritesIds,
         <Panel id={id}>
             <HeaderSlider setActiveModal={setActiveModal}/>
             {favorites &&
-                <MainSearch searchData={favorites} setSelectedCard={setSelectedCard}  go={go}/>
-            }
-           {!favorites.length && dataHasTaken &&
-            <Placeholder
-                icon={<Icon20StarCircleFillGray width={154.74} height={
-                    148.61}/>}
-            >
-                Нет избранных вузов
-            </Placeholder>
-            }
-            {favorites.length > 0 &&
-                <Cards 
-                    go={go} 
-                    cards={favorites} 
-                    setSelectedCard={setSelectedCard}
-                />
+                <div>
+                    <MainSearch searchData={favorites} setSelectedCard={setSelectedCard}  go={go}/>
+                    {!favorites.length && dataHasTaken &&
+                        <Placeholder
+                            icon={<Icon20StarCircleFillGray width={154.74} height={
+                                148.61}/>}
+                        >
+                            Нет избранных вузов
+                        </Placeholder>
+                        }
+                        {favorites.length > 0 &&
+                            <Cards 
+                                go={go} 
+                                cards={favorites} 
+                                setSelectedCard={setSelectedCard}
+                            />
+                    }
+                </div>
             }
             <FooterMain go={go} setActiveBottomType={setActiveBottomType} selectedText="favorites"/>
         </Panel>
