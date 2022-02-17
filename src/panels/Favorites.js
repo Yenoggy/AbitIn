@@ -17,8 +17,12 @@ const Favorites = ({id, go, setActiveModal, getUnicFavoritesIds,
     setSelectedCard, setActiveBottomType, setPopout}) => {
     const [favorites, setFavorites] = useState([]);
     let dataHasTaken = false;
+
     useEffect(() => {
-        if (!dataHasTaken) setPopout(<ScreenSpinner size='large'/>);
+        if (!dataHasTaken) {
+            console.log('spinner call');
+            setPopout(<ScreenSpinner size='large'/>);
+        }
         // Получаем по списку с id-шниками фаворитных вузов карточки из базы данных для отрисовки, чистим лишние
         async function getFavorites() {
 
@@ -53,8 +57,10 @@ const Favorites = ({id, go, setActiveModal, getUnicFavoritesIds,
     return (
         <Panel id={id}>
             <HeaderSlider setActiveModal={setActiveModal}/>
-            <MainSearch searchData={favorites} />
-            {!favorites.length && dataHasTaken &&
+            {favorites &&
+                <MainSearch searchData={favorites} setSelectedCard={setSelectedCard}  go={go}/>
+            }
+           {!favorites.length && dataHasTaken &&
             <Placeholder
                 icon={<Icon20StarCircleFillGray width={154.74} height={
                     148.61}/>}

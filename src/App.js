@@ -253,13 +253,14 @@ const App = () => {
                     <View activePanel={activePanel} popout={popout}>
                         <Main id={ROUTES.MAIN} go={go} setActiveModal={_setActiveModal}
                               setSelectedCard={setSelectedCard} filteredCards={filteredCards} 
-                              setActiveBottomType={setActiveBottomType}/>
+                              setActiveBottomType={setActiveBottomType} setPopout={setPopout}/>
 
                         {/* CardInfo принимает удаление из избранного и добавление обратно, на случай если пользователь сразу хочет вернуть обратно (находясь в избранном) */}
                         <CardInfo id={ROUTES.CARDINFO} go={go} selectedCard={selectedCard} panelBack={panelBack} addToFavorites={addToFavorites} removeFromFavorites={removeFromFavorites} activeBottomType={activeBottomType} setActiveBottomType={setActiveBottomType} getUnicFavoritesIds={getUnicFavoritesIds}/>
 
                         <Favorites id={ROUTES.FAVORITES} go={go} setActiveModal={_setActiveModal}
-                                   getUnicFavoritesIds={getUnicFavoritesIds} setSelectedCard={setSelectedCard} setActiveBottomType={setActiveBottomType} setPopout={setPopout}/>
+                                   getUnicFavoritesIds={getUnicFavoritesIds} setSelectedCard={setSelectedCard} 
+                                   setActiveBottomType={setActiveBottomType} setPopout={setPopout}/>
                     </View>
                 </SplitCol>
             </SplitLayout>

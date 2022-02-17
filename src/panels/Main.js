@@ -5,6 +5,7 @@ import {
     Panel,
     Search,
     Group, Spacing,
+    ScreenSpinner,
 } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 import MainSearch from '../components/MainSearch';
@@ -12,10 +13,15 @@ import HeaderSlider from '../components/HeaderSlider';
 import Cards from '../components/Cards';
 import FooterMain from '../components/FooterMain';
 
-const Main = ({id, go, setActiveModal, setSelectedCard, filteredCards, addToFavorites, setActiveBottomType}) => {
+const Main = ({id, go, setActiveModal, setSelectedCard, filteredCards, setActiveBottomType, setPopout}) => {
     const [cards, setCards] = useState([]);
     const [names, setNames] = useState(null);
+
+    let dataHasTaken = false;
     useEffect(() => {
+        if (!dataHasTaken) {
+            setPopout(<ScreenSpinner size='large'/>);
+        }
         async function getCards() {
             try {
                 const response = await fetch(SERVER_API + `/MainInfo`,{
@@ -24,6 +30,9 @@ const Main = ({id, go, setActiveModal, setSelectedCard, filteredCards, addToFavo
                 });
                 const data = await response.json();
                 setCards(data);
+                
+                setPopout(null);
+                dataHasTaken = true;
             } catch(error) {
                 console.error(error);
             }
@@ -54,8 +63,10 @@ const Main = ({id, go, setActiveModal, setSelectedCard, filteredCards, addToFavo
         <Panel id={id} style={{justifyContent: "center"}}>
             <HeaderSlider setActiveModal={setActiveModal}/>
             <Group>
-                <MainSearch searchData={names}/>
-                <Cards go={go} cards={cards} setSelectedCard={setSelectedCard} addToFavorites={addToFavorites}/>
+                {names &&
+                    <MainSearch searchData={names} setSelectedCard={setSelectedCard} go={go}/>
+                }
+                <Cards go={go} cards={cards} setSelectedCard={setSelectedCard}/>
                 <Spacing size={30}/>
                 <FooterMain go={go} selectedText="search" setActiveBottomType={setActiveBottomType}/>
             </Group>
@@ -69,8 +80,8 @@ Main.propTypes = {
     setActiveModal: PropTypes.func.isRequired,
     setSelectedCard: PropTypes.func.isRequired,
     filteredCards: PropTypes.array,
-    addToFavorites: PropTypes.func.isRequired,
     setActiveBottomType: PropTypes.func.isRequired,
+    setPopout: PropTypes.func.isRequired,
 };
 
 export default Main;
