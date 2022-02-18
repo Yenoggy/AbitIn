@@ -13,9 +13,8 @@ import HeaderSlider from '../components/HeaderSlider';
 import Cards from '../components/Cards';
 import FooterMain from '../components/FooterMain';
 
-const Main = ({id, go, setActiveModal, setSelectedCard, filteredCards, setActiveBottomType, setPopout}) => {
+const Main = ({id, go, setActiveModal, setSelectedCard, filteredCards, setActiveBottomType, setPopout, dataForSearch}) => {
     const [cards, setCards] = useState([]);
-    const [names, setNames] = useState(null);
 
     useEffect(() => {
         async function getCards() {
@@ -31,24 +30,11 @@ const Main = ({id, go, setActiveModal, setSelectedCard, filteredCards, setActive
                 console.error(error);
             }
         }
-        async function getNames() {
-        try {
-            const response = await fetch(SERVER_API + `/MainInfo?NamesOnly=${true}`,{
-                method: "POST",
-                mode: 'cors',
-            });
-            const data = await response.json();
-            setNames(data);
-        } catch(error) {
-            console.error(error);
-        }
-        } 
 
         if (filteredCards) setCards(filteredCards);
         else {
             getCards();
         }
-        if (!names) getNames();
     }, []);
 
 
@@ -57,8 +43,8 @@ const Main = ({id, go, setActiveModal, setSelectedCard, filteredCards, setActive
         <Panel id={id} style={{justifyContent: "center"}}>
             <HeaderSlider setActiveModal={setActiveModal}/>
             <Group>
-                {names &&
-                    <MainSearch searchData={names} setSelectedCard={setSelectedCard} go={go}/>
+                {dataForSearch &&
+                    <MainSearch dataForSearch={dataForSearch} setSelectedCard={setSelectedCard} go={go}/>
                 }
                 <Cards go={go} cards={cards} setSelectedCard={setSelectedCard}/>
                 <Spacing size={30}/>
@@ -76,6 +62,7 @@ Main.propTypes = {
     filteredCards: PropTypes.array,
     setActiveBottomType: PropTypes.func.isRequired,
     setPopout: PropTypes.func.isRequired,
+    dataForSearch: PropTypes.array.isRequired,
 };
 
 export default Main;

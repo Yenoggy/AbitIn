@@ -60,7 +60,7 @@ const Favorites = ({id, go, setActiveModal, getUnicFavoritesIds,
             <HeaderSlider setActiveModal={setActiveModal}/>
             {favorites &&
                 <div>
-                    <MainSearch searchData={favorites} setSelectedCard={setSelectedCard}  go={go}/>
+                    <MainSearch dataForSearch={favorites} setSelectedCard={setSelectedCard}  go={go}/>
                     {!favorites.length && dataHasTaken &&
                         <Placeholder
                             icon={<Icon20StarCircleFillGray width={154.74} height={

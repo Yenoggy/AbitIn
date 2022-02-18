@@ -42,6 +42,7 @@ const App = () => {
     const isDesktop = (viewWidth >= ViewWidth.TABLET);
 
     const [fetchedUser, setUser] = useState(null);
+    const [dataForSearch, setDataForSearch] = useState(null);
     const [userFavorites, setUserFavorites] = useState([]);
     const [selectedCard, setSelectedCard] = useState(-1);
     const [selectedCityName, setSelectedCityName] = useState("");
@@ -109,19 +110,36 @@ const App = () => {
             setPopout(null);
         }
 
+        async function fetchDataForSearch() {
+            try {
+                const response = await fetch(SERVER_API + `/MainInfo?NamesOnly=${true}`,{
+                    method: "POST",
+                    mode: 'cors',
+                });
+                const data = await response.json();
+                setDataForSearch(data);
+            } catch(error) {
+                console.error(error);
+            }
+        } 
+
         fetchData();
+        fetchDataForSearch();
     }, []);
 
     const addToFavorites = async universityId => {
         try {
-            const copyUserFavorites = [...new Set(userFavorites)];
+            let copyUserFavorites = [...userFavorites];
             copyUserFavorites.push(universityId);
+            copyUserFavorites = [...new Set(copyUserFavorites)];
             setUserFavorites(copyUserFavorites);
 
             await bridge.send("VKWebAppStorageSet", {
                 key: STORAGE_KEYS.FAVORITES,
                 value: JSON.stringify(copyUserFavorites)
             });
+            console.log(copyUserFavorites)
+            console.log(userFavorites)
         } catch (error) {
             console.error(error);
             setSnackbar(
@@ -253,7 +271,7 @@ const App = () => {
                     <View activePanel={activePanel} popout={popout}>
                         <Main id={ROUTES.MAIN} go={go} setActiveModal={_setActiveModal}
                               setSelectedCard={setSelectedCard} filteredCards={filteredCards} 
-                              setActiveBottomType={setActiveBottomType} setPopout={setPopout}/>
+                              setActiveBottomType={setActiveBottomType} setPopout={setPopout} dataForSearch={dataForSearch}/>
 
                         {/* CardInfo принимает удаление из избранного и добавление обратно, на случай если пользователь сразу хочет вернуть обратно (находясь в избранном) */}
                         <CardInfo id={ROUTES.CARDINFO} go={go} selectedCard={selectedCard} panelBack={panelBack} addToFavorites={addToFavorites} removeFromFavorites={removeFromFavorites} activeBottomType={activeBottomType} setActiveBottomType={setActiveBottomType} getUnicFavoritesIds={getUnicFavoritesIds}/>
