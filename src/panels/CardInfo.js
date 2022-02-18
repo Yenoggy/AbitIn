@@ -44,10 +44,7 @@ const CardInfo = ({id, go, selectedCard, getUnicFavoritesIds, panelBack, addToFa
     const [card, setCardData] = useState(null);
 
     // Определяет находится ли пользователь в избранных и просматривает свою карточку из избранного
-    const isInFavorites = () => {
-        console.log(activeBottomType);
-        return activeBottomType === 'favorites';
-    }
+    const isInFavorites = () => activeBottomType === 'favorites';
 
     useEffect(() => {
         console.log('isInFavorites, 11', isInFavorites(), (isInFavorites() && getUnicFavoritesIds().indexOf(selectedCard) == -1));
