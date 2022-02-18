@@ -84,11 +84,10 @@ const CardInfo = ({id, go, selectedCard, getUnicFavoritesIds, panelBack, addToFa
                             <Title level="1" weight="bold" style={{marginBottom: 6}}>{card.name}</Title>
                             <Headline weight="semibold">Обучение от {card.mincost} ₽ в год</Headline>
 
-                            {/* Если просто открыл карточку не из избранного 
+                            {/* Если просто открыл карточку не из избранного
                             или Если карточка из избранного и пользователь только что удалил её оттуда*/}
-                            {(!isInFavorites()  || isInFavorites() && getUnicFavoritesIds().indexOf(selectedCard) == -1) &&
+                            {(!isInFavorites() || isInFavorites() && getUnicFavoritesIds().indexOf(selectedCard) == -1) &&
                                 <Button size="m" id='add-favorites-btn' style={{marginTop:5}} onClick={(e) => {
-                                    console.log('add', selectedCard)
                                     addToFavorites(selectedCard);
                                     document.querySelector('#add-favorites-btn').style.display = 'none';
                                 }}>В избранное</Button>

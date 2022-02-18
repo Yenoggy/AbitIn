@@ -13,19 +13,19 @@ import MainSearch from '../components/MainSearch';
 
 import {Icon20StarCircleFillGray} from '@vkontakte/icons';
 import Cards from '../components/Cards';
+import { getUnixTimestampFromDate } from '@vkontakte/vkjs';
 const Favorites = ({id, go, setActiveModal, getUnicFavoritesIds, 
     setSelectedCard, setActiveBottomType, setPopout}) => {
     const [favorites, setFavorites] = useState(null);
     let dataHasTaken = false;
 
     useEffect(() => {
-        console.log('dataHasTaken', dataHasTaken);
         if (!dataHasTaken) {
             setPopout(<ScreenSpinner size='large'/>);
         }
         // Получаем по списку с id-шниками фаворитных вузов карточки из базы данных для отрисовки, чистим лишние
         async function getFavorites() {
-
+            console.log('Getting favorites...', new Date());
             try {
                 const unicIds = getUnicFavoritesIds();
                 const requestArguments =  {
@@ -40,10 +40,10 @@ const Favorites = ({id, go, setActiveModal, getUnicFavoritesIds,
                     data.push(...partOfData);
                 }
                 
-                setPopout(null);
                 setFavorites(data);
+                setPopout(null);
                 dataHasTaken = true;
-                console.log('dataHasTaken')
+                console.log('Got favorites...', new Date());
                 
             } catch(error) {
                 console.error(error);
@@ -51,6 +51,10 @@ const Favorites = ({id, go, setActiveModal, getUnicFavoritesIds,
         } 
 
         if (getUnicFavoritesIds().length) getFavorites(); //
+        else {
+            setFavorites([]);
+            setPopout(null); // Если данных нет, незачем ждать спиннером
+        }
     }, []);
 
 

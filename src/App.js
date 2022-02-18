@@ -131,15 +131,16 @@ const App = () => {
         try {
             let copyUserFavorites = [...userFavorites];
             copyUserFavorites.push(universityId);
-            copyUserFavorites = [...new Set(copyUserFavorites)];
+            copyUserFavorites = [...new Set(copyUserFavorites.sort())];
             setUserFavorites(copyUserFavorites);
+
+            console.log(copyUserFavorites)
+            console.log(userFavorites)
 
             await bridge.send("VKWebAppStorageSet", {
                 key: STORAGE_KEYS.FAVORITES,
                 value: JSON.stringify(copyUserFavorites)
             });
-            console.log(copyUserFavorites)
-            console.log(userFavorites)
         } catch (error) {
             console.error(error);
             setSnackbar(
@@ -164,7 +165,7 @@ const App = () => {
         try {
             const setOfFavorites = new Set(userFavorites);
             setOfFavorites.delete(universityId);
-            setUserFavorites([...setOfFavorites]);
+            setUserFavorites([...setOfFavorites].sort());
 
             await bridge.send("VKWebAppStorageSet", {
                 key: STORAGE_KEYS.FAVORITES,
@@ -214,6 +215,12 @@ const App = () => {
         setModalHistory([""]);
         setActiveModal(null);
     };
+    const modalBack = () => {
+        const modal = modalHistory[modalHistory.length - 2];
+        if (!modal) return setActiveModal(null);
+        setActiveModal(modalHistory[modalHistory.length - 2]);
+    };
+
     const go = e => {
         const panelId = e.currentTarget.dataset.to;
 
@@ -229,12 +236,7 @@ const App = () => {
 
         setPanelHistory([..._panelHistory]);
         setActivePanel(panelId);
-        console.log("panelId = ", panelId);
-    };
-    const modalBack = () => {
-        const modal = modalHistory[modalHistory.length - 2];
-        if (!modal) return setActiveModal(null);
-        setActiveModal(modalHistory[modalHistory.length - 2]);
+        console.log("panelCurrent = ", panelId);
     };
 
     const panelBack = () => {
