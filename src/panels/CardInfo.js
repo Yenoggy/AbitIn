@@ -40,14 +40,15 @@ import FooterMain from '../components/FooterMain';
 import {Icon24CheckSquareOutline} from '@vkontakte/icons';
 import {Icon24CheckBoxOff} from '@vkontakte/icons';
 
-const CardInfo = ({id, go, selectedCard, getUnicFavoritesIds, panelBack, addToFavorites, removeFromFavorites, setActiveBottomType, activeBottomType}) => {
+const CardInfo = ({id, go, selectedCard, getUnicFavoritesIds, panelBack, addToFavorites, removeFromFavorites, setActiveBottomType, activeBottomType, setPopout}) => {
     const [card, setCardData] = useState(null);
 
     // Определяет находится ли пользователь в избранных и просматривает свою карточку из избранного
     const isInFavorites = () => activeBottomType === 'favorites';
 
     useEffect(() => {
-        console.log('isInFavorites, 11', isInFavorites(), (isInFavorites() && getUnicFavoritesIds().indexOf(selectedCard) == -1));
+
+        console.log('isInFavorites, favorites', getUnicFavoritesIds());
         async function getData() {
             try {
                 const response = await fetch(SERVER_API + `/GetInfo?Id=${selectedCard}`,{
@@ -56,12 +57,15 @@ const CardInfo = ({id, go, selectedCard, getUnicFavoritesIds, panelBack, addToFa
                 });
                 const data = await response.json();
                 setCardData(...data);
+                setPopout(null);
             } catch(error) {
                 console.error('ERROR in fetch GetInfo CardInfo', error);
             }
         }
 
         if (selectedCard >= 0) {
+            console.log('getData');
+            setPopout(<ScreenSpinner size='large'/>);
             getData();
         }
 

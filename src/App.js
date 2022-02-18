@@ -274,7 +274,7 @@ const App = () => {
                               setActiveBottomType={setActiveBottomType} setPopout={setPopout} dataForSearch={dataForSearch}/>
 
                         {/* CardInfo принимает удаление из избранного и добавление обратно, на случай если пользователь сразу хочет вернуть обратно (находясь в избранном) */}
-                        <CardInfo id={ROUTES.CARDINFO} go={go} selectedCard={selectedCard} panelBack={panelBack} addToFavorites={addToFavorites} removeFromFavorites={removeFromFavorites} activeBottomType={activeBottomType} setActiveBottomType={setActiveBottomType} getUnicFavoritesIds={getUnicFavoritesIds}/>
+                        <CardInfo id={ROUTES.CARDINFO} go={go} selectedCard={selectedCard} panelBack={panelBack} addToFavorites={addToFavorites} removeFromFavorites={removeFromFavorites} activeBottomType={activeBottomType} setActiveBottomType={setActiveBottomType} getUnicFavoritesIds={getUnicFavoritesIds} setPopout={setPopout}/>
 
                         <Favorites id={ROUTES.FAVORITES} go={go} setActiveModal={_setActiveModal}
                                    getUnicFavoritesIds={getUnicFavoritesIds} setSelectedCard={setSelectedCard} 
