@@ -14,6 +14,9 @@ import Cards from '../components/Cards';
 import FooterMain from '../components/FooterMain';
 
 const Main = ({id, go, setActiveModal, setSelectedCard, filteredCards, setActiveBottomType, setPopout, dataForSearch}) => {
+    /* Filteredcards - карточки переданные из фильтров ( то есть если пользователь воспользовался фильтрами)
+    ПО умолчанию - null
+     */
     const [cards, setCards] = useState([]);
 
     useEffect(() => {
@@ -25,14 +28,19 @@ const Main = ({id, go, setActiveModal, setSelectedCard, filteredCards, setActive
                 });
                 const data = await response.json();
                 setCards(data);
+                setPopout(null);
 
             } catch(error) {
                 console.error(error);
             }
         }
 
-        if (filteredCards) setCards(filteredCards);
+        if (filteredCards) {
+            setCards(filteredCards);
+            setPopout(null);
+        }
         else {
+            setPopout(<ScreenSpinner size='large'/>);
             getCards();
         }
     }, []);
