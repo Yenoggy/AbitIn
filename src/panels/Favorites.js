@@ -7,7 +7,6 @@ import {
 } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 import PropTypes from 'prop-types';
-import HeaderSlider from '../components/HeaderSlider';
 import FooterMain from '../components/FooterMain';
 import MainSearch from '../components/MainSearch';
 
@@ -61,7 +60,6 @@ const Favorites = ({id, go, setActiveModal, getUnicFavoritesIds,
 
     return (
         <Panel id={id}>
-            <HeaderSlider setActiveModal={setActiveModal}/>
             {favorites &&
                 <div>
                     <MainSearch dataForSearch={favorites} setSelectedCard={setSelectedCard}  go={go}/>
