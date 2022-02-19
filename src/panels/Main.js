@@ -9,7 +9,7 @@ import {
 } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
 import MainSearch from '../components/MainSearch';
-import HeaderSlider from '../components/HeaderSlider';
+import HeaderFilter from '../components/HeaderFilter';
 import Cards from '../components/Cards';
 import FooterMain from '../components/FooterMain';
 
@@ -49,7 +49,7 @@ const Main = ({id, go, setActiveModal, setSelectedCard, filteredCards, setActive
 
     return (
         <Panel id={id} style={{justifyContent: "center"}}>
-            <HeaderSlider setActiveModal={setActiveModal}/>
+            <HeaderFilter setActiveModal={setActiveModal}/>
             <Group>
                 {dataForSearch &&
                     <MainSearch dataForSearch={dataForSearch} setSelectedCard={setSelectedCard} go={go}/>

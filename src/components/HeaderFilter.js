@@ -10,7 +10,7 @@ import PropTypes from "prop-types";
 
 import {Icon28SlidersOutline} from '@vkontakte/icons';
 
-const HeaderSlider = ({setActiveModal}) => {
+const HeaderFilter = ({setActiveModal}) => {
 
     return (
         <PanelHeader separator={false}
@@ -24,7 +24,7 @@ const HeaderSlider = ({setActiveModal}) => {
 };
 
 
-// HeaderSlider.propTypes = {
+// HeaderFilter.propTypes = {
 //     setActiveModal: PropTypes.func.isRequired,
 // };
-export default HeaderSlider;
+export default HeaderFilter;
