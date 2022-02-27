@@ -59,7 +59,7 @@ const Favorites = ({id, go, setActiveModal, getUnicFavoritesIds,
 
 
     return (
-        <Panel id={id}>
+        <Panel id={id} style={{justifyContent: "center"}}>
             {favorites &&
                 <div>
                     <MainSearch dataForSearch={favorites} setSelectedCard={setSelectedCard}  go={go}/>
