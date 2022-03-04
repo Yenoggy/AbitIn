@@ -51,7 +51,7 @@ const Filters = ({id, isMobile, setActiveModal, closeModals, setFilteredCards,
     const [minPoints, setMinPoints] = useState(100);
     const [maxPoints, setMaxPoints] = useState(200);
 
-    const [selectedExams, setSelectedExams] = useState(exams.slice(0, 2));
+    const [selectedExams, setSelectedExams] = useState(exams.slice(0, 3));
 
 
     useEffect(() => {
