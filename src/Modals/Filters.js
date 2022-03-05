@@ -42,21 +42,51 @@ const exams = [
 
 
 const Filters = ({id, isMobile, setActiveModal, closeModals, setFilteredCards, 
-    selectedCityName, setSelectedCityName}) => {
+    selectedCityName, setSelectedCityName,  mildep, setMildep,dorm,setDorm,minPoints,setMinPoints, maxPoints,setMaxPoints}) => {
     const [resultsCount, setResultsCount] = useState(0);
-    const [cards, setCards] = useState(null);
-    const [mildep, setMildep] = useState(false);
-    const [dorm, setDorm] = useState(false); // Общежитие
+    const [selectedExams, setSelectedExams] = useState(exams.slice(0, 1));
 
-    const [minPoints, setMinPoints] = useState(100);
-    const [maxPoints, setMaxPoints] = useState(200);
+    const [tempCards, setTempCards] = useState(null);
+    const getCardsByFilters = async () => {
+        let data;
+        try {
+            let specString = "";
+            for (let i = 0; i < selectedExams.length; i++) {
+                specString += "&";
+                specString += `spec[${i}]=${selectedExams[i].value}`;
+            }
+            
+            let requestText;
+            
+            let minscore = minPoints;
+            let avgscore = maxPoints;
+            if (!Number.isInteger(minPoints)) minscore = 0
+            if (!Number.isInteger(maxPoints)) avgscore = 0
 
-    const [selectedExams, setSelectedExams] = useState(exams.slice(0, 3));
+            if (selectedCityName) requestText = SERVER_API + 
+            `/MainInfo?mildep=${mildep}&dorm=${dorm}&city[0]=${selectedCityName}&minscore=${minscore}&avgscore=${avgscore}${specString}`;
+            else requestText = SERVER_API + 
+            `/MainInfo?mildep=${mildep}&dorm=${dorm}&minscore=${minscore}&avgscore=${avgscore}${specString}`;
 
-
+            console.log(requestText);
+            const res = await fetch(requestText,
+                {
+                    method: "POST",
+                    mode: 'cors',
+            }
+            );
+            data = await res.json(); 
+            setTempCards(data); 
+        } catch(error) {
+            console.error('Ошибка SERVER-API getCardsByFilters', error);
+        } 
+        return data;
+    };
     useEffect(() => {
-        if (selectedCityName && selectedExams) countAndUpdateResults();
-    });
+    if (selectedCityName && selectedExams) {
+        countAndUpdateResults();
+    }
+    }, [minPoints, maxPoints, dorm, mildep, selectedCityName, selectedExams])
 
     
     const exitFilters = () => {
@@ -72,65 +102,26 @@ const Filters = ({id, isMobile, setActiveModal, closeModals, setFilteredCards,
         creatable: true,
         creatableText: '',
     };
-
-
-    const checkChanges = ({target}) => {
-        console.dir('changes', target);
-        countAndUpdateResults();
-    };
-
     const countAndUpdateResults = async () => {
         //
         try {
-            const cards = await getCardsByFilters();
+            const cards = await getCardsByFilters(selectedExams);
             setResultsCount(cards.length);
         } catch (error) {
             console.error('Ошибка getCardsByFilters (в countAndUpdateResults)', error);
         }
     };
 
-
-    const getCardsByFilters = async () => {
-        let data;
-        try {
-            let specString = "";
-            for (let i = 0; i < selectedExams.length; i++) {
-                specString += "&";
-                specString += `spec[${i}]=${selectedExams[i].value}`;
-            }
-            
-            let requestText;
-            if (selectedCityName) requestText = SERVER_API + 
-            `/MainInfo?mildep=${mildep}&dorm=${dorm}&city[0]=${selectedCityName}&minscore=${minPoints}&avgscore=${maxPoints}${specString}`;
-            else requestText = SERVER_API + 
-            `/MainInfo?mildep=${mildep}&dorm=${dorm}&minscore=${minPoints}&avgscore=${maxPoints}${specString}`;
-
-            console.log(requestText);
-            const res = await fetch(requestText,
-                {
-                    method: "POST",
-                    mode: 'cors',
-            }
-            );
-            data = await res.json(); 
-            console.log('data', data);
-            setCards(data); 
-        } catch(error) {
-            console.error('Ошибка SERVER-API getCardsByFilters', error);
-        } 
-        return data;
-    };
-
-    const showResults = () => {
-        setFilteredCards(cards);
+    const showResults = (event) => {
+        setFilteredCards(tempCards);
         setSelectedCityName(null);
         setSelectedExams(exams.slice(0, 2));
+        exitFilters();
     };
     return (
         <ModalPage
             id={id}
             onClose={exitFilters}
-            onChange={checkChanges}
             header={
                 <ModalPageHeader
                     left={isMobile && <PanelHeaderClose onClick={exitFilters}/>}
@@ -161,41 +152,97 @@ const Filters = ({id, isMobile, setActiveModal, closeModals, setFilteredCards,
                             <Input 
                             id="min-points"
                             value={minPoints} 
-                                onChange={({target}) => setMinPoints(target.value)} 
+                                onInput={({target}) => setMinPoints(+target.value) }
                             />
                         </FormItem>
                         <FormItem top="Максимальные">
                             <Input 
                             id="max-points"
                             value={maxPoints} 
-                                onChange={({target}) => setMaxPoints(target.value)} 
+                                onInput={({target}) => setMaxPoints(+target.value)
+                                } 
                             />
                         </FormItem>
                     </FormLayoutGroup>
 
                     <FormItem top="Дополнительно">
-                        <Cell style={{marginLeft: 0}} role={null} defaultChecked disabled
-                              after={
-                                <Switch 
-                                    id="mildep" value={mildep} 
-                                    onChange={({target}) => setMildep(target.value)} 
-                                    aria-label="Военная кафедра"/>
-                              }>
-                            Военная кафедра
-                        </Cell>
-                        <Cell style={{marginLeft: 0}} role={null} defaultChecked disabled
-                              after={
-                                <Switch id="dorm" value={dorm} 
-                                onChange={({target}) => setDorm(target.value)} 
-                                aria-label="Общежитие"/>
-                              }>
+                        {mildep &&
+                            <Cell style={{marginLeft: 0}} role={null} disabled
+                                after={
+
+                                    <>
+                                        <Switch 
+                                            id="mildep" checked
+                                            onChange={({target}) => {
+                                                setMildep(target.checked)
+                                                }
+                                            } 
+                                            aria-label="Военная кафедра"
+                                        />
+                                    </>
+                                }>
+                                Военная кафедра
+                            </Cell>
+                        }
+                        {!mildep &&
+                            <Cell style={{marginLeft: 0}} role={null} disabled
+                                after={
+
+                                    <>
+                                        <Switch 
+                                            id="mildep"
+                                            onChange={({target}) => 
+                                                setMildep(target.checked)
+                                            } 
+                                            aria-label="Военная кафедра"
+                                        />
+                                    </>
+                                }>
+                                Военная кафедра
+                            </Cell>
+                        }
+                        {dorm &&
+                            <Cell style={{marginLeft: 0}} role={null} disabled
+                            after={
+
+                                <>
+                                    <Switch 
+                                        id="dorm" checked
+                                        onChange={({target}) => {
+                                            setDorm(target.checked)
+                                        }
+                                        } 
+                                        aria-label="Общежитие"
+                                    />
+                                </>
+                            }>
                             Общежитие
                         </Cell>
+                        }
+                        {!dorm &&
+                            <Cell style={{marginLeft: 0}} role={null} disabled
+                                after={
+
+                                    <>
+                                        <Switch 
+                                            id="dorm"
+                                            onChange={({target}) => {                                      
+                                                setDorm(target.checked)
+                                            }
+                                            } 
+                                            aria-label="Общежитие"
+                                        />
+                                    </>
+                                }>
+                                Общежитие
+                            </Cell>
+                        }
                     </FormItem>
                     <Div>
                         <Button
                             before={<Icon16Add/>}
                             after={
+                                selectedCityName && 
                                 <>
                                     <Counter>
                                         {resultsCount}
@@ -203,7 +250,7 @@ const Filters = ({id, isMobile, setActiveModal, closeModals, setFilteredCards,
                                 </>
                             }
                             size="l"
-                            onClick={showResults}
+                            onClick={showResults} data-modal=""
                             stretched style={{marginRight: 8}}>
                             Показать результаты
                         </Button>

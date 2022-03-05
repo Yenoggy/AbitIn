@@ -64,7 +64,7 @@ const MainSearch = ({dataForSearch, setSelectedCard, go}) => {
 MainSearch.propTypes = {
   setSelectedCard: PropTypes.func.isRequired,
   go: PropTypes.func.isRequired,
-  dataForSearch: PropTypes.array.isRequired,
+  dataForSearch: PropTypes.array,
 };
 
 export default MainSearch;

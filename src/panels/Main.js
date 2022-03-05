@@ -36,14 +36,16 @@ const Main = ({id, go, setActiveModal, setSelectedCard, filteredCards, setActive
         }
 
         if (filteredCards) {
+            console.log(filteredCards)
             setCards(filteredCards);
             setPopout(null);
         }
         else {
+            console.log('-', filteredCards)
             setPopout(<ScreenSpinner size='large'/>);
             getCards();
         }
-    }, []);
+    }, [filteredCards]);
 
 
 
@@ -70,7 +72,7 @@ Main.propTypes = {
     filteredCards: PropTypes.array,
     setActiveBottomType: PropTypes.func.isRequired,
     setPopout: PropTypes.func.isRequired,
-    dataForSearch: PropTypes.array.isRequired,
+    dataForSearch: PropTypes.array,
 };
 
 export default Main;

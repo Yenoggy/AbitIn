@@ -32,6 +32,7 @@ import {STORAGE_KEYS} from './config';
 import Filters from './Modals/Filters';
 import SelectCity from './Modals/SelectCity';
 
+
 const App = () => {
 
     const {viewWidth, sizeX} = useAdaptivity();
@@ -58,6 +59,12 @@ const App = () => {
     const [activePanel, setActivePanel] = useState(ROUTES.MAIN);
     const [activeModal, setActiveModal] = useState(null);
     const [activeBottomType, setActiveBottomType] = useState("search"); // Поиск или Избранное, отображение выбранного
+
+    const [mildep, setMildep] = useState(false);
+    const [dorm, setDorm] = useState(false); // Общежитие
+
+    const [minPoints, setMinPoints] = useState("");
+    const [maxPoints, setMaxPoints] = useState("");
 
     useEffect(() => {
         bridge.subscribe(({detail: {type, data}}) => {
@@ -244,10 +251,17 @@ const App = () => {
         console.log("panelnew=", panelHistory[panelHistory.length - 2]);
     };
 
+
     const modal = (
         <ModalRoot activeModal={activeModal}>
 
-            <Filters id={MODALS.FILTERS} isMobile={isMobile} closeModals={closeAndCleanModals} setActiveModal={_setActiveModal} setFilteredCards={setFilteredCards} selectedCityName={selectedCityName} setSelectedCityName={setSelectedCityName}/>
+            <Filters id={MODALS.FILTERS} 
+            isMobile={isMobile} closeModals={closeAndCleanModals} setActiveModal={_setActiveModal} 
+            setFilteredCards={setFilteredCards} selectedCityName={selectedCityName} 
+            setSelectedCityName={setSelectedCityName}
+            mildep={mildep} setMildep={setMildep} dorm={dorm} setDorm={setDorm}
+            minPoints={minPoints} setMinPoints={setMinPoints} maxPoints={maxPoints} setMaxPoints={setMaxPoints}
+            />
 
             <SelectCity id={MODALS.SELECTCITY} isMobile={isMobile} setActiveModal={_setActiveModal}
                         modalBack={modalBack} selectedCityName={selectedCityName} setSelectedCityName={setSelectedCityName}/>
