@@ -35,27 +35,6 @@ const SelectCity = ({id, isMobile, setActiveModal, modalBack, selectedCityName, 
     ]);
 
     const setCity = ({target}) => setSelectedCityName(target.value);
-
-    /*useEffect(async () => {
-        try {
-            let response = await fetch(`https://api.vk.com/method/database.getCities?access_token=${VK_TOKEN}&country_id=1&need_all=1&count=1000&v=5.81?lang=ru`, {
-                method: 'GET',
-                mode: 'cors',
-                headers: {
-                    'Content-Type': 'application/json;charset=utf-8',
-                },
-                credentials: "same-origin"
-            });
-
-            const data = JSON.parse(response);
-            setCities(data.map(d => {
-                d.id, d.title
-            }));
-        } catch (error) {
-            console.error(error);
-        } 
-    });*/
-
     return (
 
         <ModalPage
