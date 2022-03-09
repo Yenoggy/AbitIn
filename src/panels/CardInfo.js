@@ -86,7 +86,7 @@ const CardInfo = ({id, go, selectedCard, getUnicFavoritesIds, panelBack, addToFa
 
                             {/* Если просто открыл карточку не из избранного
                             или Если карточка из избранного и пользователь только что удалил её оттуда*/}
-                            {(!isInFavorites() || isInFavorites() && getUnicFavoritesIds().indexOf(selectedCard) == -1) &&
+                            {getUnicFavoritesIds().indexOf(selectedCard) == -1 &&
                                 <Button size="m" id='add-favorites-btn' style={{marginTop:5}} onClick={(e) => {
                                     addToFavorites(selectedCard);
                                     document.querySelector('#add-favorites-btn').style.display = 'none';
@@ -95,7 +95,7 @@ const CardInfo = ({id, go, selectedCard, getUnicFavoritesIds, panelBack, addToFa
 
 
                             {/* Если карточка из избранного и можно удалить её*/}
-                            {isInFavorites() && getUnicFavoritesIds().indexOf(selectedCard) !== -1 &&
+                            {getUnicFavoritesIds().indexOf(selectedCard) !== -1 &&
                                 <Button size="m" id='add-favorites-btn' style={{marginTop:5}} onClick={(e) => {
                                     removeFromFavorites(selectedCard);
                                     document.querySelector('#add-favorites-btn').style.display = 'none';
