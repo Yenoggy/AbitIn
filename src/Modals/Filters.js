@@ -35,9 +35,7 @@ import {Icon16ChevronOutline} from '@vkontakte/icons';
 const exams = [
     {value: 'Р', label: 'Русский язык'}, 
     {value: 'М', label: 'Математика'}, 
-    {value: 'ИК', label: 'Информатика',}, 
-    {value: 'И', label: 'История',},
-    {value: 'АЯ', label: 'Английский язык'}
+    {value: 'ИК', label: 'Информатика',},
 ];
 
 
