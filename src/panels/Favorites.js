@@ -5,6 +5,7 @@ import {
     Search,
     PanelHeader,
     Group,
+    Spacing,
     ScreenSpinner,
 } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
@@ -83,6 +84,7 @@ const Favorites = ({id, go, setActiveModal, getUnicFavoritesIds,
                                 setSelectedCard={setSelectedCard}
                             />
                     }
+                    <Spacing size={30}/>
                     <FooterMain go={go} setActiveBottomType={setActiveBottomType} selectedText="favorites"/>
                 </Group>
 
