@@ -5,6 +5,7 @@ import {
     Panel,
     Search,
     Group, Spacing,
+    PanelHeader,
     ScreenSpinner,
 } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
