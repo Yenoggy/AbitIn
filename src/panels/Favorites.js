@@ -61,6 +61,9 @@ const Favorites = ({id, go, setActiveModal, getUnicFavoritesIds,
 
     return (
         <Panel id={id} style={{justifyContent: "center"}}>
+        <PanelHeader separator={false}>
+            AbitIn
+        </PanelHeader>
             {favorites &&
                 <Group>
                     <MainSearch dataForSearch={favorites} setSelectedCard={setSelectedCard}  go={go}/>
