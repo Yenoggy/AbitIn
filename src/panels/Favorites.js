@@ -3,6 +3,7 @@ import {
     Placeholder,
     Panel,
     Search,
+    Group,
     ScreenSpinner,
 } from '@vkontakte/vkui';
 import '@vkontakte/vkui/dist/vkui.css';
@@ -61,7 +62,7 @@ const Favorites = ({id, go, setActiveModal, getUnicFavoritesIds,
     return (
         <Panel id={id} style={{justifyContent: "center"}}>
             {favorites &&
-                <div>
+                <Group>
                     <MainSearch dataForSearch={favorites} setSelectedCard={setSelectedCard}  go={go}/>
                     {!favorites.length && dataHasTaken &&
                         <Placeholder
@@ -78,9 +79,10 @@ const Favorites = ({id, go, setActiveModal, getUnicFavoritesIds,
                                 setSelectedCard={setSelectedCard}
                             />
                     }
-                </div>
+                    <FooterMain go={go} setActiveBottomType={setActiveBottomType} selectedText="favorites"/>
+                </Group>
+
             }
-            <FooterMain go={go} setActiveBottomType={setActiveBottomType} selectedText="favorites"/>
         </Panel>
     );
 };
