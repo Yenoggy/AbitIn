@@ -3,6 +3,7 @@ import {
     Placeholder,
     Panel,
     Search,
+    PanelHeader,
     Group,
     ScreenSpinner,
 } from '@vkontakte/vkui';
