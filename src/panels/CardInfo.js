@@ -44,11 +44,8 @@ const CardInfo = ({id, go, selectedCard, getUnicFavoritesIds, panelBack, addToFa
     const [card, setCardData] = useState(null);
 
     // Определяет находится ли пользователь в избранных и просматривает свою карточку из избранного
-    const isInFavorites = () => activeBottomType === 'favorites';
-
     useEffect(() => {
 
-        console.log('isInFavorites, favorites', getUnicFavoritesIds());
         async function getData() {
             try {
                 const response = await fetch(SERVER_API + `/GetInfo?Id=${selectedCard}`,{
