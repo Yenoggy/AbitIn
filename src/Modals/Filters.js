@@ -60,8 +60,8 @@ const Filters = ({id, isMobile, setActiveModal, closeModals, setFilteredCards,
             
             let minscore = minPoints;
             let avgscore = maxPoints;
-            if (!Number.isInteger(minPoints)) minscore = 0
-            if (!Number.isInteger(maxPoints)) avgscore = 0
+            if (!Number.isInteger(minPoints)) minscore = 0;
+            if (!Number.isInteger(maxPoints)) avgscore = 1000;
 
             if (selectedCityName) requestText = SERVER_API + 
             `/MainInfo?mildep=${mildep}&dorm=${dorm}&city[0]=${selectedCityName}&minscore=${minscore}&avgscore=${avgscore}${specString}`;
